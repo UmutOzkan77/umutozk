@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebRTC File Transfer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>WebRTC File Transfer</h2>
+        <input type="file" id="fileInput">
+        <button onclick="sendFile()">Send File</button>
+        <br>
+        <div id="fileList"></div>
+        <div id="peerConnectionId"></div>
+    </div>
+
+    <script>
+        let localConnection;
+        let remoteConnection;
+        let sendChannel;
+        let receiveChannel;
+        let fileInput = document.getElementById('fileInput');
+        let fileList = document.getElementById('fileList');
+        let peerConnectionId = document.getElementById('peerConnectionId');
+        
+        function createConnection() {
+            localConnection = new RTCPeerConnection();
+            sendChannel = localConnection.createDataChannel('sendDataChannel');
+            
+            localConnection.onicecandidate = e => {
+                if (e.candidate) {
+                    remoteConnection.addIceCandidate(e.candidate);
+                }
+            };
+
+            sendChannel.onopen = e => {
+                console.log('Send channel open');
+            };
+
+            sendChannel.onclose = e => {
+                console.log('Send channel closed');
+            };
+
+            remoteConnection = new RTCPeerConnection();
+
+            remoteConnection.onicecandidate = e => {
+                if (e.candidate) {
+                    localConnection.addIceCandidate(e.candidate);
+                }
+            };
+
+            remoteConnection.ondatachannel = e => {
+                receiveChannel = e.channel;
+                receiveChannel.onmessage = e => {
+                    let url = URL.createObjectURL(e.data);
+                    let a = document.createElement('a');
+                    a.href = url;
+                    a.download = fileInput.files[0].name;
+                    a.textContent = 'Download ' + fileInput.files[0].name;
+                    fileList.appendChild(a);
+                };
+                receiveChannel.onopen = e => {
+                    console.log('Receive channel open');
+                };
+                receiveChannel.onclose = e => {
+                    console.log('Receive channel closed');
+                };
+            };
+
+            localConnection.createOffer().then(offer => {
+                localConnection.setLocalDescription(offer);
+                remoteConnection.setRemoteDescription(offer);
+                return remoteConnection.createAnswer();
+            }).then(answer => {
+                remoteConnection.setLocalDescription(answer);
+                localConnection.setRemoteDescription(answer);
+            }).catch(error => console.error(error));
+        }
+
+        function sendFile() {
+            let file = fileInput.files[0];
+            if (file && sendChannel.readyState === 'open') {
+                sendChannel.send(file);
+            }
+        }
+
+        createConnection();
+    </script>
+</body>
+</html>
