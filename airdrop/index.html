@@ -29,83 +29,60 @@
     <div class="container">
         <h2>WebRTC File Transfer</h2>
         <input type="file" id="fileInput">
-        <button onclick="sendFile()">Send File</button>
-        <br>
+        <button id="startButton">Start Connection</button>
+        <button id="sendButton" disabled>Send File</button>
+        <div id="peerIdDisplay"></div>
         <div id="fileList"></div>
-        <div id="peerConnectionId"></div>
     </div>
 
+    <script src="https://unpkg.com/simple-peer/simplepeer.min.js"></script>
     <script>
-        let localConnection;
-        let remoteConnection;
-        let sendChannel;
-        let receiveChannel;
-        let fileInput = document.getElementById('fileInput');
-        let fileList = document.getElementById('fileList');
-        let peerConnectionId = document.getElementById('peerConnectionId');
-        
-        function createConnection() {
-            localConnection = new RTCPeerConnection();
-            sendChannel = localConnection.createDataChannel('sendDataChannel');
-            
-            localConnection.onicecandidate = e => {
-                if (e.candidate) {
-                    remoteConnection.addIceCandidate(e.candidate);
+        const startButton = document.getElementById('startButton');
+        const sendButton = document.getElementById('sendButton');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const peerIdDisplay = document.getElementById('peerIdDisplay');
+        let peer;
+
+        startButton.addEventListener('click', () => {
+            const initiator = confirm("Are you the initiator? OK for yes, Cancel for no.");
+            peer = new SimplePeer({ initiator, trickle: false });
+
+            peer.on('signal', data => {
+                const peerId = JSON.stringify(data);
+                peerIdDisplay.innerHTML = `Your peer ID: <textarea>${peerId}</textarea>`;
+                if (!initiator) {
+                    const otherPeerId = prompt("Enter the peer ID of the initiator:");
+                    peer.signal(JSON.parse(otherPeerId));
                 }
-            };
+            });
 
-            sendChannel.onopen = e => {
-                console.log('Send channel open');
-            };
+            peer.on('connect', () => {
+                console.log('Peer connected!');
+                sendButton.disabled = false;
+            });
 
-            sendChannel.onclose = e => {
-                console.log('Send channel closed');
-            };
+            peer.on('data', data => {
+                const blob = new Blob([data]);
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'received_file';
+                a.innerText = 'Download received file';
+                fileList.appendChild(a);
+            });
+        });
 
-            remoteConnection = new RTCPeerConnection();
-
-            remoteConnection.onicecandidate = e => {
-                if (e.candidate) {
-                    localConnection.addIceCandidate(e.candidate);
-                }
-            };
-
-            remoteConnection.ondatachannel = e => {
-                receiveChannel = e.channel;
-                receiveChannel.onmessage = e => {
-                    let url = URL.createObjectURL(e.data);
-                    let a = document.createElement('a');
-                    a.href = url;
-                    a.download = fileInput.files[0].name;
-                    a.textContent = 'Download ' + fileInput.files[0].name;
-                    fileList.appendChild(a);
+        sendButton.addEventListener('click', () => {
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    peer.send(e.target.result);
                 };
-                receiveChannel.onopen = e => {
-                    console.log('Receive channel open');
-                };
-                receiveChannel.onclose = e => {
-                    console.log('Receive channel closed');
-                };
-            };
-
-            localConnection.createOffer().then(offer => {
-                localConnection.setLocalDescription(offer);
-                remoteConnection.setRemoteDescription(offer);
-                return remoteConnection.createAnswer();
-            }).then(answer => {
-                remoteConnection.setLocalDescription(answer);
-                localConnection.setRemoteDescription(answer);
-            }).catch(error => console.error(error));
-        }
-
-        function sendFile() {
-            let file = fileInput.files[0];
-            if (file && sendChannel.readyState === 'open') {
-                sendChannel.send(file);
+                reader.readAsArrayBuffer(file);
             }
-        }
-
-        createConnection();
+        });
     </script>
 </body>
 </html>
