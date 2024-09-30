@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Fiyat Teklif Formu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- jsPDF Library for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- QRCode.js Library for QR Code Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .header, .product-table {
+            background-color: #e6f2ff;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header img {
+            max-width: 150px;
+            height: auto;
+        }
+        .header-info {
+            flex: 1;
+            margin-left: 20px;
+        }
+        .header-info input {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .qr-code {
+            text-align: center;
+        }
+        .qr-code canvas {
+            margin-bottom: 5px;
+        }
+        .product-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .product-table th, .product-table td {
+            border: 1px solid #b3d1ff;
+            padding: 8px;
+            text-align: center;
+        }
+        .product-table th {
+            background-color: #99c2ff;
+        }
+        .add-product-btn {
+            margin-top: 10px;
+        }
+        .download-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #008cba;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        @media (max-width: 600px) {
+            .header, .header-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .header-info {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <!-- Company Logo -->
+    <img src="logo.svg" alt="AGEN Logo">
+
+    <!-- Input Fields -->
+    <div class="header-info">
+        <label>Alıcı:</label>
+        <input type="text" id="alici" placeholder="Alıcı adı">
+        <label>İlgili:</label>
+        <input type="text" id="ilgili" placeholder="İlgili kişi">
+        <label>Gönderen:</label>
+        <input type="text" id="gonderen" placeholder="Gönderen kişi">
+        <label>Tarih:</label>
+        <input type="text" id="tarih" readonly>
+    </div>
+
+    <!-- QR Code and Website -->
+    <div class="qr-code">
+        <div id="qrcode"></div>
+        <a href="https://www.agentedarik.com">www.agentedarik.com</a>
+    </div>
+</div>
+
+<!-- Product Table -->
+<div class="product-table">
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Tanımı</th>
+                <th>Adet</th>
+                <th>Fiyat (TRY)</th>
+                <th>Toplam (TRY)</th>
+                <th>STOK</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Product rows will be added here -->
+        </tbody>
+    </table>
+    <button class="add-product-btn" onclick="addProduct()">Ürün Ekle</button>
+</div>
+
+<!-- Download Button -->
+<button class="download-btn" onclick="downloadPDF()">PDF İndir</button>
+
+<script>
+    // Initialize Date
+    document.getElementById('tarih').value = new Date().toLocaleDateString('tr-TR');
+
+    // Generate QR Code
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: "https://www.agentedarik.com",
+        width: 80,
+        height: 80,
+    });
+
+    // Add Product Function
+    function addProduct() {
+        var table = document.getElementById('productTable').getElementsByTagName('tbody')[0];
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+
+        // Item Number
+        var cell0 = row.insertCell(0);
+        cell0.innerHTML = rowCount + 1;
+
+        // Description
+        var cell1 = row.insertCell(1);
+        var tanim = document.createElement("input");
+        tanim.type = "text";
+        tanim.placeholder = "Ürün tanımı";
+        cell1.appendChild(tanim);
+
+        // Quantity
+        var cell2 = row.insertCell(2);
+        var adet = document.createElement("input");
+        adet.type = "number";
+        adet.placeholder = "Adet";
+        adet.onchange = calculateTotal;
+        cell2.appendChild(adet);
+
+        // Unit Price
+        var cell3 = row.insertCell(3);
+        var fiyat = document.createElement("input");
+        fiyat.type = "number";
+        fiyat.placeholder = "Fiyat";
+        fiyat.onchange = calculateTotal;
+        cell3.appendChild(fiyat);
+
+        // Total Price
+        var cell4 = row.insertCell(4);
+        var toplam = document.createElement("input");
+        toplam.type = "text";
+        toplam.placeholder = "Toplam";
+        toplam.readOnly = true;
+        cell4.appendChild(toplam);
+
+        // Stock Info
+        var cell5 = row.insertCell(5);
+        var stok = document.createElement("input");
+        stok.type = "text";
+        stok.placeholder = "STOK";
+        cell5.appendChild(stok);
+
+        // Delete Button
+        var cell6 = row.insertCell(6);
+        var delBtn = document.createElement("button");
+        delBtn.innerHTML = "Sil";
+        delBtn.onclick = function() {
+            table.deleteRow(row.rowIndex - 1);
+            updateRowNumbers();
+        };
+        cell6.appendChild(delBtn);
+    }
+
+    // Update Row Numbers
+    function updateRowNumbers() {
+        var table = document.getElementById('productTable').getElementsByTagName('tbody')[0];
+        for (var i = 0; i < table.rows.length; i++) {
+            table.rows[i].cells[0].innerHTML = i + 1;
+        }
+    }
+
+    // Calculate Total Price
+    function calculateTotal() {
+        var row = this.parentElement.parentElement;
+        var adet = row.cells[2].getElementsByTagName('input')[0].value;
+        var fiyat = row.cells[3].getElementsByTagName('input')[0].value;
+        var toplamCell = row.cells[4].getElementsByTagName('input')[0];
+        var toplam = adet * fiyat;
+        toplamCell.value = toplam.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    }
+
+    // Download PDF Function
+    function downloadPDF() {
+        // Collect Data
+        var alici = document.getElementById('alici').value;
+        var ilgili = document.getElementById('ilgili').value;
+        var gonderen = document.getElementById('gonderen').value;
+        var tarih = document.getElementById('tarih').value;
+
+        // Initialize jsPDF
+        var { jsPDF } = window.jspdf;
+        var doc = new jsPDF();
+
+        // Add Logo
+        var img = new Image();
+        img.src = 'logo.svg';
+        doc.addImage(img, 'SVG', 10, 10, 50, 20);
+
+        // Add QR Code
+        var qrCanvas = document.querySelector('#qrcode canvas');
+        var qrImgData = qrCanvas.toDataURL('image/png');
+        doc.addImage(qrImgData, 'PNG', 150, 10, 50, 50);
+
+        // Add Text Fields
+        doc.setFontSize(12);
+        doc.text(`Alıcı: ${alici}`, 10, 40);
+        doc.text(`İlgili: ${ilgili}`, 10, 50);
+        doc.text(`Gönderen: ${gonderen}`, 10, 60);
+        doc.text(`Tarih: ${tarih}`, 10, 70);
+
+        // Add Table Headers
+        var startY = 80;
+        doc.autoTable({
+            startY: startY,
+            head: [['#', 'Tanımı', 'Adet', 'Fiyat (TRY)', 'Toplam (TRY)', 'STOK']],
+            body: getTableData(),
+            styles: { cellPadding: 1, fontSize: 10 },
+            headStyles: { fillColor: [153, 194, 255] },
+        });
+
+        // Save PDF
+        doc.save('FiyatTeklifFormu.pdf');
+    }
+
+    // Get Table Data Function
+    function getTableData() {
+        var table = document.getElementById('productTable').getElementsByTagName('tbody')[0];
+        var data = [];
+        for (var i = 0; i < table.rows.length; i++) {
+            var row = table.rows[i];
+            var tanim = row.cells[1].getElementsByTagName('input')[0].value;
+            var adet = row.cells[2].getElementsByTagName('input')[0].value;
+            var fiyat = row.cells[3].getElementsByTagName('input')[0].value;
+            var toplam = row.cells[4].getElementsByTagName('input')[0].value;
+            var stok = row.cells[5].getElementsByTagName('input')[0].value;
+            data.push([i + 1, tanim, adet, fiyat, toplam, stok]);
+        }
+        return data;
+    }
+</script>
+
+</body>
+</html>
