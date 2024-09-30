@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiyat Teklifi Formu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, button {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+        table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Fiyat Teklifi Formu</h1>
+
+    <div class="form-section">
+        <label for="alici">Alıcı:</label>
+        <input type="text" id="alici" placeholder="Alıcı adını girin">
+
+        <label for="ilgili">İlgili:</label>
+        <input type="text" id="ilgili" placeholder="İlgili kişinin adını girin">
+
+        <label for="gonderen">Gönderen:</label>
+        <input type="text" id="gonderen" placeholder="Gönderen kişinin adını girin">
+
+        <label for="tarih">Tarih:</label>
+        <input type="text" id="tarih" value="" readonly>
+    </div>
+
+    <h2>Ürün Ekleme</h2>
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th>Ürün İsmi</th>
+                <th>Adet</th>
+                <th>Birim Fiyatı</th>
+                <th>Toplam Fiyat</th>
+                <th>Stok Durumu</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    
+    <button onclick="addProduct()">Ürün Ekle</button>
+
+    <br><br>
+
+    <button onclick="generatePDF()">PDF Olarak İndir</button>
+
+    <script>
+        // Automatically set today's date
+        document.getElementById('tarih').value = new Date().toLocaleDateString();
+
+        function addProduct() {
+            const table = document.getElementById('productTable').getElementsByTagName('tbody')[0];
+            const row = table.insertRow();
+            row.innerHTML = `
+                <td><input type="text" placeholder="Ürün ismi"></td>
+                <td><input type="number" placeholder="Adet" oninput="calculateTotal(this)"></td>
+                <td><input type="number" placeholder="Birim Fiyatı" oninput="calculateTotal(this)"></td>
+                <td><input type="number" placeholder="Toplam Fiyat" readonly></td>
+                <td><input type="text" placeholder="Stok Durumu"></td>
+            `;
+        }
+
+        function calculateTotal(element) {
+            const row = element.parentElement.parentElement;
+            const adet = row.cells[1].getElementsByTagName('input')[0].value;
+            const birimFiyat = row.cells[2].getElementsByTagName('input')[0].value;
+            const toplamFiyat = row.cells[3].getElementsByTagName('input')[0];
+            toplamFiyat.value = adet * birimFiyat || 0;
+        }
+
+        function generatePDF() {
+            const alici = document.getElementById('alici').value;
+            const ilgili = document.getElementById('ilgili').value;
+            const gonderen = document.getElementById('gonderen').value;
+            const tarih = document.getElementById('tarih').value;
+
+            const rows = document.querySelectorAll('#productTable tbody tr');
+            const products = [];
+            rows.forEach(row => {
+                const productName = row.cells[0].getElementsByTagName('input')[0].value;
+                const adet = row.cells[1].getElementsByTagName('input')[0].value;
+                const birimFiyat = row.cells[2].getElementsByTagName('input')[0].value;
+                const toplamFiyat = row.cells[3].getElementsByTagName('input')[0].value;
+                const stokDurumu = row.cells[4].getElementsByTagName('input')[0].value;
+                products.push({ productName, adet, birimFiyat, toplamFiyat, stokDurumu });
+            });
+
+            let content = `
+                <h1>Fiyat Teklifi</h1>
+                <p><strong>Alıcı:</strong> ${alici}</p>
+                <p><strong>İlgili:</strong> ${ilgili}</p>
+                <p><strong>Gönderen:</strong> ${gonderen}</p>
+                <p><strong>Tarih:</strong> ${tarih}</p>
+                <br>
+                <table border="1" cellpadding="10">
+                    <tr>
+                        <th>Ürün İsmi</th>
+                        <th>Adet</th>
+                        <th>Birim Fiyatı</th>
+                        <th>Toplam Fiyat</th>
+                        <th>Stok Durumu</th>
+                    </tr>`;
+
+            products.forEach(product => {
+                content += `
+                    <tr>
+                        <td>${product.productName}</td>
+                        <td>${product.adet}</td>
+                        <td>${product.birimFiyat}</td>
+                        <td>${product.toplamFiyat}</td>
+                        <td>${product.stokDurumu}</td>
+                    </tr>`;
+            });
+
+            content += '</table>';
+
+            const win = window.open('', '_blank');
+            win.document.write(content);
+            win.document.close();
+            win.print();
+        }
+    </script>
+</body>
+</html>
