@@ -150,15 +150,7 @@
         .sender-buttons button:hover {
             background-color: #5d8bb0;
         }
-        /* Paylaş butonu stilleri */
-        .share-btn {
-            background-color: #4caf50; /* Yeşil */
-            margin-left: 10px;
-        }
-        .share-btn:hover {
-            background-color: #3e8e41;
-        }
-        /* İşlem butonları konteyneri */
+        /* İşlem butonları */
         .action-buttons {
             display: flex;
             align-items: center;
@@ -341,7 +333,7 @@
         }
 
         // Döviz Kuru API Anahtarı
-        const API_KEY = 'e7bbdab4e92cef5b5dfd1682';
+        const API_KEY = 'YOUR_API_KEY_HERE';
 
         // Döviz kurları
         let exchangeRates = {};
@@ -535,10 +527,6 @@
                                 <th style="color: #0563C1; font-weight: bold; width: 100px;">${lastColumnHeader}</th>
                             </tr>
                         </thead>
-                    </table>
-                    <!-- Çizgi -->
-                    <hr style="border: none; border-top: 2px solid #0563C1; margin: 5px 40px;">
-                    <table class="pdf-table" style="width:100%; text-align: left; font-size: 12px; table-layout: fixed; padding: 0 40px;">
                         <tbody>
             `;
 
@@ -609,11 +597,16 @@
 
             // Resimlerin yüklendiğinden emin ol
             function imagesLoaded() {
-                return Promise.all(Array.from(element.querySelectorAll('img'))
-                    .filter(img => !img.complete)
-                    .map(img => new Promise(resolve => {
-                        img.onload = img.onerror = resolve;
-                    })));
+                const images = pdfElement.querySelectorAll('img');
+                const promises = [];
+                images.forEach(img => {
+                    if (!img.complete) {
+                        promises.push(new Promise(resolve => {
+                            img.onload = img.onerror = resolve;
+                        }));
+                    }
+                });
+                return Promise.all(promises);
             }
 
             const pdfElement = document.createElement('div');
