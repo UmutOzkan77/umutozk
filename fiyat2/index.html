@@ -83,10 +83,10 @@
         }
         .add-product-btn {
             margin-top: 10px;
-            background-color: #78a9d4; /* Daha soluk mavi */
+            background-color: #00AEEF; /* Yeni renk */
         }
         .add-product-btn:hover {
-            background-color: #5d8bb0;
+            background-color: #0086bb;
         }
         /* Yeni stiller */
         .currency-input {
@@ -145,10 +145,10 @@
             flex: 1;
             padding: 10px;
             font-size: 14px;
-            background-color: #78a9d4; /* Daha soluk mavi */
+            background-color: #00AEEF; /* Yeni renk */
         }
         .sender-buttons button:hover {
-            background-color: #5d8bb0;
+            background-color: #0086bb;
         }
         /* İşlem butonları */
         .action-buttons {
@@ -307,7 +307,9 @@
             <tbody>
             </tbody>
         </table>
-        
+        <!-- Çizgi -->
+        <hr style="border: none; border-top: 2px solid #0563C1; margin: 5px 0;">
+
         <button class="add-product-btn" onclick="addProduct()">Ürün Ekle</button>
 
         <br><br>
@@ -320,7 +322,7 @@
         </div>
 
         <!-- Versiyon etiketi -->
-        <div class="version-label">Version 1.7</div>
+        <div class="version-label">Version 1.8</div>
     </div>
 
     <script>
@@ -333,7 +335,7 @@
         }
 
         // Döviz Kuru API Anahtarı
-        const API_KEY = 'YOUR_API_KEY_HERE';
+        const API_KEY = 'e7bbdab4e92cef5b5dfd1682';
 
         // Döviz kurları
         let exchangeRates = {};
@@ -527,6 +529,10 @@
                                 <th style="color: #0563C1; font-weight: bold; width: 100px;">${lastColumnHeader}</th>
                             </tr>
                         </thead>
+                    </table>
+                    <!-- Çizgi -->
+                    <hr style="border: none; border-top: 2px solid #0563C1; margin: 5px 40px;">
+                    <table class="pdf-table" style="width:100%; text-align: left; font-size: 12px; table-layout: fixed; padding: 0 40px;">
                         <tbody>
             `;
 
@@ -623,7 +629,7 @@
                 document.body.removeChild(pdfElement);
             } else if (action === 'download' || action === 'share') {
                 const opt = {
-                    margin:       [0, 0, 0, 0], // Kenar boşlukları
+                    margin:       [30, 20, 20, 20], // Kenar boşlukları: üst, sol, alt, sağ
                     filename:     'fiyat_teklifi.pdf',
                     image:        { type: 'jpeg', quality: 1 },
                     html2canvas:  { scale: 2, useCORS: true },
