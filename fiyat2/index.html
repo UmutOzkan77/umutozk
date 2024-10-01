@@ -66,6 +66,7 @@
             padding: 10px;
             text-align: left;
             word-wrap: break-word;
+            vertical-align: top; /* Ensure top alignment */
         }
         th {
             background-color: transparent;
@@ -151,6 +152,30 @@
             .version-label {
                 font-size: 10px;
             }
+            /* Mobile-specific styles for the product table */
+            #productTable thead {
+                display: none; /* Hide table headers on mobile */
+            }
+            #productTable tbody tr {
+                display: block;
+                margin-bottom: 20px;
+                border-bottom: 1px solid #ccc;
+            }
+            #productTable tbody tr td {
+                display: block;
+                width: 100%;
+            }
+            #productTable tbody tr td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+                margin-bottom: 5px;
+                color: #0563C1;
+            }
+            .currency-input {
+                flex-direction: row;
+                align-items: center;
+            }
         }
     </style>
 </head>
@@ -216,7 +241,7 @@
         <button onclick="generatePDF()">PDF Olarak İndir</button>
 
         <!-- Version label -->
-        <div class="version-label">Version 1.2</div>
+        <div class="version-label">Version 1.3</div>
     </div>
 
     <script>
@@ -271,13 +296,16 @@
             // Set index
             indexCell.innerText = table.rows.length;
             indexCell.classList.add('index-column');
+            indexCell.setAttribute('data-label', '#');
 
             // Product name
             productCell.innerHTML = `<input type="text" placeholder="Ürün ismi" required>`;
+            productCell.setAttribute('data-label', 'Ürün İsmi');
 
             // Quantity
             adetCell.classList.add('adet-column');
             adetCell.innerHTML = `<input type="number" placeholder="Adet" oninput="calculateTotal(this)" required>`;
+            adetCell.setAttribute('data-label', 'Adet');
 
             // Unit Price
             birimFiyatCell.classList.add('birim-fiyat-column');
@@ -291,14 +319,17 @@
                     </select>
                 </div>
             `;
+            birimFiyatCell.setAttribute('data-label', 'Birim Fiyatı');
 
             // Total Price
             toplamFiyatCell.classList.add('toplam-fiyat-column');
             toplamFiyatCell.innerHTML = `<input type="text" placeholder="Toplam Fiyat" readonly>`;
+            toplamFiyatCell.setAttribute('data-label', 'Toplam Fiyat');
 
             // Last Column
             lastColumnCell.classList.add('last-column');
             lastColumnCell.innerHTML = `<input type="text" placeholder="${lastColumnHeader}">`;
+            lastColumnCell.setAttribute('data-label', lastColumnHeader);
         }
 
         function calculateTotal(element) {
