@@ -36,6 +36,7 @@
             padding: 10px;
             margin-bottom: 10px;
             width: 100%;
+            max-width: 100%;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
@@ -60,7 +61,7 @@
         }
         th, td {
             padding: 10px;
-            text-align: center;
+            text-align: left;
             word-wrap: break-word;
         }
         th {
@@ -78,6 +79,7 @@
         /* New styles */
         .currency-input {
             display: flex;
+            width: 100%;
         }
         .currency-input input {
             flex: 1;
@@ -89,9 +91,25 @@
         .header-selector {
             margin-bottom: 20px;
         }
-        /* Adjusted the index column width */
+        /* Adjusted column widths */
         .index-column {
             width: 30px;
+        }
+        .adet-column {
+            width: 60px;
+        }
+        .birim-fiyat-column {
+            width: 120px;
+        }
+        .toplam-fiyat-column {
+            width: 120px;
+        }
+        .last-column {
+            width: 100px;
+        }
+        /* Adjusted input widths */
+        .birim-fiyat-input {
+            width: calc(100% - 70px);
         }
     </style>
 </head>
@@ -140,10 +158,10 @@
                 <tr>
                     <th class="index-column">#</th>
                     <th>Ürün İsmi</th>
-                    <th style="width: 60px;">Adet</th>
-                    <th style="width: 90px;">Birim Fiyatı</th>
-                    <th style="width: 100px;">Toplam Fiyat</th>
-                    <th id="lastColumnHeader">Stok Durumu</th>
+                    <th class="adet-column">Adet</th>
+                    <th class="birim-fiyat-column">Birim Fiyatı</th>
+                    <th class="toplam-fiyat-column">Toplam Fiyat</th>
+                    <th id="lastColumnHeader" class="last-column">Stok Durumu</th>
                 </tr>
             </thead>
             <tbody>
@@ -158,16 +176,16 @@
     </div>
 
     <script>
-        // Tarihi otomatik ayarla
+        // Automatically set today's date
         document.getElementById('tarih').value = new Date().toLocaleDateString();
 
-        // API Key for ExchangeRate-API (You need to replace 'YOUR_API_KEY' with your actual API key)
+        // API Key for ExchangeRate-API (Replaced with your actual API key)
         const API_KEY = 'e7bbdab4e92cef5b5dfd1682';
 
-        // Döviz kurları
+        // Exchange rates
         let exchangeRates = {};
 
-        // Döviz kurlarını API'den al
+        // Fetch exchange rates from API
         async function fetchExchangeRates(baseCurrency) {
             try {
                 const response = await fetch(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${baseCurrency}`);
@@ -182,11 +200,11 @@
             }
         }
 
-        // Son kolon başlığını güncelle
+        // Update last column header
         function updateColumnHeader() {
             const headerText = document.getElementById('columnHeader').value;
             document.getElementById('lastColumnHeader').innerText = headerText;
-            // Mevcut ürün satırlarındaki placeholder'ları güncelle
+            // Update placeholders in existing product rows
             const rows = document.querySelectorAll('#productTable tbody tr');
             rows.forEach(row => {
                 row.cells[5].getElementsByTagName('input')[0].placeholder = headerText;
@@ -203,31 +221,33 @@
 
             row.innerHTML += `
                 <td><input type="text" placeholder="Ürün ismi" required></td>
-                <td><input type="number" placeholder="Adet" oninput="calculateTotal(this)" required></td>
-                <td>
+                <td class="adet-column"><input type="number" placeholder="Adet" oninput="calculateTotal(this)" required></td>
+                <td class="birim-fiyat-column">
                     <div class="currency-input">
-                        <input type="number" placeholder="Birim Fiyatı" oninput="calculateTotal(this)" required>
-                        <select>
+                        <input type="number" placeholder="Birim Fiyatı" oninput="calculateTotal(this)" required class="birim-fiyat-input">
+                        <select onchange="calculateTotal(this)">
                             <option value="TRY">₺</option>
                             <option value="EUR">€</option>
                             <option value="USD">$</option>
                         </select>
                     </div>
                 </td>
-                <td><input type="text" placeholder="Toplam Fiyat" readonly></td>
-                <td><input type="text" placeholder="${lastColumnHeader}"></td>
+                <td class="toplam-fiyat-column"><input type="text" placeholder="Toplam Fiyat" readonly></td>
+                <td class="last-column"><input type="text" placeholder="${lastColumnHeader}"></td>
             `;
         }
 
         function calculateTotal(element) {
             const row = element.closest('tr');
             const adet = parseFloat(row.cells[2].getElementsByTagName('input')[0].value) || 0;
-            const birimFiyat = parseFloat(row.cells[3].getElementsByTagName('input')[0].value) || 0;
-            const currencySymbol = row.cells[3].getElementsByTagName('select')[0].value;
-            const currencySign = row.cells[3].getElementsByTagName('select')[0].selectedOptions[0].text;
-            const toplamFiyat = row.cells[4].getElementsByTagName('input')[0];
+            const birimFiyatInput = row.cells[3].getElementsByTagName('input')[0];
+            const birimFiyat = parseFloat(birimFiyatInput.value) || 0;
+            const currencySelect = row.cells[3].getElementsByTagName('select')[0];
+            const currencySymbol = currencySelect.value;
+            const currencySign = currencySelect.selectedOptions[0].text;
+            const toplamFiyatInput = row.cells[4].getElementsByTagName('input')[0];
             const total = adet * birimFiyat;
-            toplamFiyat.value = currencySign + ' ' + total.toFixed(2);
+            toplamFiyatInput.value = currencySign + ' ' + total.toFixed(2);
         }
 
         async function generatePDF() {
@@ -239,7 +259,7 @@
             const genelToplamCurrency = document.getElementById('genelToplamCurrency').value;
             const genelToplamCurrencySign = document.getElementById('genelToplamCurrency').selectedOptions[0].text;
 
-            // Döviz kurlarını al
+            // Fetch exchange rates
             await fetchExchangeRates(genelToplamCurrency);
 
             const rows = document.querySelectorAll('#productTable tbody tr');
@@ -250,16 +270,19 @@
             rows.forEach(row => {
                 const productName = row.cells[1].getElementsByTagName('input')[0].value;
                 const adet = parseFloat(row.cells[2].getElementsByTagName('input')[0].value) || 0;
-                const birimFiyat = parseFloat(row.cells[3].getElementsByTagName('input')[0].value) || 0;
-                const currency = row.cells[3].getElementsByTagName('select')[0].value;
-                const currencySign = row.cells[3].getElementsByTagName('select')[0].selectedOptions[0].text;
-                const toplamFiyatText = row.cells[4].getElementsByTagName('input')[0].value;
-                const toplamFiyatValue = adet * birimFiyat;
+                const birimFiyatInput = row.cells[3].getElementsByTagName('input')[0];
+                const birimFiyat = parseFloat(birimFiyatInput.value) || 0;
+                const currencySelect = row.cells[3].getElementsByTagName('select')[0];
+                const currencySymbol = currencySelect.value;
+                const currencySign = currencySelect.selectedOptions[0].text;
+                const toplamFiyatInput = row.cells[4].getElementsByTagName('input')[0];
+                const total = adet * birimFiyat;
+                const toplamFiyatText = currencySign + ' ' + total.toFixed(2);
                 const lastColumnValue = row.cells[5].getElementsByTagName('input')[0].value;
 
-                // Döviz kuru ile toplam fiyatı genel toplam para birimine çevir
-                const exchangeRate = exchangeRates[currency];
-                const convertedTotal = toplamFiyatValue / exchangeRate;
+                // Convert total price to the general total currency
+                const exchangeRate = exchangeRates[currencySymbol];
+                const convertedTotal = total / exchangeRate;
 
                 genelToplam += convertedTotal;
 
@@ -277,15 +300,15 @@
 
             let content = `
                 <div class="pdf-header" style="margin-bottom: 20px; padding: 0 20px;">
-                    <img src="logo.svg" class="pdf-logo">
+                    <img src="logo.svg" class="pdf-logo" style="width: 150px;">
                     <div class="pdf-qr">
                         <img src="https://api.qrserver.com/v1/create-qr-code/?data=http://www.agentedarik.com&size=80x80&color=06AEEF&bgcolor=FFFFFF" alt="QR Code">
                         <div style="color: #0563C1; font-size: 10px;">www.agentedarik.com</div>
                     </div>
                 </div>
-                <!-- Boşluk ekledim -->
+                <!-- Added space -->
                 <div style="height: 20px;"></div>
-                <!-- Bilgileri iki sütun halinde düzenledim -->
+                <!-- Organized information in two columns -->
                 <div style="display: flex; justify-content: space-between; font-size: 12px; color: #0563C1; padding: 0 20px;">
                     <div>
                         <p><strong>Alıcı:</strong> ${alici}</p>
@@ -296,42 +319,42 @@
                         <p><strong>Tarih:</strong> ${tarih}</p>
                     </div>
                 </div>
-                <!-- Boşluk ekledim -->
+                <!-- Added space -->
                 <div style="height: 20px;"></div>
-                <!-- Yatay çizgiyi başlıkların altına yerleştirdim -->
+                <!-- Placed horizontal line below headers -->
                 <table class="pdf-table" style="width:100%; text-align: left; font-size: 12px; table-layout: fixed; padding: 0 20px;">
                     <thead>
                         <tr>
                             <th style="color: #0563C1; font-weight: bold; width: 30px;">#</th>
                             <th style="color: #0563C1; font-weight: bold;">Tanımı</th>
-                            <th style="color: #0563C1; font-weight: bold; width: 50px;">Adet</th>
-                            <th style="color: #0563C1; font-weight: bold; width: 80px;">Birim Fiyatı</th>
-                            <th style="color: #0563C1; font-weight: bold; width: 90px;">Toplam Fiyat</th>
-                            <th style="color: #0563C1; font-weight: bold;">${lastColumnHeader}</th>
+                            <th style="color: #0563C1; font-weight: bold; width: 60px;">Adet</th>
+                            <th style="color: #0563C1; font-weight: bold; width: 100px;">Birim Fiyatı</th>
+                            <th style="color: #0563C1; font-weight: bold; width: 100px;">Toplam Fiyat</th>
+                            <th style="color: #0563C1; font-weight: bold; width: 100px;">${lastColumnHeader}</th>
                         </tr>
                     </thead>
                 </table>
-                <!-- Başlıkların altına yatay çizgi -->
+                <!-- Horizontal line below headers -->
                 <hr style="border: none; border-top: 2px solid #0563C1; margin: 5px 20px;">
                 <table class="pdf-table" style="width:100%; text-align: left; font-size: 12px; table-layout: fixed; padding: 0 20px;">
                     <tbody>`;
-    
+        
             products.forEach(product => {
                 content += `
                     <tr>
                         <td style="width: 30px;">${product.index}</td>
                         <td>${product.productName}</td>
-                        <td style="width: 50px;">${product.adet}</td>
-                        <td style="width: 80px;">${product.currencySign} ${parseFloat(product.birimFiyat).toFixed(2)}</td>
-                        <td style="width: 90px;">${product.toplamFiyatText}</td>
-                        <td>${product.lastColumnValue}</td>
+                        <td style="width: 60px;">${product.adet}</td>
+                        <td style="width: 100px;">${product.currencySign} ${parseFloat(product.birimFiyat).toFixed(2)}</td>
+                        <td style="width: 100px;">${product.toplamFiyatText}</td>
+                        <td style="width: 100px;">${product.lastColumnValue}</td>
                     </tr>`;
             });
 
             content += `</tbody></table>
-                <!-- Boşluk ekledim -->
+                <!-- Added space -->
                 <div style="height: 20px;"></div>
-                <!-- Genel Toplam Bölümü -->
+                <!-- Genel Toplam Section -->
                 <div style="display: flex; justify-content: flex-end; margin-top: 20px; padding: 0 20px;">
                     <div style="background-color: #0563C1; color: white; padding: 5px; width: 150px; text-align: center; font-size: 14px;">
                         <strong>Genel Toplam</strong><br>
@@ -345,7 +368,7 @@
                         margin: 20mm;
                     }
                     body { font-family: Arial, sans-serif; font-size: 12px; margin: 0; }
-                    .pdf-logo { float: left; width: 80px; }
+                    .pdf-logo { float: left; width: 150px; }
                     .pdf-qr { float: right; text-align: center; }
                     .pdf-qr img { width: 80px; }
                     .pdf-header::after { content: ""; display: block; clear: both; }
