@@ -106,7 +106,7 @@
             width: 60px;
         }
         .birim-fiyat-column {
-            width: 130px;
+            width: 160px; /* Increased width */
         }
         .toplam-fiyat-column {
             width: 130px;
@@ -216,7 +216,7 @@
         <button onclick="generatePDF()">PDF Olarak İndir</button>
 
         <!-- Version label -->
-        <div class="version-label">Version 1.1</div>
+        <div class="version-label">Version 1.2</div>
     </div>
 
     <script>
@@ -423,7 +423,7 @@
                 <div style="height: 20px;"></div>
                 <!-- Genel Toplam Section -->
                 <div style="display: flex; justify-content: flex-end; margin-top: 20px; padding: 0 40px;">
-                    <div style="background-color: #0563C1; color: white; padding: 5px; width: 150px; text-align: center; font-size: 14px;">
+                    <div class="genel-toplam" style="background-color: #0563C1; color: white; padding: 5px; width: 150px; text-align: center; font-size: 14px;">
                         <strong>Genel Toplam</strong><br>
                         <span>${genelToplamCurrencySign} ${genelToplam.toFixed(2)}</span>
                     </div>
@@ -455,6 +455,14 @@
                     /* Word wrapping */
                     .pdf-table td, .pdf-table th {
                         word-wrap: break-word;
+                    }
+                    /* Ensure background colors are printed */
+                    @media print {
+                        * {
+                            -webkit-print-color-adjust: exact;
+                            color-adjust: exact;
+                            print-color-adjust: exact;
+                        }
                     }
                 </style>
             `;
