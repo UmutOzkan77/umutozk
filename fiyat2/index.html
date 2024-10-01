@@ -9,6 +9,7 @@
             font-family: Arial, sans-serif;
             padding: 20px;
             background-color: #f0f8ff; /* AliceBlue */
+            font-size: 14px; /* Metinleri küçülttüm */
         }
         .container {
             background-color: #fff;
@@ -53,6 +54,7 @@
             width: 100%;
             margin-top: 10px;
             border-collapse: collapse;
+            table-layout: fixed; /* Uzun metinler için tabloyu ayarladım */
         }
         table, th, td {
             /* Removed borders */
@@ -61,6 +63,7 @@
         th, td {
             padding: 10px;
             text-align: center;
+            word-wrap: break-word; /* Uzun metinlerin taşmasını engelledim */
         }
         th {
             /* Removed background color and updated styles */
@@ -214,19 +217,23 @@
                 <div class="pdf-header">
                     <img src="logo.svg" class="pdf-logo">
                     <div class="pdf-qr">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?data=http://www.agentedarik.com&size=100x100&color=06AEEF&bgcolor=FFFFFF" alt="QR Code">
-                        <div style="color: #0563C1;">www.agentedarik.com</div>
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?data=http://www.agentedarik.com&size=80x80&color=06AEEF&bgcolor=FFFFFF" alt="QR Code">
+                        <div style="color: #0563C1; font-size: 10px;">www.agentedarik.com</div>
                     </div>
                 </div>
-                <!-- Removed 'Fiyat Teklifi' Heading -->
-                <p><strong>Alıcı:</strong> ${alici}</p>
-                <p><strong>İlgili:</strong> ${ilgili}</p>
-                <p><strong>Gönderen:</strong> ${gonderen}</p>
-                <p><strong>Tarih:</strong> ${tarih}</p>
-                <br>
-                <!-- Horizontal Line Separator -->
-                <hr style="border: none; border-top: 2px solid #0563C1;">
-                <table class="pdf-table" style="width:100%; text-align: left;">
+                <!-- Bilgileri iki sütun halinde düzenledim -->
+                <div style="display: flex; justify-content: space-between; font-size: 12px; color: #0563C1;">
+                    <div>
+                        <p><strong>Alıcı:</strong> ${alici}</p>
+                        <p><strong>İlgili:</strong> ${ilgili}</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p><strong>Gönderen:</strong> ${gonderen}</p>
+                        <p><strong>Tarih:</strong> ${tarih}</p>
+                    </div>
+                </div>
+                <!-- Yatay çizgiyi başlıkların altına yerleştirdim -->
+                <table class="pdf-table" style="width:100%; text-align: left; font-size: 12px; table-layout: fixed;">
                     <thead>
                         <tr>
                             <th style="color: #0563C1; font-weight: bold;">#</th>
@@ -237,8 +244,14 @@
                             <th style="color: #0563C1; font-weight: bold;">${lastColumnHeader}</th>
                         </tr>
                     </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <!-- Başlıkların altına yatay çizgi -->
+                <hr style="border: none; border-top: 2px solid #0563C1; margin: 5px 0;">
+                <table class="pdf-table" style="width:100%; text-align: left; font-size: 12px; table-layout: fixed;">
                     <tbody>`;
-
+    
             products.forEach(product => {
                 content += `
                     <tr>
@@ -258,26 +271,23 @@
                         size: A4;
                         margin: 20mm;
                     }
-                    body { font-family: Arial, sans-serif; }
-                    h1 { color: #333; }
-                    .pdf-table th, .pdf-table td {
-                        padding: 8px 5px;
-                    }
-                    .pdf-table tr:nth-child(even) { background-color: #f9f9f9; }
-                    .pdf-table tr:hover { background-color: #f1f1f1; }
-                    .pdf-logo { float: left; width: 100px; }
+                    body { font-family: Arial, sans-serif; font-size: 12px; }
+                    .pdf-logo { float: left; width: 80px; }
                     .pdf-qr { float: right; text-align: center; }
-                    .pdf-qr img { width: 100px; }
+                    .pdf-qr img { width: 80px; }
                     .pdf-header::after { content: ""; display: block; clear: both; }
                     /* Removed borders */
                     .pdf-table, .pdf-table th, .pdf-table td {
                         border: none;
                     }
-                    /* Horizontal line separator */
+                    /* Yatay çizgi */
                     hr {
-                        margin: 20px 0;
                         border: none;
                         border-top: 2px solid #0563C1;
+                    }
+                    /* Uzun metinler için ayarlamalar */
+                    .pdf-table td, .pdf-table th {
+                        word-wrap: break-word;
                     }
                 </style>
             `;
