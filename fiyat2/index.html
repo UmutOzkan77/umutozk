@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Fiyat Teklifi Formu</title>
+    <title> AGEN Fiyat Teklifi Formu</title>
     <!-- Meta tag for mobile responsiveness -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
@@ -648,14 +648,14 @@
                             try {
                                 await navigator.share({
                                     files: [new File([pdfBlob], opt.filename, { type: 'application/pdf' })],
-                                    title: 'Fiyat Teklifi',
-                                    text: 'Fiyat teklifine göz atın.'
+                                    title: 'AGEN Fiyat Teklifi',
+                                    text: 'Merhaba, talep etmiş olduğunuz ürünlerin fiyat teklifi ektedir. Kolay gelsin, iyi çalışmalar dilerim.'
                                 });
                             } catch (error) {
                                 alert('Paylaşma işlemi iptal edildi veya bir hata oluştu.');
                             }
                         } else {
-                            alert('Paylaşma özelliği bu tarayıcıda desteklenmiyor.');
+                            alert('Paylaşma özelliği bu tarayıcıda desteklenmiyor. Lütfen daha güncel bir tarayıcı kullanınız.');
                         }
                     });
                 }
