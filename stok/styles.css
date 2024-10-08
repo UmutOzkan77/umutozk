@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff; /* Açık mavi arka plan */
+    margin: 0;
+    padding: 0;
+}
+
+#login-container, #app-container {
+    width: 300px;
+    margin: 100px auto;
+    text-align: center;
+}
+
+input[type="email"], input[type="password"], input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007BFF; /* Mavi buton */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3; /* Daha koyu mavi */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #007BFF;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+}
