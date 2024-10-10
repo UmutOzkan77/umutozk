@@ -2,332 +2,405 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title> AGEN Fiyat Teklifi Formu</title>
-    <!-- Meta tag for mobile responsiveness -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGEN Fiyat Teklifi Formu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <!-- Favicon -->
     <link rel="icon" href="icon.png" type="image/png">
     <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="icon.png">
     <!-- Include html2pdf.js library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <!-- Include Font Awesome for icons -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
-        /* Genel stiller */
+        :root {
+            --primary-color: #0563C1;
+            --secondary-color: #00AEEF;
+            --background-color: #f0f8ff;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+            --button-color: #00AEEF;
+            --delete-button-color: #ff6b6b;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            padding: 40px;
-            background-color: #f0f8ff; /* AliceBlue */
-            font-size: 14px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
             margin: 0;
+            padding: 20px;
+            line-height: 1.6;
         }
+
         .container {
-            background-color: #fff;
-            padding: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 99, 193, 0.1);
-            max-width: 800px;
-            margin: auto;
-            position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
-        h1, h2 {
+
+        h1 {
+            color: var(--primary-color);
             text-align: center;
-            color: #0563C1;
+            margin-bottom: 30px;
         }
-        .form-section {
+
+        .form-group {
             margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
+            color: var(--primary-color);
             font-weight: bold;
-            color: #0563C1;
         }
-        input, select, button {
-            padding: 12px;
-            margin-bottom: 10px;
-            width: 100%;
-            max-width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        button {
-            background-color: #0563C1;
-            color: white;
-            cursor: pointer;
-            border: none;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #004a99;
-        }
-        table {
-            width: 100%;
-            margin-top: 10px;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            word-wrap: break-word;
-            vertical-align: top;
-        }
-        th {
-            background-color: transparent;
-            font-weight: bold;
-            color: #0563C1;
-        }
-        .add-product-btn {
-            margin-top: 10px;
-            background-color: #00AEEF; /* Yeni renk */
-        }
-        .add-product-btn:hover {
-            background-color: #0086bb;
-        }
-        /* Yeni stiller */
-        .currency-input {
-            display: flex;
-            width: 100%;
-        }
-        .currency-input input {
-            flex: 1;
-        }
-        .currency-input select {
-            width: 70px;
-            margin-left: 5px;
-            font-size: 16px;
-        }
-        .header-selector {
-            margin-bottom: 20px;
-        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
         select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
             font-size: 16px;
+            box-sizing: border-box;
         }
-        /* Kolon genişlikleri */
-        .index-column {
-            width: 30px;
-        }
-        .adet-column {
-            width: 60px;
-        }
-        .birim-fiyat-column {
-            width: 160px;
-        }
-        .toplam-fiyat-column {
-            width: 130px;
-        }
-        .last-column {
-            width: 100px;
-        }
-        /* Input genişlikleri */
-        .birim-fiyat-input {
-            width: calc(100% - 80px);
-        }
-        /* Versiyon etiketi */
-        .version-label {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            font-size: 12px;
-            color: #0563C1;
-        }
-        /* Hızlı gönderen butonları */
-        .sender-buttons {
+
+        .quick-fill-buttons {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
         }
-        .sender-buttons button {
+
+        .quick-fill-button {
             flex: 1;
             padding: 10px;
-            font-size: 14px;
-            background-color: #00AEEF; /* Yeni renk */
+            background-color: var(--button-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-        .sender-buttons button:hover {
+
+        .quick-fill-button:hover {
             background-color: #0086bb;
         }
-        /* İşlem butonları */
-        .action-buttons {
+
+        /* Mobil için ürün bölümü */
+        .product-section {
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .product-header {
             display: flex;
             align-items: center;
-            margin-top: 10px;
-            gap: 10px; /* Butonlar arasında boşluk */
+            margin-bottom: 15px;
         }
-        .action-buttons button {
-            flex: 1;
-            padding: 10px;
-            font-size: 16px;
+
+        .product-number {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50%;
+            margin-right: 10px;
         }
-        /* İşlem butonlarının renkleri */
-        .print-btn {
-            background-color: #0563C1;
+
+        .reorder-buttons {
+            margin-left: auto;
+            display: flex;
+            gap: 5px;
         }
-        .print-btn:hover {
+
+        .reorder-buttons button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .reorder-buttons button:hover {
             background-color: #004a99;
         }
-        .download-btn {
-            background-color: #ff9800; /* Turuncu */
+
+        .currency-input {
+            display: flex;
+            align-items: center;
         }
-        .download-btn:hover {
-            background-color: #e68900;
+
+        .currency-input input {
+            flex-grow: 1;
+            margin-right: 5px;
         }
-        .share-btn {
-            background-color: #4caf50; /* Yeşil */
+
+        .currency-input select {
+            width: auto;
         }
-        .share-btn:hover {
-            background-color: #3e8e41;
+
+        .action-button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: var(--button-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-        /* Responsive stiller */
-        @media (max-width: 600px) {
-            body {
-                padding: 20px;
-            }
-            .container {
-                padding: 20px;
-            }
-            h1, h2 {
-                font-size: 24px;
-            }
-            input, select, button {
-                padding: 10px;
-                font-size: 14px;
-            }
-            .currency-input select {
-                width: 60px;
-                font-size: 14px;
-            }
-            .birim-fiyat-input {
-                width: calc(100% - 70px);
-            }
-            .version-label {
-                font-size: 10px;
-            }
-            /* Mobil için tablo düzeni */
-            #productTable thead {
+
+        .action-button:hover {
+            background-color: #0086bb;
+        }
+
+        .delete-button {
+            background-color: var(--delete-button-color);
+        }
+
+        .delete-button:hover {
+            background-color: #ff4757;
+        }
+
+        .pdf-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .pdf-button {
+            padding: 12px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .pdf-print {
+            background-color: var(--primary-color);
+        }
+
+        .pdf-download {
+            background-color: #ffa502;
+        }
+
+        .pdf-share {
+            background-color: #4caf50;
+        }
+
+        /* Yeni Sütun Ekleme Stilleri */
+        .extra-columns {
+            margin-bottom: 20px;
+        }
+
+        .extra-columns .extra-column-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .extra-columns button {
+            background-color: var(--button-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .extra-columns button:hover {
+            background-color: #0086bb;
+        }
+
+        .extra-column {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .extra-column input {
+            flex-grow: 1;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .extra-column .delete-extra-column {
+            background-color: var(--delete-button-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .extra-column .delete-extra-column:hover {
+            background-color: #ff4757;
+        }
+
+        /* Masaüstü için tablo stili */
+        @media (min-width: 601px) {
+            /* Ürün bölümü gizle */
+            .product-section {
                 display: none;
             }
-            #productTable tbody tr {
-                display: block;
+
+            /* Tablo stili */
+            #productTable {
+                width: 100%;
+                border-collapse: collapse;
                 margin-bottom: 20px;
-                border-bottom: 1px solid #ccc;
             }
-            #productTable tbody tr td {
-                display: block;
-                width: 100%;
+
+            #productTable th, #productTable td {
+                border: 1px solid var(--border-color);
+                padding: 10px;
+                text-align: left;
+                font-size: 14px;
             }
-            #productTable tbody tr td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                display: block;
-                margin-bottom: 5px;
-                color: #0563C1;
+
+            #productTable th {
+                background-color: var(--primary-color);
+                color: white;
             }
-            .currency-input {
-                flex-direction: row;
-                align-items: center;
+
+            .action-button {
+                width: auto;
+                margin-top: 0;
             }
-            /* Mobilde buton düzeni */
-            .action-buttons {
-                flex-direction: column;
+
+            .actions-cell button {
+                margin-right: 5px;
             }
-            .action-buttons button {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-            .share-btn {
-                margin-left: 0;
+
+            .actions-cell .delete-button {
+                margin-top: 5px;
             }
         }
+
+        /* Mobil için tablo gizle */
+        @media (max-width: 600px) {
+            #productTable {
+                display: none;
+            }
+        }
+
     </style>
 </head>
 <body>
-
     <div class="container">
         <h1>AGEN Fiyat Teklifi Formu</h1>
 
-        <div class="form-section">
+        <div class="form-group">
             <label for="alici">Alıcı:</label>
             <input type="text" id="alici" placeholder="Alıcı adını girin" required>
+        </div>
 
+        <div class="form-group">
             <label for="ilgili">İlgili:</label>
             <input type="text" id="ilgili" placeholder="İlgili kişinin adını girin" required>
+        </div>
 
+        <div class="form-group">
             <label for="gonderen">Gönderen:</label>
             <input type="text" id="gonderen" placeholder="Gönderen kişinin adını girin" required>
+        </div>
 
-            <!-- Hızlı gönderen butonları -->
-            <div class="sender-buttons">
-                <button type="button" onclick="fillSender('Mustafa GÜR')">Mustafa GÜR</button>
-                <button type="button" onclick="fillSender('Uğurcan TAMAŞ')">Uğurcan TAMAŞ</button>
-            </div>
+        <div class="quick-fill-buttons">
+            <button class="quick-fill-button" onclick="fillSender('Mustafa GÜR')">Mustafa GÜR</button>
+            <button class="quick-fill-button" onclick="fillSender('Uğurcan TAMAŞ')">Uğurcan TAMAŞ</button>
+        </div>
 
+        <div class="form-group">
             <label for="tarih">Tarih:</label>
-            <input type="text" id="tarih" value="" readonly>
+            <input type="date" id="tarih" required>
+        </div>
 
+        <div class="form-group">
             <label for="teklifNo">Teklif No:</label>
             <input type="text" id="teklifNo" placeholder="Teklif numarasını girin" required>
+        </div>
 
-            <!-- Son kolon başlığı seçimi -->
-            <div class="header-selector">
-                <label for="columnHeader">Son Kolon Başlığı:</label>
-                <select id="columnHeader" onchange="updateColumnHeader()">
-                    <option value="Stok Durumu">Stok</option>
-                    <option value="Termin">Termin</option>
-                    <option value="Marka">Marka</option>
-                </select>
+        <div class="form-group">
+            <label for="genelToplamCurrency">Genel Toplam Para Birimi:</label>
+            <select id="genelToplamCurrency">
+                <option value="EUR">€</option>
+                <option value="TRY">₺</option>
+                <option value="USD">$</option>
+            </select>
+        </div>
+
+        <!-- Yeni Sütun Ekleme Bölümü -->
+        <div class="extra-columns">
+            <div class="extra-column-buttons">
+                <button onclick="addExtraColumn('Marka')">Marka Sütunu Ekle</button>
+                <button onclick="addExtraColumn('Termin')">Termin Sütunu Ekle</button>
+                <button onclick="promptExtraColumn()">Yeni Sütun Ekle</button>
             </div>
-
-            <!-- Genel Toplam Para Birimi Seçimi -->
-            <div class="header-selector">
-                <label for="genelToplamCurrency">Genel Toplam Para Birimi:</label>
-                <select id="genelToplamCurrency">
-                    <option value="EUR">€</option>
-                    <option value="TRY">₺</option>
-                    <option value="USD">$</option>
-                </select>
+            <div id="extraColumnsContainer">
+                <!-- Ekstra sütunlar buraya eklenecek -->
             </div>
         </div>
 
-        <h2>Ürün Ekleme</h2>
+        <!-- Masaüstü için ürün tablosu -->
         <table id="productTable">
             <thead>
                 <tr>
-                    <th class="index-column">#</th>
+                    <th>#</th>
                     <th>Ürün İsmi</th>
-                    <th class="adet-column">Adet</th>
-                    <th class="birim-fiyat-column">Birim Fiyatı</th>
-                    <th class="toplam-fiyat-column">Toplam Fiyat</th>
-                    <th id="lastColumnHeader" class="last-column">Stok Durumu</th>
+                    <th>Adet</th>
+                    <th>Birim Fiyatı</th>
+                    <th>Toplam Fiyat</th>
+                    <th>Stok Durumu</th>
+                    <!-- Ekstra sütun başlıkları buraya eklenecek -->
+                    <th class="actions-column">İşlemler</th>
                 </tr>
             </thead>
             <tbody>
+                <!-- Ürün satırları buraya eklenecek -->
             </tbody>
         </table>
-        <!-- Çizgi -->
-        <hr style="border: none; border-top: 2px solid #0563C1; margin: 5px 0;">
 
-        <button class="add-product-btn" onclick="addProduct()">Ürün Ekle</button>
-
-        <br><br>
-
-        <!-- İşlem butonları -->
-        <div class="action-buttons">
-            <button class="print-btn" onclick="generatePDF()"><i class="fas fa-print"></i> PDF Çıktısı Al</button>
-            <button class="download-btn" onclick="downloadPDF()"><i class="fas fa-download"></i> PDF İndir</button>
-            <button class="share-btn" onclick="sharePDF()"><i class="fas fa-share-alt"></i> Paylaş</button>
+        <!-- Mobil için ürün bölümleri -->
+        <div id="productContainer">
+            <!-- Ürün bölümleri buraya eklenecek -->
         </div>
 
-        <!-- Versiyon etiketi -->
-        <div class="version-label">Version 1.8</div>
+        <button class="action-button" onclick="addProduct()">Yeni Ürün Ekle</button>
+
+        <div class="pdf-buttons">
+            <button class="pdf-button pdf-print" onclick="generatePDF()">PDF Çıktısı Al</button>
+            <button class="pdf-button pdf-download" onclick="downloadPDF()">PDF Olarak İndir</button>
+            <button class="pdf-button pdf-share" onclick="sharePDF()">PDF Olarak Paylaş</button>
+        </div>
     </div>
 
     <script>
         // Tarihi otomatik ayarla
-        document.getElementById('tarih').value = new Date().toLocaleDateString();
+        document.getElementById('tarih').valueAsDate = new Date();
+
+        // Sayfa yüklendiğinde ilk ürünü ekle
+        window.onload = function() {
+            addProduct();
+        };
 
         // Gönderen alanını doldurmak için fonksiyon
         function fillSender(name) {
@@ -339,6 +412,9 @@
 
         // Döviz kurları
         let exchangeRates = {};
+
+        // Ekstra sütunları saklamak için dizi
+        let extraColumns = [];
 
         // Döviz kurlarını API'den çek
         async function fetchExchangeRates(baseCurrency) {
@@ -355,83 +431,333 @@
             }
         }
 
-        // Son kolon başlığını güncelle
-        function updateColumnHeader() {
-            const headerText = document.getElementById('columnHeader').value;
-            document.getElementById('lastColumnHeader').innerText = headerText;
-            // Mevcut ürün satırlarındaki placeholder'ları güncelle
-            const rows = document.querySelectorAll('#productTable tbody tr');
+        function promptExtraColumn() {
+            const columnName = prompt("Lütfen eklemek istediğiniz sütun adını girin:");
+            if (columnName) {
+                addExtraColumn(columnName);
+            }
+        }
+
+        function addExtraColumn(columnName) {
+            if (extraColumns.includes(columnName)) {
+                alert(`${columnName} sütunu zaten eklenmiş.`);
+                return;
+            }
+
+            // Ekstra sütunları güncelle
+            extraColumns.push(columnName);
+
+            // Ekstra sütunlar bölümüne ekle
+            const extraColumnsContainer = document.getElementById('extraColumnsContainer');
+
+            const extraColumnDiv = document.createElement('div');
+            extraColumnDiv.className = 'extra-column';
+            extraColumnDiv.dataset.columnName = columnName;
+
+            extraColumnDiv.innerHTML = `
+                <input type="text" value="${columnName}" readonly>
+                <button class="delete-extra-column" onclick="deleteExtraColumn(this)">Sütunu Sil</button>
+            `;
+
+            extraColumnsContainer.appendChild(extraColumnDiv);
+
+            // Mevcut ürünlere yeni alanı ekle (Mobil)
+            const productSections = document.querySelectorAll('.product-section');
+            productSections.forEach(section => {
+                const formGroup = document.createElement('div');
+                formGroup.className = 'form-group';
+                formGroup.dataset.columnName = columnName;
+                formGroup.innerHTML = `
+                    <label>${columnName}:</label>
+                    <input type="text" placeholder="${columnName} girin">
+                `;
+                section.insertBefore(formGroup, section.querySelector('.action-button'));
+            });
+
+            // Masaüstü için tabloya yeni sütun ekle
+            const productTable = document.getElementById('productTable');
+            const headerRow = productTable.querySelector('thead tr');
+            const newHeader = document.createElement('th');
+            newHeader.textContent = columnName;
+            headerRow.insertBefore(newHeader, headerRow.querySelector('.actions-column'));
+
+            // Mevcut satırlara yeni hücre ekle
+            const rows = productTable.querySelectorAll('tbody tr');
             rows.forEach(row => {
-                row.cells[5].getElementsByTagName('input')[0].placeholder = headerText;
-                row.cells[5].setAttribute('data-label', headerText);
+                const newCell = row.insertCell(-1);
+                newCell.innerHTML = `<input type="text" placeholder="${columnName} girin">`;
+                // İşlemler hücresini sona taşı
+                const actionsCell = row.querySelector('.actions-cell');
+                if (actionsCell) {
+                    row.appendChild(actionsCell);
+                }
             });
         }
 
+        function deleteExtraColumn(button) {
+            const extraColumnDiv = button.parentElement;
+            const columnName = extraColumnDiv.dataset.columnName;
+
+            // Ekstra sütunu diziden çıkar
+            extraColumns = extraColumns.filter(col => col !== columnName);
+
+            // Ekstra sütunu arayüzden kaldır
+            extraColumnDiv.remove();
+
+            // Ürünlerden ilgili alanları kaldır (Mobil)
+            const productSections = document.querySelectorAll('.product-section');
+            productSections.forEach(section => {
+                const formGroup = section.querySelector(`.form-group[data-column-name="${columnName}"]`);
+                if (formGroup) {
+                    formGroup.remove();
+                }
+            });
+
+            // Masaüstü için tablodan sütunu kaldır
+            const productTable = document.getElementById('productTable');
+            const headerCells = productTable.querySelectorAll('thead th');
+            let columnIndex = -1;
+            headerCells.forEach((th, index) => {
+                if (th.textContent === columnName) {
+                    columnIndex = index;
+                }
+            });
+
+            if (columnIndex !== -1) {
+                // Başlıktan kaldır
+                headerCells[columnIndex].remove();
+
+                // Satırlardan kaldır
+                const rows = productTable.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    row.deleteCell(columnIndex);
+                });
+            }
+        }
+
         function addProduct() {
-            const table = document.getElementById('productTable').getElementsByTagName('tbody')[0];
-            const row = table.insertRow();
-            const lastColumnHeader = document.getElementById('columnHeader').value;
+            // Mobil için ürün ekleme
+            const isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                const productContainer = document.getElementById('productContainer');
+                const productCount = productContainer.children.length + 1;
 
-            // Hücreleri ekle
-            const indexCell = row.insertCell(0);
-            const productCell = row.insertCell(1);
-            const adetCell = row.insertCell(2);
-            const birimFiyatCell = row.insertCell(3);
-            const toplamFiyatCell = row.insertCell(4);
-            const lastColumnCell = row.insertCell(5);
+                const productSection = document.createElement('div');
+                productSection.className = 'product-section';
+                productSection.dataset.index = productCount;
 
-            // İndeksi ayarla
-            indexCell.innerText = table.rows.length;
-            indexCell.classList.add('index-column');
-            indexCell.setAttribute('data-label', '#');
+                let extraFieldsHTML = '';
+                extraColumns.forEach(columnName => {
+                    extraFieldsHTML += `
+                        <div class="form-group" data-column-name="${columnName}">
+                            <label>${columnName}:</label>
+                            <input type="text" placeholder="${columnName} girin">
+                        </div>
+                    `;
+                });
 
-            // Ürün ismi
-            productCell.innerHTML = `<input type="text" placeholder="Ürün ismi" required>`;
-            productCell.setAttribute('data-label', 'Ürün İsmi');
+                productSection.innerHTML = `
+                    <div class="product-header">
+                        <span class="product-number">#${productCount}</span>
+                        <div class="reorder-buttons">
+                            <button onclick="moveUp(this)">▲</button>
+                            <button onclick="moveDown(this)">▼</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Ürün İsmi:</label>
+                        <input type="text" placeholder="Ürün ismini girin" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Adet:</label>
+                        <input type="number" placeholder="Adet girin" required oninput="calculateTotal(this)">
+                    </div>
+                    <div class="form-group">
+                        <label>Birim Fiyatı:</label>
+                        <div class="currency-input">
+                            <input type="text" placeholder="Birim fiyatını girin" required oninput="calculateTotal(this)">
+                            <select onchange="calculateTotal(this)">
+                                <option value="EUR">€</option>
+                                <option value="TRY">₺</option>
+                                <option value="USD">$</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Stok Durumu:</label>
+                        <input type="text" placeholder="Stok durumunu girin">
+                    </div>
+                    ${extraFieldsHTML}
+                    <div class="form-group">
+                        <label>Toplam Fiyat:</label>
+                        <input type="text" placeholder="Toplam Fiyat" readonly>
+                    </div>
+                    <button class="action-button delete-button" onclick="deleteProduct(this)">Ürünü Sil</button>
+                `;
 
-            // Adet
-            adetCell.classList.add('adet-column');
-            adetCell.innerHTML = `<input type="number" placeholder="Adet" oninput="calculateTotal(this)" required>`;
-            adetCell.setAttribute('data-label', 'Adet');
+                productContainer.appendChild(productSection);
+                updateProductNumbers();
+            } else {
+                // Masaüstü için ürün ekleme
+                const productTableBody = document.getElementById('productTable').querySelector('tbody');
+                const rowCount = productTableBody.rows.length;
+                const row = productTableBody.insertRow();
 
-            // Birim Fiyatı
-            birimFiyatCell.classList.add('birim-fiyat-column');
-            birimFiyatCell.innerHTML = `
-                <div class="currency-input">
-                    <input type="number" placeholder="Birim Fiyatı" oninput="calculateTotal(this)" required class="birim-fiyat-input">
-                    <select onchange="calculateTotal(this)">
-                        <option value="EUR">€</option>
-                        <option value="TRY">₺</option>
-                        <option value="USD">$</option>
-                    </select>
-                </div>
-            `;
-            birimFiyatCell.setAttribute('data-label', 'Birim Fiyatı');
+                row.dataset.index = rowCount + 1;
 
-            // Toplam Fiyat
-            toplamFiyatCell.classList.add('toplam-fiyat-column');
-            toplamFiyatCell.innerHTML = `<input type="text" placeholder="Toplam Fiyat" readonly>`;
-            toplamFiyatCell.setAttribute('data-label', 'Toplam Fiyat');
+                let cellIndex = 0;
 
-            // Son Kolon
-            lastColumnCell.classList.add('last-column');
-            lastColumnCell.innerHTML = `<input type="text" placeholder="${lastColumnHeader}">`;
-            lastColumnCell.setAttribute('data-label', lastColumnHeader);
+                // #
+                const cellNumber = row.insertCell(cellIndex++);
+                cellNumber.textContent = rowCount + 1;
+
+                // Ürün İsmi
+                const cellName = row.insertCell(cellIndex++);
+                cellName.innerHTML = `<input type="text" placeholder="Ürün ismini girin" required>`;
+
+                // Adet
+                const cellQuantity = row.insertCell(cellIndex++);
+                cellQuantity.innerHTML = `<input type="number" placeholder="Adet girin" required oninput="calculateTotal(this)">`;
+
+                // Birim Fiyatı
+                const cellPrice = row.insertCell(cellIndex++);
+                cellPrice.innerHTML = `
+                    <div class="currency-input">
+                        <input type="text" placeholder="Birim fiyatını girin" required oninput="calculateTotal(this)">
+                        <select onchange="calculateTotal(this)">
+                            <option value="EUR">€</option>
+                            <option value="TRY">₺</option>
+                            <option value="USD">$</option>
+                        </select>
+                    </div>
+                `;
+
+                // Toplam Fiyat
+                const cellTotal = row.insertCell(cellIndex++);
+                cellTotal.innerHTML = `<input type="text" placeholder="Toplam Fiyat" readonly>`;
+
+                // Stok Durumu
+                const cellStock = row.insertCell(cellIndex++);
+                cellStock.innerHTML = `<input type="text" placeholder="Stok durumunu girin">`;
+
+                // Ekstra sütunlar
+                extraColumns.forEach(columnName => {
+                    const cell = row.insertCell(cellIndex++);
+                    cell.innerHTML = `<input type="text" placeholder="${columnName} girin">`;
+                });
+
+                // İşlemler
+                const cellActions = row.insertCell(cellIndex++);
+                cellActions.className = 'actions-cell';
+                cellActions.innerHTML = `
+                    <button onclick="moveUp(this)">▲</button>
+                    <button onclick="moveDown(this)">▼</button>
+                    <button class="delete-button" onclick="deleteProduct(this)">Sil</button>
+                `;
+            }
+        }
+
+        function deleteProduct(button) {
+            const isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                const productSection = button.closest('.product-section');
+                productSection.remove();
+                updateProductNumbers();
+            } else {
+                const row = button.closest('tr');
+                row.remove();
+                updateProductNumbers();
+            }
+        }
+
+        function moveUp(button) {
+            const isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                const productSection = button.closest('.product-section');
+                const prevSection = productSection.previousElementSibling;
+                if (prevSection) {
+                    productSection.parentNode.insertBefore(productSection, prevSection);
+                    updateProductNumbers();
+                }
+            } else {
+                const row = button.closest('tr');
+                const prevRow = row.previousElementSibling;
+                if (prevRow) {
+                    row.parentNode.insertBefore(row, prevRow);
+                    updateProductNumbers();
+                }
+            }
+        }
+
+        function moveDown(button) {
+            const isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                const productSection = button.closest('.product-section');
+                const nextSection = productSection.nextElementSibling;
+                if (nextSection) {
+                    productSection.parentNode.insertBefore(nextSection, productSection);
+                    updateProductNumbers();
+                }
+            } else {
+                const row = button.closest('tr');
+                const nextRow = row.nextElementSibling;
+                if (nextRow) {
+                    row.parentNode.insertBefore(nextRow, row);
+                    updateProductNumbers();
+                }
+            }
+        }
+
+        function updateProductNumbers() {
+            const isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                const productContainer = document.getElementById('productContainer');
+                const productSections = productContainer.querySelectorAll('.product-section');
+                productSections.forEach((section, index) => {
+                    section.dataset.index = index + 1;
+                    section.querySelector('.product-number').innerText = `#${index + 1}`;
+                });
+            } else {
+                const productTableBody = document.getElementById('productTable').querySelector('tbody');
+                const rows = productTableBody.querySelectorAll('tr');
+                rows.forEach((row, index) => {
+                    row.dataset.index = index + 1;
+                    row.cells[0].textContent = index + 1;
+                });
+            }
         }
 
         function calculateTotal(element) {
-            const row = element.closest('tr');
-            const adet = parseFloat(row.cells[2].getElementsByTagName('input')[0].value) || 0;
-            const birimFiyatInput = row.cells[3].getElementsByTagName('input')[0];
+            const isMobile = window.matchMedia("(max-width: 600px)").matches;
+            let adetInput, birimFiyatInput, currencySelect, toplamFiyatInput;
+
+            if (isMobile) {
+                const productSection = element.closest('.product-section');
+                adetInput = productSection.querySelector('input[placeholder="Adet girin"]');
+                birimFiyatInput = productSection.querySelector('input[placeholder="Birim fiyatını girin"]');
+                currencySelect = productSection.querySelector('.currency-input select');
+                toplamFiyatInput = productSection.querySelector('input[placeholder="Toplam Fiyat"]');
+            } else {
+                const row = element.closest('tr');
+                adetInput = row.cells[2].querySelector('input');
+                birimFiyatInput = row.cells[3].querySelector('input');
+                currencySelect = row.cells[3].querySelector('select');
+                toplamFiyatInput = row.cells[4].querySelector('input');
+            }
+
+            // Virgülleri noktaya çevir
+            birimFiyatInput.value = birimFiyatInput.value.replace(',', '.');
+
+            const adet = parseFloat(adetInput.value) || 0;
             const birimFiyat = parseFloat(birimFiyatInput.value) || 0;
-            const currencySelect = row.cells[3].getElementsByTagName('select')[0];
-            const currencySymbol = currencySelect.value;
             const currencySign = currencySelect.selectedOptions[0].text;
-            const toplamFiyatInput = row.cells[4].getElementsByTagName('input')[0];
+
             const total = adet * birimFiyat;
+
             toplamFiyatInput.value = currencySign + ' ' + total.toFixed(2);
         }
 
+        // PDF oluşturma fonksiyonları
         async function generatePDF() {
             await createPDF('print');
         }
@@ -450,50 +776,119 @@
             const gonderen = document.getElementById('gonderen').value;
             const tarih = document.getElementById('tarih').value;
             const teklifNo = document.getElementById('teklifNo').value;
-            const lastColumnHeader = document.getElementById('columnHeader').value;
             const genelToplamCurrency = document.getElementById('genelToplamCurrency').value;
             const genelToplamCurrencySign = document.getElementById('genelToplamCurrency').selectedOptions[0].text;
 
             // Döviz kurlarını al
             await fetchExchangeRates(genelToplamCurrency);
 
-            const rows = document.querySelectorAll('#productTable tbody tr');
-            const products = [];
-            let index = 1;
+            const isMobile = window.matchMedia("(max-width: 600px)").matches;
+
+            let products = [];
             let genelToplam = 0;
 
-            rows.forEach(row => {
-                const productName = row.cells[1].getElementsByTagName('input')[0].value;
-                const adet = parseFloat(row.cells[2].getElementsByTagName('input')[0].value) || 0;
-                const birimFiyatInput = row.cells[3].getElementsByTagName('input')[0];
-                const birimFiyat = parseFloat(birimFiyatInput.value) || 0;
-                const currencySelect = row.cells[3].getElementsByTagName('select')[0];
-                const currencySymbol = currencySelect.value;
-                const currencySign = currencySelect.selectedOptions[0].text;
-                const total = adet * birimFiyat;
-                const toplamFiyatText = currencySign + ' ' + total.toFixed(2);
-                const lastColumnValue = row.cells[5].getElementsByTagName('input')[0].value;
+            if (isMobile) {
+                const productSections = document.querySelectorAll('.product-section');
 
-                // Toplam fiyatı genel toplam para birimine çevir
-                const exchangeRate = exchangeRates[currencySymbol];
-                const convertedTotal = total / exchangeRate;
+                productSections.forEach((section, index) => {
+                    const productName = section.querySelector('input[placeholder="Ürün ismini girin"]').value;
+                    const adet = parseFloat(section.querySelector('input[placeholder="Adet girin"]').value) || 0;
+                    const birimFiyatInput = section.querySelector('input[placeholder="Birim fiyatını girin"]');
+                    // Virgülleri noktaya çevir
+                    birimFiyatInput.value = birimFiyatInput.value.replace(',', '.');
+                    const birimFiyat = parseFloat(birimFiyatInput.value) || 0;
+                    const currencySelect = section.querySelector('.currency-input select');
+                    const currencySymbol = currencySelect.value;
+                    const currencySign = currencySelect.selectedOptions[0].text;
+                    const stokDurumu = section.querySelector('input[placeholder="Stok durumunu girin"]').value || '';
+                    const total = adet * birimFiyat;
+                    const toplamFiyatText = currencySign + ' ' + total.toFixed(2);
 
-                genelToplam += convertedTotal;
+                    // Ekstra alan değerlerini al
+                    const extraValues = [];
+                    extraColumns.forEach(columnName => {
+                        const input = section.querySelector(`.form-group[data-column-name="${columnName}"] input`);
+                        const value = input ? input.value : '';
+                        extraValues.push({ columnName, value });
+                    });
 
-                products.push({
-                    index,
-                    productName,
-                    adet,
-                    birimFiyat,
-                    currencySign,
-                    toplamFiyatText,
-                    lastColumnValue
+                    // Toplam fiyatı genel toplam para birimine çevir
+                    const exchangeRate = exchangeRates[currencySymbol];
+                    const convertedTotal = total / exchangeRate;
+
+                    genelToplam += convertedTotal;
+
+                    products.push({
+                        index: index + 1,
+                        productName,
+                        adet,
+                        birimFiyat,
+                        currencySign,
+                        toplamFiyatText,
+                        stokDurumu,
+                        extraValues
+                    });
                 });
-                index++;
-            });
+            } else {
+                const rows = document.querySelectorAll('#productTable tbody tr');
+
+                rows.forEach((row, index) => {
+                    const productName = row.cells[1].querySelector('input').value;
+                    const adet = parseFloat(row.cells[2].querySelector('input').value) || 0;
+                    const birimFiyatInput = row.cells[3].querySelector('input');
+                    // Virgülleri noktaya çevir
+                    birimFiyatInput.value = birimFiyatInput.value.replace(',', '.');
+                    const birimFiyat = parseFloat(birimFiyatInput.value) || 0;
+                    const currencySelect = row.cells[3].querySelector('select');
+                    const currencySymbol = currencySelect.value;
+                    const currencySign = currencySelect.selectedOptions[0].text;
+                    const stokDurumu = row.cells[5].querySelector('input').value || '';
+                    const total = adet * birimFiyat;
+                    const toplamFiyatText = currencySign + ' ' + total.toFixed(2);
+
+                    // Ekstra alan değerlerini al
+                    const extraValues = [];
+                    extraColumns.forEach((columnName, idx) => {
+                        const cellIndex = 6 + idx;
+                        const input = row.cells[cellIndex].querySelector('input');
+                        const value = input ? input.value : '';
+                        extraValues.push({ columnName, value });
+                    });
+
+                    // Toplam fiyatı genel toplam para birimine çevir
+                    const exchangeRate = exchangeRates[currencySymbol];
+                    const convertedTotal = total / exchangeRate;
+
+                    genelToplam += convertedTotal;
+
+                    products.push({
+                        index: index + 1,
+                        productName,
+                        adet,
+                        birimFiyat,
+                        currencySign,
+                        toplamFiyatText,
+                        stokDurumu,
+                        extraValues
+                    });
+                });
+            }
+
+            // "Alıcı" değerini dosya ismi için hazırlama
+            let sanitizedAlici = alici.trim()
+                .replace(/[\s]+/g, '-') // Boşlukları tire ile değiştir
+                .replace(/[^a-zA-Z0-9ığüşöçİĞÜŞÖÇ\-]/g, '') // Özel karakterleri kaldır, Türkçe karakterleri koru
+
+            // Eğer "Alıcı" alanı boşsa varsayılan bir isim kullan
+            if (!sanitizedAlici) {
+                sanitizedAlici = 'Fiyat-Teklifi';
+            }
+
+            // Dosya ismini oluştur
+            const filename = `${sanitizedAlici}-Fiyat-Teklifi-AGEN.pdf`;
 
             let content = `
-                <div id="pdf-content">
+                <div id="pdf-content" style="position: relative; min-height: 1000px;">
                     <div class="pdf-header" style="margin-bottom: 40px; padding: 0 40px;">
                         <img src="logo.svg" class="pdf-logo" style="width: 230px; margin-top: 40px;">
                         <div class="pdf-qr" style="margin-top: 40px;">
@@ -526,7 +921,14 @@
                                 <th style="color: #0563C1; font-weight: bold; width: 60px;">Adet</th>
                                 <th style="color: #0563C1; font-weight: bold; width: 100px;">Birim Fiyatı</th>
                                 <th style="color: #0563C1; font-weight: bold; width: 100px;">Toplam Fiyat</th>
-                                <th style="color: #0563C1; font-weight: bold; width: 100px;">${lastColumnHeader}</th>
+                                <th style="color: #0563C1; font-weight: bold; width: 100px;">Stok Durumu</th>
+            `;
+
+            extraColumns.forEach(columnName => {
+                content += `<th style="color: #0563C1; font-weight: bold; width: 100px;">${columnName}</th>`;
+            });
+
+            content += `
                             </tr>
                         </thead>
                     </table>
@@ -544,9 +946,12 @@
                         <td style="width: 60px;">${product.adet}</td>
                         <td style="width: 100px;">${product.currencySign} ${parseFloat(product.birimFiyat).toFixed(2)}</td>
                         <td style="width: 100px;">${product.toplamFiyatText}</td>
-                        <td style="width: 100px;">${product.lastColumnValue}</td>
-                    </tr>
+                        <td style="width: 100px;">${product.stokDurumu}</td>
                 `;
+                product.extraValues.forEach(extra => {
+                    content += `<td style="width: 100px;">${extra.value}</td>`;
+                });
+                content += `</tr>`;
             });
 
             content += `
@@ -562,7 +967,7 @@
                         </div>
                     </div>
                     <!-- Alt bilgi -->
-                    <div style="position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 10px; color: #0563C1;">
+                    <div style="position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; font-size: 10px; color: #0563C1;">
                         www.agentedarik.com
                     </div>
                 </div>
@@ -630,7 +1035,7 @@
             } else if (action === 'download' || action === 'share') {
                 const opt = {
                     margin:       [30, 20, 20, 20], // Kenar boşlukları: üst, sol, alt, sağ
-                    filename:     'fiyat_teklifi.pdf',
+                    filename:     filename,
                     image:        { type: 'jpeg', quality: 1 },
                     html2canvas:  { scale: 2, useCORS: true },
                     jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' }
@@ -661,6 +1066,7 @@
                 }
             }
         }
+
     </script>
 </body>
 </html>
