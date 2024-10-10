@@ -26,9 +26,6 @@
         .container {
             background-color: #fff;
             padding: 20px;
-            /* border-radius: 10px; */
-            /* box-shadow: 0 5px 15px rgba(0, 99, 193, 0.1); */
-            /* max-width: 1200px; */
             margin: auto;
             position: relative;
         }
@@ -442,7 +439,7 @@
         </div>
 
         <!-- Versiyon etiketi -->
-        <div class="version-label">Version 2.3</div>
+        <div class="version-label">Version 2.4</div>
     </div>
 
     <script>
@@ -754,7 +751,7 @@
             updateRowNumbers();
         }
 
-        // PDF oluşturma fonksiyonlar
+        // PDF oluşturma fonksiyonları
         async function generatePDF() {
             await createPDF('print');
         }
@@ -780,9 +777,9 @@
             await fetchExchangeRates(genelToplamCurrency);
 
             const headerCells = document.querySelectorAll('#productTable thead tr th');
-            // İlk beş kolon sabit, ekstra kolonlar 5. indeksten başlar
+            // İlk altı kolon sabit, ekstra kolonlar 6. indeksten başlar
             const extraHeaders = [];
-            for (let i = 5; i < headerCells.length - 1; i++) {
+            for (let i = 6; i < headerCells.length - 1; i++) {
                 const headerTextElement = headerCells[i].querySelector('.column-dropdown span');
                 const headerText = headerTextElement ? headerTextElement.innerText : headerCells[i].innerText;
                 extraHeaders.push(headerText);
@@ -794,11 +791,13 @@
             let genelToplam = 0;
 
             rows.forEach(row => {
-                const productName = row.cells[1].getElementsByTagName('input')[0].value;
-                const adet = parseFloat(row.cells[2].getElementsByTagName('input')[0].value) || 0;
-                const birimFiyatInput = row.cells[3].getElementsByTagName('input')[0];
+                const productName = row.cells[2].getElementsByTagName('input')[0].value;
+                const adet = parseFloat(row.cells[3].getElementsByTagName('input')[0].value) || 0;
+                const birimFiyatInput = row.cells[4].getElementsByTagName('input')[0];
+                // Virgülleri noktaya çevir
+                birimFiyatInput.value = birimFiyatInput.value.replace(',', '.');
                 const birimFiyat = parseFloat(birimFiyatInput.value) || 0;
-                const currencySelect = row.cells[3].getElementsByTagName('select')[0];
+                const currencySelect = row.cells[4].getElementsByTagName('select')[0];
                 const currencySymbol = currencySelect.value;
                 const currencySign = currencySelect.selectedOptions[0].text;
                 const total = adet * birimFiyat;
@@ -807,7 +806,7 @@
                 // Ekstra kolon değerlerini al
                 const extraValues = [];
                 for (let i = 0; i < extraHeaders.length; i++) {
-                    const cellIndex = 5 + i;
+                    const cellIndex = 6 + i;
                     const cell = row.cells[cellIndex];
                     if (cell) {
                         const input = cell.getElementsByTagName('input')[0];
@@ -835,6 +834,19 @@
                 });
                 index++;
             });
+
+            // "Alıcı" değerini dosya ismi için hazırlama
+            let sanitizedAlici = alici.trim()
+                .replace(/[\s]+/g, '-') // Boşlukları tire ile değiştir
+                .replace(/[^a-zA-Z0-9ığüşöçİĞÜŞÖÇ\-]/g, '') // Özel karakterleri kaldır, Türkçe karakterleri koru
+
+            // Eğer "Alıcı" alanı boşsa varsayılan bir isim kullan
+            if (!sanitizedAlici) {
+                sanitizedAlici = 'Fiyat-Teklifi';
+            }
+
+            // Dosya ismini oluştur
+            const filename = `${sanitizedAlici}-Fiyat-Teklifi-AGEN.pdf`;
 
             let content = `
                 <div id="pdf-content" style="position: relative; min-height: 1000px;">
@@ -982,7 +994,7 @@
             } else if (action === 'download' || action === 'share') {
                 const opt = {
                     margin:       [30, 20, 20, 20], // Kenar boşlukları: üst, sol, alt, sağ
-                    filename:     'fiyat_teklifi.pdf',
+                    filename:     filename,
                     image:        { type: 'jpeg', quality: 1 },
                     html2canvas:  { scale: 2, useCORS: true },
                     jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' }
@@ -1013,11 +1025,10 @@
                 }
             }
         }
-        // (Daha önceki kodda olduğu gibi, fonksiyonlar burada yer alacaktır.)
-        // ...
 
-        // PDF oluşturma fonksiyonları (yukarıdaki kodunuzla aynı)
-        // PDF oluşturma kodu buraya gelecek
+        // Otomatik isim tamamlama fonksiyonu (daha sonra eklenecek)
+        // Şu an için bu fonksiyon boş bırakıldı
+        // İleride 'isimler.txt' dosyasından verileri çekerek entegre edebilirsiniz
 
     </script>
 </body>
