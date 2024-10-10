@@ -2,9 +2,9 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>AGEN Fiyat Teklifi Formu</title>
+    <title> AGEN Fiyat Teklifi Formu</title>
     <!-- Meta tag for mobile responsiveness -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
     <link rel="icon" href="icon.png" type="image/png">
     <!-- Apple Touch Icon -->
@@ -17,15 +17,17 @@
         /* Genel stiller */
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
+            padding: 40px;
             background-color: #f0f8ff; /* AliceBlue */
             font-size: 14px;
             margin: 0;
-            overflow-x: hidden; /* Yatay kaydırmayı engelle */
         }
         .container {
             background-color: #fff;
-            padding: 20px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 99, 193, 0.1);
+            max-width: 800px;
             margin: auto;
             position: relative;
         }
@@ -73,21 +75,15 @@
             text-align: left;
             word-wrap: break-word;
             vertical-align: top;
-            word-break: break-word; /* Kelime taşmalarını engelle */
-            border-bottom: 1px solid #ddd;
         }
         th {
             background-color: transparent;
             font-weight: bold;
             color: #0563C1;
-            position: relative;
-            border-bottom: 2px solid #0563C1;
         }
         .add-product-btn {
             margin-top: 10px;
             background-color: #00AEEF; /* Yeni renk */
-            font-size: 18px;
-            padding: 15px;
         }
         .add-product-btn:hover {
             background-color: #0086bb;
@@ -104,6 +100,9 @@
             width: 70px;
             margin-left: 5px;
             font-size: 16px;
+        }
+        .header-selector {
+            margin-bottom: 20px;
         }
         select {
             font-size: 16px;
@@ -182,111 +181,13 @@
         .share-btn:hover {
             background-color: #3e8e41;
         }
-        /* Sürükleme stilleri */
-        .draggable {
-            cursor: move;
-        }
-        .dragging {
-            opacity: 0.5;
-        }
-        /* Yukarı Aşağı Taşı Butonları */
-        .move-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .move-buttons button {
-            padding: 5px;
-            font-size: 14px;
-        }
-        /* Silme Butonu */
-        .delete-btn {
-            background-color: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .delete-btn:hover {
-            background-color: #e60000;
-        }
-        /* Sil butonunu solda göster */
-        .delete-cell {
-            width: 50px;
-        }
-        /* Tablo başlığı için stil */
-        th .column-dropdown {
-            cursor: pointer;
-            position: relative;
-        }
-        th .column-dropdown .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            z-index: 1000;
-            width: 150px;
-        }
-        th .column-dropdown .dropdown-menu button {
-            width: 100%;
-            padding: 10px;
-            text-align: left;
-            border: none;
-            background: none;
-            cursor: pointer;
-        }
-        th .column-dropdown .dropdown-menu button:hover {
-            background-color: #f0f0f0;
-        }
-        th .add-column-btn {
-            cursor: pointer;
-            font-size: 20px;
-            color: #0563C1;
-        }
-        /* Mobilde tablo başlığı altında buton */
-        @media (max-width: 600px) {
-            .add-column-mobile {
-                display: block;
-                margin-bottom: 10px;
-                background-color: #ff9800; /* Turuncu */
-                color: white;
-                padding: 10px;
-                text-align: center;
-                border-radius: 5px;
-                text-decoration: none;
-            }
-            th .add-column-btn {
-                display: none;
-            }
-        }
-        @media (min-width: 601px) {
-            .add-column-mobile {
-                display: none;
-            }
-        }
-        /* Sıralama Butonları */
-        .reorder-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        /* Sıralama butonunu masaüstünde gizle */
-        @media (min-width: 601px) {
-            #startReorderBtn {
-                display: none;
-            }
-        }
         /* Responsive stiller */
         @media (max-width: 600px) {
             body {
-                padding: 10px;
+                padding: 20px;
             }
             .container {
-                padding: 10px;
+                padding: 20px;
             }
             h1, h2 {
                 font-size: 24px;
@@ -317,7 +218,6 @@
             #productTable tbody tr td {
                 display: block;
                 width: 100%;
-                overflow: hidden;
             }
             #productTable tbody tr td::before {
                 content: attr(data-label);
@@ -340,20 +240,6 @@
             }
             .share-btn {
                 margin-left: 0;
-            }
-            /* Ürün ismi alanının taşmasını engelle */
-            #productTable tbody tr td {
-                word-break: normal;
-            }
-            /* Sürükleme yerine yukarı aşağı taşıma butonları */
-            .move-buttons {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-            /* Sil butonunu sağda göster */
-            .delete-cell {
-                order: 1;
-                width: auto;
             }
         }
     </style>
@@ -380,10 +266,20 @@
             </div>
 
             <label for="tarih">Tarih:</label>
-            <input type="date" id="tarih" value="" required>
+            <input type="text" id="tarih" value="" readonly>
 
             <label for="teklifNo">Teklif No:</label>
             <input type="text" id="teklifNo" placeholder="Teklif numarasını girin" required>
+
+            <!-- Son kolon başlığı seçimi -->
+            <div class="header-selector">
+                <label for="columnHeader">Son Kolon Başlığı:</label>
+                <select id="columnHeader" onchange="updateColumnHeader()">
+                    <option value="Stok Durumu">Stok</option>
+                    <option value="Termin">Termin</option>
+                    <option value="Marka">Marka</option>
+                </select>
+            </div>
 
             <!-- Genel Toplam Para Birimi Seçimi -->
             <div class="header-selector">
@@ -396,34 +292,21 @@
             </div>
         </div>
 
-        <!-- Sıralama Butonları (Mobilde Görünecek) -->
-        <div class="reorder-buttons">
-            <button id="startReorderBtn" onclick="startReordering()">Sıralamayı Değiştir</button>
-            <button id="finishReorderBtn" onclick="finishReordering()" style="display:none;">Sıralamayı Bitir</button>
-        </div>
-
         <h2>Ürün Ekleme</h2>
         <table id="productTable">
             <thead>
                 <tr>
                     <th class="index-column">#</th>
-                    <!-- Sil butonu için boşluk -->
-                    <th class="delete-cell"></th>
                     <th>Ürün İsmi</th>
                     <th class="adet-column">Adet</th>
                     <th class="birim-fiyat-column">Birim Fiyatı</th>
                     <th class="toplam-fiyat-column">Toplam Fiyat</th>
-                    <!-- Dinamik olarak eklenen kolon başlıkları buraya eklenecek -->
-                    <th>
-                        <span class="add-column-btn" onclick="addColumnHeader()">+</span>
-                    </th>
+                    <th id="lastColumnHeader" class="last-column">Stok Durumu</th>
                 </tr>
             </thead>
             <tbody>
             </tbody>
         </table>
-        <!-- Mobilde Son Sütun Ekle Butonu -->
-        <a href="#" class="add-column-mobile" onclick="addColumnHeader()">Son Sütun Ekle</a>
         <!-- Çizgi -->
         <hr style="border: none; border-top: 2px solid #0563C1; margin: 5px 0;">
 
@@ -439,12 +322,12 @@
         </div>
 
         <!-- Versiyon etiketi -->
-        <div class="version-label">Version 2.4</div>
+        <div class="version-label">Version 1.8</div>
     </div>
 
     <script>
         // Tarihi otomatik ayarla
-        document.getElementById('tarih').valueAsDate = new Date();
+        document.getElementById('tarih').value = new Date().toLocaleDateString();
 
         // Gönderen alanını doldurmak için fonksiyon
         function fillSender(name) {
@@ -472,117 +355,50 @@
             }
         }
 
-        // Sayfa yüklendiğinde otomatik olarak bir son sütun ekle
-        window.addEventListener('load', function() {
-            addColumnHeader();
-        });
-
-        // Kolon başlığı ekleme fonksiyonu
-        function addColumnHeader() {
-            // Tablo başlığına yeni bir kolon ekle
-            const tableHeadRow = document.querySelector('#productTable thead tr');
-            const th = document.createElement('th');
-            th.className = 'last-column';
-            th.innerHTML = `
-                <div class="column-dropdown" onclick="toggleDropdown(event, this)">
-                    <span>Stok Durumu</span>
-                    <div class="dropdown-menu">
-                        <button onclick="changeColumnName(this, 'Stok Durumu')">Stok Durumu</button>
-                        <button onclick="changeColumnName(this, 'Marka')">Marka</button>
-                        <button onclick="changeColumnName(this, 'Termin')">Termin</button>
-                    </div>
-                </div>
-            `;
-            tableHeadRow.insertBefore(th, tableHeadRow.lastElementChild);
-
-            // Mevcut ürün satırlarına yeni hücre ekle
+        // Son kolon başlığını güncelle
+        function updateColumnHeader() {
+            const headerText = document.getElementById('columnHeader').value;
+            document.getElementById('lastColumnHeader').innerText = headerText;
+            // Mevcut ürün satırlarındaki placeholder'ları güncelle
             const rows = document.querySelectorAll('#productTable tbody tr');
             rows.forEach(row => {
-                const cell = row.insertCell(-1);
-                cell.className = 'last-column';
-                cell.innerHTML = `<input type="text" placeholder="Stok Durumu">`;
-                cell.setAttribute('data-label', 'Stok Durumu');
+                row.cells[5].getElementsByTagName('input')[0].placeholder = headerText;
+                row.cells[5].setAttribute('data-label', headerText);
             });
         }
-
-        // Kolon ismini değiştirme fonksiyonu
-        function changeColumnName(button, newName) {
-            const dropdown = button.closest('.column-dropdown');
-            dropdown.querySelector('span').innerText = newName;
-            const th = dropdown.closest('th');
-            const index = Array.from(th.parentNode.children).indexOf(th);
-
-            // Tüm satırlardaki ilgili hücrenin data-label ve placeholder'ını güncelle
-            const rows = document.querySelectorAll('#productTable tbody tr');
-            rows.forEach(row => {
-                const cell = row.cells[index];
-                cell.setAttribute('data-label', newName);
-                const input = cell.querySelector('input');
-                if (input) {
-                    input.placeholder = newName;
-                }
-            });
-
-            // Dropdown'u kapat
-            dropdown.querySelector('.dropdown-menu').style.display = 'none';
-        }
-
-        // Dropdown açma/kapatma fonksiyonu
-        function toggleDropdown(event, element) {
-            event.stopPropagation();
-            const menu = element.querySelector('.dropdown-menu');
-            const allMenus = document.querySelectorAll('.dropdown-menu');
-            allMenus.forEach(m => m.style.display = 'none');
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-        }
-
-        // Sayfa dışında bir yere tıklandığında dropdown'ları kapat
-        document.addEventListener('click', function() {
-            const menus = document.querySelectorAll('.dropdown-menu');
-            menus.forEach(menu => menu.style.display = 'none');
-        });
 
         function addProduct() {
             const table = document.getElementById('productTable').getElementsByTagName('tbody')[0];
             const row = table.insertRow();
+            const lastColumnHeader = document.getElementById('columnHeader').value;
 
-            // Mobilde sürükle bırak yerine yukarı aşağı taşıma butonları
-            const isMobile = window.matchMedia("only screen and (max-width: 600px)").matches;
-
-            if (!isMobile && !isReordering) {
-                row.classList.add('draggable');
-                row.setAttribute('draggable', 'true');
-                addDragAndDropHandlers(row);
-            }
+            // Hücreleri ekle
+            const indexCell = row.insertCell(0);
+            const productCell = row.insertCell(1);
+            const adetCell = row.insertCell(2);
+            const birimFiyatCell = row.insertCell(3);
+            const toplamFiyatCell = row.insertCell(4);
+            const lastColumnCell = row.insertCell(5);
 
             // İndeksi ayarla
-            const indexCell = row.insertCell(0);
             indexCell.innerText = table.rows.length;
             indexCell.classList.add('index-column');
             indexCell.setAttribute('data-label', '#');
 
-            // Silme butonu
-            const deleteCell = row.insertCell(1);
-            deleteCell.classList.add('delete-cell');
-            deleteCell.innerHTML = `<button class="delete-btn" onclick="deleteProduct(this)">Sil</button>`;
-
             // Ürün ismi
-            const productCell = row.insertCell(2);
             productCell.innerHTML = `<input type="text" placeholder="Ürün ismi" required>`;
             productCell.setAttribute('data-label', 'Ürün İsmi');
 
             // Adet
-            const adetCell = row.insertCell(3);
             adetCell.classList.add('adet-column');
             adetCell.innerHTML = `<input type="number" placeholder="Adet" oninput="calculateTotal(this)" required>`;
             adetCell.setAttribute('data-label', 'Adet');
 
             // Birim Fiyatı
-            const birimFiyatCell = row.insertCell(4);
             birimFiyatCell.classList.add('birim-fiyat-column');
             birimFiyatCell.innerHTML = `
                 <div class="currency-input">
-                    <input type="text" placeholder="Birim Fiyatı" oninput="calculateTotal(this)" required class="birim-fiyat-input">
+                    <input type="number" placeholder="Birim Fiyatı" oninput="calculateTotal(this)" required class="birim-fiyat-input">
                     <select onchange="calculateTotal(this)">
                         <option value="EUR">€</option>
                         <option value="TRY">₺</option>
@@ -593,165 +409,29 @@
             birimFiyatCell.setAttribute('data-label', 'Birim Fiyatı');
 
             // Toplam Fiyat
-            const toplamFiyatCell = row.insertCell(5);
             toplamFiyatCell.classList.add('toplam-fiyat-column');
             toplamFiyatCell.innerHTML = `<input type="text" placeholder="Toplam Fiyat" readonly>`;
             toplamFiyatCell.setAttribute('data-label', 'Toplam Fiyat');
 
-            // Ekstra kolonları ekle
-            const headerCells = document.querySelectorAll('#productTable thead tr th');
-            for (let i = 6; i < headerCells.length - 1; i++) {
-                const headerText = headerCells[i].querySelector('.column-dropdown span').innerText;
-                const cell = row.insertCell(-1);
-                cell.className = 'last-column';
-                cell.innerHTML = `<input type="text" placeholder="${headerText}">`;
-                cell.setAttribute('data-label', headerText);
-            }
-
-            // Mobilde yukarı aşağı taşıma butonlarını ekle
-            if (isMobile) {
-                const moveCell = row.insertCell(-1);
-                moveCell.innerHTML = `
-                    <div class="move-buttons">
-                        <button type="button" onclick="moveUp(this)">▲</button>
-                        <button type="button" onclick="moveDown(this)">▼</button>
-                    </div>
-                `;
-            }
-        }
-
-        function deleteProduct(button) {
-            const row = button.closest('tr');
-            row.remove();
-            updateRowNumbers();
+            // Son Kolon
+            lastColumnCell.classList.add('last-column');
+            lastColumnCell.innerHTML = `<input type="text" placeholder="${lastColumnHeader}">`;
+            lastColumnCell.setAttribute('data-label', lastColumnHeader);
         }
 
         function calculateTotal(element) {
             const row = element.closest('tr');
-            const adet = parseFloat(row.cells[3].getElementsByTagName('input')[0].value) || 0;
-            const birimFiyatInput = row.cells[4].getElementsByTagName('input')[0];
-            // Virgülleri noktaya çevir
-            birimFiyatInput.value = birimFiyatInput.value.replace(',', '.');
+            const adet = parseFloat(row.cells[2].getElementsByTagName('input')[0].value) || 0;
+            const birimFiyatInput = row.cells[3].getElementsByTagName('input')[0];
             const birimFiyat = parseFloat(birimFiyatInput.value) || 0;
-            const currencySelect = row.cells[4].getElementsByTagName('select')[0];
+            const currencySelect = row.cells[3].getElementsByTagName('select')[0];
             const currencySymbol = currencySelect.value;
             const currencySign = currencySelect.selectedOptions[0].text;
-            const toplamFiyatInput = row.cells[5].getElementsByTagName('input')[0];
+            const toplamFiyatInput = row.cells[4].getElementsByTagName('input')[0];
             const total = adet * birimFiyat;
             toplamFiyatInput.value = currencySign + ' ' + total.toFixed(2);
         }
 
-        // Sürükle bırak işlevselliği
-        function addDragAndDropHandlers(row) {
-            row.addEventListener('dragstart', function (e) {
-                e.dataTransfer.setData('text/plain', null);
-                this.classList.add('dragging');
-            });
-            row.addEventListener('dragover', function (e) {
-                e.preventDefault();
-                const dragging = document.querySelector('.dragging');
-                if (dragging && dragging !== this) {
-                    this.parentNode.insertBefore(dragging, this.nextSibling);
-                }
-            });
-            row.addEventListener('dragend', function (e) {
-                this.classList.remove('dragging');
-                updateRowNumbers();
-            });
-        }
-
-        function updateRowNumbers() {
-            const rows = document.querySelectorAll('#productTable tbody tr');
-            let index = 1;
-            rows.forEach(row => {
-                row.cells[0].innerText = index++;
-            });
-        }
-
-        // Mevcut satırlar için sürükle bırak olaylarını başlat
-        function initializeDragAndDrop() {
-            const isMobile = window.matchMedia("only screen and (max-width: 600px)").matches;
-            if (!isMobile) {
-                const rows = document.querySelectorAll('#productTable tbody tr');
-                rows.forEach(row => {
-                    row.classList.add('draggable');
-                    row.setAttribute('draggable', 'true');
-                    addDragAndDropHandlers(row);
-                });
-            }
-        }
-
-        // Sayfa yüklendiğinde sürükle bırak işlemini başlat
-        window.addEventListener('load', initializeDragAndDrop);
-
-        // Yukarı taşıma fonksiyonu
-        function moveUp(button) {
-            const row = button.closest('tr');
-            const prevRow = row.previousElementSibling;
-            if (prevRow) {
-                row.parentNode.insertBefore(row, prevRow);
-                updateRowNumbers();
-            }
-        }
-
-        // Aşağı taşıma fonksiyonu
-        function moveDown(button) {
-            const row = button.closest('tr');
-            const nextRow = row.nextElementSibling;
-            if (nextRow) {
-                row.parentNode.insertBefore(nextRow, row);
-                updateRowNumbers();
-            }
-        }
-
-        // Sıralama modunu kontrol etmek için değişken
-        let isReordering = false;
-
-        function startReordering() {
-            isReordering = true;
-            document.getElementById('startReorderBtn').style.display = 'none';
-            document.getElementById('finishReorderBtn').style.display = 'block';
-
-            // Ürün detaylarını gizle, sadece ürün isimleri kalsın
-            const rows = document.querySelectorAll('#productTable tbody tr');
-            rows.forEach(row => {
-                for (let i = 2; i < row.cells.length; i++) {
-                    row.cells[i].style.display = 'none';
-                }
-            });
-
-            // Sürükle bırak işlevini etkinleştir
-            const isMobile = window.matchMedia("only screen and (max-width: 600px)").matches;
-            if (!isMobile) {
-                const rows = document.querySelectorAll('#productTable tbody tr');
-                rows.forEach(row => {
-                    row.classList.add('draggable');
-                    row.setAttribute('draggable', 'true');
-                    addDragAndDropHandlers(row);
-                });
-            }
-        }
-
-        function finishReordering() {
-            isReordering = false;
-            document.getElementById('startReorderBtn').style.display = 'block';
-            document.getElementById('finishReorderBtn').style.display = 'none';
-
-            // Ürün detaylarını geri getir
-            const rows = document.querySelectorAll('#productTable tbody tr');
-            rows.forEach(row => {
-                for (let i = 2; i < row.cells.length; i++) {
-                    row.cells[i].style.display = '';
-                }
-                // Sürükle bırak işlevini devre dışı bırak
-                row.classList.remove('draggable');
-                row.removeAttribute('draggable');
-            });
-
-            updateRowNumbers();
-        }
-
-        // PDF oluşturma fonksiyonları
         async function generatePDF() {
             await createPDF('print');
         }
@@ -770,20 +450,12 @@
             const gonderen = document.getElementById('gonderen').value;
             const tarih = document.getElementById('tarih').value;
             const teklifNo = document.getElementById('teklifNo').value;
+            const lastColumnHeader = document.getElementById('columnHeader').value;
             const genelToplamCurrency = document.getElementById('genelToplamCurrency').value;
             const genelToplamCurrencySign = document.getElementById('genelToplamCurrency').selectedOptions[0].text;
 
             // Döviz kurlarını al
             await fetchExchangeRates(genelToplamCurrency);
-
-            const headerCells = document.querySelectorAll('#productTable thead tr th');
-            // İlk altı kolon sabit, ekstra kolonlar 6. indeksten başlar
-            const extraHeaders = [];
-            for (let i = 6; i < headerCells.length - 1; i++) {
-                const headerTextElement = headerCells[i].querySelector('.column-dropdown span');
-                const headerText = headerTextElement ? headerTextElement.innerText : headerCells[i].innerText;
-                extraHeaders.push(headerText);
-            }
 
             const rows = document.querySelectorAll('#productTable tbody tr');
             const products = [];
@@ -791,31 +463,16 @@
             let genelToplam = 0;
 
             rows.forEach(row => {
-                const productName = row.cells[2].getElementsByTagName('input')[0].value;
-                const adet = parseFloat(row.cells[3].getElementsByTagName('input')[0].value) || 0;
-                const birimFiyatInput = row.cells[4].getElementsByTagName('input')[0];
-                // Virgülleri noktaya çevir
-                birimFiyatInput.value = birimFiyatInput.value.replace(',', '.');
+                const productName = row.cells[1].getElementsByTagName('input')[0].value;
+                const adet = parseFloat(row.cells[2].getElementsByTagName('input')[0].value) || 0;
+                const birimFiyatInput = row.cells[3].getElementsByTagName('input')[0];
                 const birimFiyat = parseFloat(birimFiyatInput.value) || 0;
-                const currencySelect = row.cells[4].getElementsByTagName('select')[0];
+                const currencySelect = row.cells[3].getElementsByTagName('select')[0];
                 const currencySymbol = currencySelect.value;
                 const currencySign = currencySelect.selectedOptions[0].text;
                 const total = adet * birimFiyat;
                 const toplamFiyatText = currencySign + ' ' + total.toFixed(2);
-
-                // Ekstra kolon değerlerini al
-                const extraValues = [];
-                for (let i = 0; i < extraHeaders.length; i++) {
-                    const cellIndex = 6 + i;
-                    const cell = row.cells[cellIndex];
-                    if (cell) {
-                        const input = cell.getElementsByTagName('input')[0];
-                        const value = input ? input.value : '';
-                        extraValues.push(value);
-                    } else {
-                        extraValues.push('');
-                    }
-                }
+                const lastColumnValue = row.cells[5].getElementsByTagName('input')[0].value;
 
                 // Toplam fiyatı genel toplam para birimine çevir
                 const exchangeRate = exchangeRates[currencySymbol];
@@ -830,26 +487,13 @@
                     birimFiyat,
                     currencySign,
                     toplamFiyatText,
-                    extraValues
+                    lastColumnValue
                 });
                 index++;
             });
 
-            // "Alıcı" değerini dosya ismi için hazırlama
-            let sanitizedAlici = alici.trim()
-                .replace(/[\s]+/g, '-') // Boşlukları tire ile değiştir
-                .replace(/[^a-zA-Z0-9ığüşöçİĞÜŞÖÇ\-]/g, '') // Özel karakterleri kaldır, Türkçe karakterleri koru
-
-            // Eğer "Alıcı" alanı boşsa varsayılan bir isim kullan
-            if (!sanitizedAlici) {
-                sanitizedAlici = 'Fiyat-Teklifi';
-            }
-
-            // Dosya ismini oluştur
-            const filename = `${sanitizedAlici}-Fiyat-Teklifi-AGEN.pdf`;
-
             let content = `
-                <div id="pdf-content" style="position: relative; min-height: 1000px;">
+                <div id="pdf-content">
                     <div class="pdf-header" style="margin-bottom: 40px; padding: 0 40px;">
                         <img src="logo.svg" class="pdf-logo" style="width: 230px; margin-top: 40px;">
                         <div class="pdf-qr" style="margin-top: 40px;">
@@ -882,13 +526,7 @@
                                 <th style="color: #0563C1; font-weight: bold; width: 60px;">Adet</th>
                                 <th style="color: #0563C1; font-weight: bold; width: 100px;">Birim Fiyatı</th>
                                 <th style="color: #0563C1; font-weight: bold; width: 100px;">Toplam Fiyat</th>
-            `;
-
-            extraHeaders.forEach(header => {
-                content += `<th style="color: #0563C1; font-weight: bold; width: 100px;">${header}</th>`;
-            });
-
-            content += `
+                                <th style="color: #0563C1; font-weight: bold; width: 100px;">${lastColumnHeader}</th>
                             </tr>
                         </thead>
                     </table>
@@ -906,11 +544,9 @@
                         <td style="width: 60px;">${product.adet}</td>
                         <td style="width: 100px;">${product.currencySign} ${parseFloat(product.birimFiyat).toFixed(2)}</td>
                         <td style="width: 100px;">${product.toplamFiyatText}</td>
+                        <td style="width: 100px;">${product.lastColumnValue}</td>
+                    </tr>
                 `;
-                product.extraValues.forEach(value => {
-                    content += `<td style="width: 100px;">${value}</td>`;
-                });
-                content += `</tr>`;
             });
 
             content += `
@@ -926,7 +562,7 @@
                         </div>
                     </div>
                     <!-- Alt bilgi -->
-                    <div style="position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; font-size: 10px; color: #0563C1;">
+                    <div style="position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 10px; color: #0563C1;">
                         www.agentedarik.com
                     </div>
                 </div>
@@ -994,7 +630,7 @@
             } else if (action === 'download' || action === 'share') {
                 const opt = {
                     margin:       [30, 20, 20, 20], // Kenar boşlukları: üst, sol, alt, sağ
-                    filename:     filename,
+                    filename:     'fiyat_teklifi.pdf',
                     image:        { type: 'jpeg', quality: 1 },
                     html2canvas:  { scale: 2, useCORS: true },
                     jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' }
@@ -1025,11 +661,6 @@
                 }
             }
         }
-
-        // Otomatik isim tamamlama fonksiyonu (daha sonra eklenecek)
-        // Şu an için bu fonksiyon boş bırakıldı
-        // İleride 'isimler.txt' dosyasından verileri çekerek entegre edebilirsiniz
-
     </script>
 </body>
 </html>
