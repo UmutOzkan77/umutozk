@@ -1098,13 +1098,13 @@
                         document.body.removeChild(pdfElement); // Temizlik
                     });
                 } else if (action === 'share') {
-                    html2pdf().set(opt).from(pdfElement).outputPdf('blob').then(async (pdfBlob) => {
+                    html2pdf().set(opt).from(pdfElement).output('blob').then(async (pdfBlob) => {
                         document.body.removeChild(pdfElement); // Temizlik
 
-                        if (navigator.canShare && navigator.canShare({ files: [new File([pdfBlob], opt.filename, { type: 'application/pdf' })] })) {
+                        if (navigator.canShare && navigator.canShare({ files: [new File([pdfBlob], filename, { type: 'application/pdf' })] })) {
                             try {
                                 await navigator.share({
-                                    files: [new File([pdfBlob], opt.filename, { type: 'application/pdf' })],
+                                    files: [new File([pdfBlob], filename, { type: 'application/pdf' })],
                                     title: 'AGEN Fiyat Teklifi',
                                     text: 'Merhaba, talep etmiş olduğunuz ürünlerin fiyat teklifi ektedir. Kolay gelsin, iyi çalışmalar dilerim.'
                                 });
