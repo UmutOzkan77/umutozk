@@ -21,6 +21,7 @@
             --border-color: #e0e0e0;
             --button-color: #00AEEF;
             --delete-button-color: #ff6b6b;
+            --apply-all-button-color: #ffa502; /* Yeni renk */
         }
 
         body {
@@ -247,7 +248,7 @@
         }
 
         .extra-column .fill-column-button {
-            background-color: var(--button-color);
+            background-color: var(--apply-all-button-color); /* Yeni renk */
             color: white;
             border: none;
             padding: 10px;
@@ -258,7 +259,7 @@
         }
 
         .extra-column .fill-column-button:hover {
-            background-color: #0086bb;
+            background-color: #e08902;
         }
 
         .extra-column .delete-extra-column {
@@ -941,6 +942,11 @@
             // Dosya ismini oluştur
             const filename = `${sanitizedAlici}-Fiyat-Teklifi-AGEN.pdf`;
 
+            // Tablo sütun genişliklerini ayarla
+            const numExtraColumns = extraColumns.length;
+            const baseWidth = numExtraColumns > 0 ? 100 : 0;
+            const nameColumnWidth = 100 + (3 - numExtraColumns) * 50;
+
             let content = `
                 <div id="pdf-content" style="position: relative; min-height: 1000px;">
                     <div class="pdf-header" style="margin-bottom: 40px; padding: 0 40px;">
@@ -971,14 +977,14 @@
                         <thead>
                             <tr>
                                 <th style="color: #0563C1; font-weight: bold; width: 30px;">#</th>
-                                <th style="color: #0563C1; font-weight: bold;">Tanımı</th>
+                                <th style="color: #0563C1; font-weight: bold; width: ${nameColumnWidth}px;">Tanımı</th>
                                 <th style="color: #0563C1; font-weight: bold; width: 60px;">Adet</th>
                                 <th style="color: #0563C1; font-weight: bold; width: 100px;">Birim Fiyatı</th>
                                 <th style="color: #0563C1; font-weight: bold; width: 100px;">Toplam Fiyat</th>
             `;
 
             extraColumns.forEach(columnName => {
-                content += `<th style="color: #0563C1; font-weight: bold; width: 100px;">${columnName}</th>`;
+                content += `<th style="color: #0563C1; font-weight: bold; width: ${baseWidth}px;">${columnName}</th>`;
             });
 
             content += `
@@ -995,13 +1001,13 @@
                 content += `
                     <tr>
                         <td style="width: 30px;">${product.index}</td>
-                        <td>${product.productName}</td>
+                        <td style="width: ${nameColumnWidth}px;">${product.productName}</td>
                         <td style="width: 60px;">${product.adet}</td>
                         <td style="width: 100px;">${product.currencySign} ${parseFloat(product.birimFiyat).toFixed(2)}</td>
                         <td style="width: 100px;">${product.toplamFiyatText}</td>
                 `;
                 product.extraValues.forEach(extra => {
-                    content += `<td style="width: 100px;">${extra.value}</td>`;
+                    content += `<td style="width: ${baseWidth}px;">${extra.value}</td>`;
                 });
                 content += `</tr>`;
             });
@@ -1098,13 +1104,15 @@
                         document.body.removeChild(pdfElement); // Temizlik
                     });
                 } else if (action === 'share') {
-                    html2pdf().set(opt).from(pdfElement).output('blob').then(async (pdfBlob) => {
+                    html2pdf().set(opt).from(pdfElement).outputPdf('blob').then(async (pdfBlob) => {
                         document.body.removeChild(pdfElement); // Temizlik
 
-                        if (navigator.canShare && navigator.canShare({ files: [new File([pdfBlob], filename, { type: 'application/pdf' })] })) {
+                        const file = new File([pdfBlob], filename, { type: 'application/pdf' });
+
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
                             try {
                                 await navigator.share({
-                                    files: [new File([pdfBlob], filename, { type: 'application/pdf' })],
+                                    files: [file],
                                     title: 'AGEN Fiyat Teklifi',
                                     text: 'Merhaba, talep etmiş olduğunuz ürünlerin fiyat teklifi ektedir. Kolay gelsin, iyi çalışmalar dilerim.'
                                 });
