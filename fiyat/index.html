@@ -818,7 +818,36 @@
         }
 
         async function sharePDF() {
-            await createPDF('share');
+    const filename = 'AGEN-Fiyat-Teklifi.pdf';
+    const pdfElement = document.querySelector('.container');
+    
+    const opt = {
+        margin: 10,
+        filename: filename,
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
+    };
+    
+    html2pdf().set(opt).from(pdfElement).outputPdf('blob').then(async (pdfBlob) => {
+        const file = new File([pdfBlob], filename, { type: 'application/pdf' });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({
+                    files: [file],
+                    title: 'AGEN Fiyat Teklifi',
+                    text: 'Merhaba, talep etmiş olduğunuz ürünlerin fiyat teklifi ektedir.'
+                });
+            } catch (error) {
+                alert('Paylaşma işlemi iptal edildi veya bir hata oluştu.');
+            }
+        } else {
+            alert('Paylaşma özelliği bu tarayıcıda desteklenmiyor. Lütfen daha güncel bir tarayıcı kullanınız.');
+        }
+    });
+}
+
         }
 
         async function createPDF(action) {
