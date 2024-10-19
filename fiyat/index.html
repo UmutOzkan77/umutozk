@@ -1104,13 +1104,12 @@
                         document.body.removeChild(pdfElement); // Temizlik
                     });
                 } else if (action === 'share') {
-                    html2pdf().set(opt).from(pdfElement).output('blob').then(async (pdfBlob) => {
+                    html2pdf().set(opt).from(pdfElement).outputPdf('blob').then(async (pdfBlob) => {
                         document.body.removeChild(pdfElement); // Temizlik
 
                         const file = new File([pdfBlob], filename, { type: 'application/pdf' });
 
-                        // Dosya paylaşımı destekleniyor mu kontrolü ve paylaşma işlemi
-                        if (navigator.share && navigator.canShare({ files: [file] })) {
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
                             try {
                                 await navigator.share({
                                     files: [file],
