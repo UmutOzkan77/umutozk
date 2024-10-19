@@ -1104,28 +1104,26 @@
                         document.body.removeChild(pdfElement); // Temizlik
                     });
                 } else if (action === 'share') {
-    html2pdf().set(opt).from(pdfElement).outputPdf('blob').then(async (pdfBlob) => {
-        document.body.removeChild(pdfElement); // Temizlik
+                    html2pdf().set(opt).from(pdfElement).output('blob').then(async (pdfBlob) => {
+                        document.body.removeChild(pdfElement); // Temizlik
 
-        const file = new File([pdfBlob], filename, { type: 'application/pdf' });
+                        const file = new File([pdfBlob], filename, { type: 'application/pdf' });
 
-        // Dosya paylaşımı destekleniyor mu kontrolü ve paylaşma işlemi
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    files: [file],
-                    title: 'AGEN Fiyat Teklifi',
-                    text: 'Merhaba, talep etmiş olduğunuz ürünlerin fiyat teklifi ektedir. Kolay gelsin, iyi çalışmalar dilerim.'
-                });
-            } catch (error) {
-                console.error('Paylaşma hatası:', error);
-                alert('Paylaşma işlemi iptal edildi veya bir hata oluştu.');
-            }
-        } else {
-            alert('Paylaşma özelliği bu tarayıcıda desteklenmiyor. Lütfen daha güncel bir tarayıcı kullanınız.');
-        }
-    });
-}
+                        // Dosya paylaşımı destekleniyor mu kontrolü ve paylaşma işlemi
+                        if (navigator.share && navigator.canShare({ files: [file] })) {
+                            try {
+                                await navigator.share({
+                                    files: [file],
+                                    title: 'AGEN Fiyat Teklifi',
+                                    text: 'Merhaba, talep etmiş olduğunuz ürünlerin fiyat teklifi ektedir. Kolay gelsin, iyi çalışmalar dilerim.'
+                                });
+                            } catch (error) {
+                                console.error('Paylaşma hatası:', error);
+                                alert('Paylaşma işlemi iptal edildi veya bir hata oluştu.');
+                            }
+                        } else {
+                            alert('Paylaşma özelliği bu tarayıcıda desteklenmiyor. Lütfen daha güncel bir tarayıcı kullanınız.');
+                        }
                     });
                 }
             }
