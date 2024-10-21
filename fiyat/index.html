@@ -21,7 +21,7 @@
             --border-color: #e0e0e0;
             --button-color: #00AEEF;
             --delete-button-color: #ff6b6b;
-            --apply-all-button-color: #ffa502; /* Yeni renk */
+            --apply-all-button-color: #ffa502;
         }
 
         body {
@@ -248,7 +248,7 @@
         }
 
         .extra-column .fill-column-button {
-            background-color: var(--apply-all-button-color); /* Yeni renk */
+            background-color: var(--apply-all-button-color);
             color: white;
             border: none;
             padding: 10px;
@@ -1092,21 +1092,23 @@
                 document.body.removeChild(pdfElement);
             } else if (action === 'download' || action === 'share') {
                 const opt = {
-                    margin:       [30, 20, 20, 20], // Kenar boşlukları: üst, sağ, alt, sol
+                    margin:       [30, 20, 20, 20], // Kenar boşlukları: üst, sol, alt, sağ
                     filename:     filename,
                     image:        { type: 'jpeg', quality: 1 },
                     html2canvas:  { scale: 2, useCORS: true },
                     jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' }
                 };
 
-                if (action === 'download') {
-                    html2pdf().set(opt).from(pdfElement).save().then(() => {
-                        document.body.removeChild(pdfElement); // Temizlik
-                    });
-                } else if (action === 'share') {
-                    html2pdf().set(opt).from(pdfElement).outputPdf('blob').then(async (pdfBlob) => {
-                        document.body.removeChild(pdfElement); // Temizlik
+                try {
+                    const pdfBlob = await html2pdf().set(opt).from(pdfElement).outputPdf('blob');
+                    document.body.removeChild(pdfElement); // Temizlik
 
+                    if (action === 'download') {
+                        const link = document.createElement('a');
+                        link.href = URL.createObjectURL(pdfBlob);
+                        link.download = filename;
+                        link.click();
+                    } else if (action === 'share') {
                         const file = new File([pdfBlob], filename, { type: 'application/pdf' });
 
                         if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -1117,12 +1119,16 @@
                                     text: 'Merhaba, talep etmiş olduğunuz ürünlerin fiyat teklifi ektedir. Kolay gelsin, iyi çalışmalar dilerim.'
                                 });
                             } catch (error) {
+                                console.error('Paylaşma hatası:', error);
                                 alert('Paylaşma işlemi iptal edildi veya bir hata oluştu.');
                             }
                         } else {
                             alert('Paylaşma özelliği bu tarayıcıda desteklenmiyor. Lütfen daha güncel bir tarayıcı kullanınız.');
                         }
-                    });
+                    }
+                } catch (error) {
+                    console.error('PDF oluşturma hatası:', error);
+                    alert('PDF oluşturulurken bir hata oluştu. Lütfen tekrar deneyiniz.');
                 }
             }
         }
