@@ -1092,7 +1092,7 @@
                 document.body.removeChild(pdfElement);
             } else if (action === 'download' || action === 'share') {
                 const opt = {
-                    margin:       [30, 20, 20, 20], // Kenar boşlukları: üst, sol, alt, sağ
+                    margin:       [30, 20, 20, 20], // Kenar boşlukları: üst, sağ, alt, sol
                     filename:     filename,
                     image:        { type: 'jpeg', quality: 1 },
                     html2canvas:  { scale: 2, useCORS: true },
@@ -1117,7 +1117,6 @@
                                     text: 'Merhaba, talep etmiş olduğunuz ürünlerin fiyat teklifi ektedir. Kolay gelsin, iyi çalışmalar dilerim.'
                                 });
                             } catch (error) {
-                                console.error('Paylaşma hatası:', error);
                                 alert('Paylaşma işlemi iptal edildi veya bir hata oluştu.');
                             }
                         } else {
