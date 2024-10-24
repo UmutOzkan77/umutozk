@@ -1,0 +1,227 @@
+import json
+
+# Giriş dosyası (tweets.txt)
+input_file = 'tweets.txt'
+
+# Çıkış JSON dosyası
+json_file = 'tweets.json'
+
+# HTML dosyası
+html_file = 'index.html'
+
+# CSS dosyası
+css_file = 'styles.css'
+
+# JavaScript dosyası
+js_file = 'app.js'
+
+# Tweetleri oku ve listeye ekle
+tweets = []
+
+with open(input_file, 'r', encoding='utf-8') as f:
+    tweet = {}
+    for line in f:
+        line = line.strip()
+        if line.startswith('Link:'):
+            tweet['link'] = line.replace('Link: ', '').strip()
+        elif line.startswith('Tarih:'):
+            tweet['date'] = line.replace('Tarih: ', '').strip()
+        elif line.startswith('Tweet:'):
+            tweet['text'] = line.replace('Tweet: ', '').strip()
+        elif line.strip() == '-' * 50:
+            # Tweet tamamlandı
+            if tweet:
+                tweets.append(tweet)
+                tweet = {}
+        else:
+            # Tweet metninin devamı
+            if 'text' in tweet:
+                tweet['text'] += '\n' + line.strip()
+            else:
+                tweet['text'] = line.strip()
+    # Son tweeti ekle
+    if tweet:
+        tweets.append(tweet)
+
+# Tweetleri JSON dosyasına yaz
+with open(json_file, 'w', encoding='utf-8') as f_out:
+    json.dump(tweets, f_out, ensure_ascii=False)
+
+print(f'İşlem tamamlandı. Toplam {len(tweets)} tweet "{json_file}" dosyasına kaydedildi.')
+
+# HTML dosyasını oluştur
+html_content = '''<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Tweet Arşivi</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Tweet Arşivi</h1>
+  <div id="search-container">
+    <input type="text" id="search-input" placeholder="Tweetlerde ara...">
+    <input type="date" id="date-input">
+  </div>
+  <div id="tweets-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+'''
+
+with open(html_file, 'w', encoding='utf-8') as f_html:
+    f_html.write(html_content)
+
+print(f'"{html_file}" dosyası oluşturuldu.')
+
+# CSS dosyasını oluştur
+css_content = '''body {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+#search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#search-container input {
+  margin: 0 10px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+#tweets-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.tweet {
+  background-color: #1e1e1e;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.tweet a {
+  color: #1da1f2;
+  text-decoration: none;
+}
+
+.tweet p {
+  margin: 5px 0;
+}
+
+.tweet .date {
+  color: #aaaaaa;
+  font-size: 14px;
+}
+'''
+
+with open(css_file, 'w', encoding='utf-8') as f_css:
+    f_css.write(css_content)
+
+print(f'"{css_file}" dosyası oluşturuldu.')
+
+# JavaScript dosyasını oluştur
+js_content = '''let tweets = [];
+let tweetsPerPage = 100; // İlk yüklemede gösterilecek tweet sayısı
+let currentPage = 1;
+
+function loadTweets() {
+  fetch('tweets.json')
+    .then(response => response.json())
+    .then(data => {
+      tweets = data;
+      displayTweets();
+    })
+    .catch(error => console.error('Veriler yüklenirken hata oluştu:', error));
+}
+
+function displayTweets() {
+  const tweetsContainer = document.getElementById('tweets-container');
+  const searchInput = document.getElementById('search-input');
+  const dateInput = document.getElementById('date-input');
+
+  let filteredTweets = tweets.filter(tweet => {
+    const searchText = searchInput.value.toLowerCase();
+    const selectedDate = dateInput.value;
+    const textMatch = tweet.text.toLowerCase().includes(searchText);
+    const dateMatch = selectedDate ? tweet.date.startsWith(selectedDate) : true;
+    return textMatch && dateMatch;
+  });
+
+  // Sayfalama
+  const startIndex = 0;
+  const endIndex = currentPage * tweetsPerPage;
+  const tweetsToDisplay = filteredTweets.slice(startIndex, endIndex);
+
+  tweetsContainer.innerHTML = '';
+  tweetsToDisplay.forEach(tweet => {
+    const tweetElement = document.createElement('div');
+    tweetElement.classList.add('tweet');
+
+    const linkElement = document.createElement('a');
+    linkElement.href = tweet.link;
+    linkElement.textContent = 'Tweet Linki';
+    linkElement.target = '_blank';
+
+    const dateElement = document.createElement('p');
+    dateElement.classList.add('date');
+    dateElement.textContent = `Tarih: ${tweet.date}`;
+
+    const textElement = document.createElement('p');
+    textElement.textContent = tweet.text;
+
+    tweetElement.appendChild(linkElement);
+    tweetElement.appendChild(dateElement);
+    tweetElement.appendChild(textElement);
+
+    tweetsContainer.appendChild(tweetElement);
+  });
+}
+
+function setupEventListeners() {
+  const searchInput = document.getElementById('search-input');
+  const dateInput = document.getElementById('date-input');
+
+  searchInput.addEventListener('input', () => {
+    currentPage = 1;
+    displayTweets();
+  });
+
+  dateInput.addEventListener('input', () => {
+    currentPage = 1;
+    displayTweets();
+  });
+
+  window.addEventListener('scroll', () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+      // Sayfanın sonuna yaklaştıkça daha fazla tweet yükle
+      if ((currentPage * tweetsPerPage) < tweets.length) {
+        currentPage++;
+        displayTweets();
+      }
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadTweets();
+  setupEventListeners();
+});
+'''
+
+with open(js_file, 'w', encoding='utf-8') as f_js:
+    f_js.write(js_content)
+
+print(f'"{js_file}" dosyası oluşturuldu.')
