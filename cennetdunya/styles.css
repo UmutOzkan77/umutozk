@@ -1,0 +1,50 @@
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+#search-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+#search-container input, #search-container select {
+  margin: 5px 10px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+#tweets-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.tweet {
+  background-color: #1e1e1e;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.tweet a {
+  color: #1da1f2;
+  text-decoration: none;
+}
+
+.tweet p {
+  margin: 5px 0;
+}
+
+.tweet .date {
+  color: #aaaaaa;
+  font-size: 14px;
+}
