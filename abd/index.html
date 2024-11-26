@@ -3,142 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaman Dönüştürücü</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Türkiye-California Zaman Dönüştürücü</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 100vh;
+        }
+        .time-zone {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .turkey {
+            background-color: #e6f2ff;
+            border-right: 2px solid #007bff;
+        }
+        .california {
+            background-color: #fff0e6;
+            border-left: 2px solid #ff6b00;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #007bff;
+            text-align: center;
+        }
+        .california h1 {
+            color: #ff6b00;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="date"], 
+        input[type="time"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        #day-info {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+        #time-difference {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+            color: #666;
+        }
+        .copy-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 15px;
+        }
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            .time-zone {
+                height: 50vh;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 font-sans min-h-screen flex items-center justify-center p-4 selection:bg-blue-200">
-    <div class="w-full max-w-4xl mx-auto bg-white/90 backdrop-blur-xl rounded-[40px] shadow-2xl ring-1 ring-gray-100 overflow-hidden">
-        <div class="grid grid-cols-1 md:grid-cols-2">
-            <!-- California Tarafı (Sol) -->
-            <div class="bg-gradient-to-br from-blue-50/50 to-blue-100/50 p-10 flex flex-col justify-center">
-                <div class="flex items-center justify-center space-x-4 mb-8">
-                    <span class="text-4xl">🇺🇸</span>
-                    <h2 class="text-3xl font-extrabold text-blue-900 tracking-tight">ABD California</h2>
-                    <span class="text-4xl">⏰</span>
-                </div>
-                
-                <div class="bg-white/80 rounded-3xl shadow-xl ring-1 ring-gray-100 p-6 mb-6 transition-all duration-300 hover:ring-2 hover:ring-blue-300 flex space-x-4">
-                    <div>
-                        <label for="usDateInput" class="block text-gray-700 font-medium mb-2">Tarih</label>
-                        <input 
-                            type="date" 
-                            id="usDateInput" 
-                            class="w-full bg-transparent text-xl text-gray-800 border-none focus:ring-0 focus:outline-none"
-                        >
-                    </div>
-                    <div>
-                        <label for="usTimeInput" class="block text-gray-700 font-medium mb-2">Saat</label>
-                        <input 
-                            type="time" 
-                            id="usTimeInput" 
-                            class="w-full bg-transparent text-xl text-gray-800 border-none focus:ring-0 focus:outline-none"
-                            step="1"
-                        >
-                    </div>
-                </div>
-                
-                <button 
-                    onclick="convertToTurkeyTime()" 
-                    class="w-full py-4 bg-blue-600 text-white rounded-2xl text-lg font-bold tracking-wider uppercase hover:bg-blue-700 transition-colors duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-xl hover:shadow-blue-300/50"
-                >
-                    Türkiye'ye Çevir
-                </button>
-                
-                <div 
-                    id="turkeyResult" 
-                    class="mt-6 p-5 bg-white/80 rounded-2xl shadow-md text-lg text-gray-800 text-center tracking-tight"
-                ></div>
+<body>
+    <div class="container">
+        <div class="time-zone turkey">
+            <h1>🇹🇷 Türkiye Saati</h1>
+            <div class="input-group">
+                <label for="turkey-date">Tarih Seç</label>
+                <input type="date" id="turkey-date">
+                <label for="turkey-time">Saat Seç</label>
+                <input type="time" id="turkey-time">
+                <button id="turkey-copy-btn" class="copy-btn">Türkiye Zamanını Kopyala</button>
+                <div id="day-info"></div>
             </div>
-
-            <!-- Türkiye Tarafı (Sağ) -->
-            <div class="bg-gradient-to-br from-red-50/50 to-red-100/50 p-10 flex flex-col justify-center">
-                <div class="flex items-center justify-center space-x-4 mb-8">
-                    <span class="text-4xl">🇹🇷</span>
-                    <h2 class="text-3xl font-extrabold text-red-900 tracking-tight">Türkiye</h2>
-                    <span class="text-4xl">⏰</span>
-                </div>
-                
-                <div class="bg-white/80 rounded-3xl shadow-xl ring-1 ring-gray-100 p-6 mb-6 transition-all duration-300 hover:ring-2 hover:ring-red-300 flex space-x-4">
-                    <div>
-                        <label for="turkeyDateInput" class="block text-gray-700 font-medium mb-2">Tarih</label>
-                        <input 
-                            type="date" 
-                            id="turkeyDateInput" 
-                            class="w-full bg-transparent text-xl text-gray-800 border-none focus:ring-0 focus:outline-none"
-                        >
-                    </div>
-                    <div>
-                        <label for="turkeyTimeInput" class="block text-gray-700 font-medium mb-2">Saat</label>
-                        <input 
-                            type="time" 
-                            id="turkeyTimeInput" 
-                            class="w-full bg-transparent text-xl text-gray-800 border-none focus:ring-0 focus:outline-none"
-                            step="1"
-                        >
-                    </div>
-                </div>
-                
-                <button 
-                    onclick="convertToUSTime()" 
-                    class="w-full py-4 bg-red-600 text-white rounded-2xl text-lg font-bold tracking-wider uppercase hover:bg-red-700 transition-colors duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-xl hover:shadow-red-300/50"
-                >
-                    ABD California'ya Çevir
-                </button>
-                
-                <div 
-                    id="usResult" 
-                    class="mt-6 p-5 bg-white/80 rounded-2xl shadow-md text-lg text-gray-800 text-center tracking-tight"
-                ></div>
+        </div>
+        <div class="time-zone california">
+            <h1>🇺🇸 California Saati</h1>
+            <div class="input-group">
+                <label for="california-date">Tarih Seç</label>
+                <input type="date" id="california-date">
+                <label for="california-time">Saat Seç</label>
+                <input type="time" id="california-time">
+                <button id="california-copy-btn" class="copy-btn">California Zamanını Kopyala</button>
+                <div id="time-difference"></div>
             </div>
         </div>
     </div>
 
     <script>
-        function convertToUSTime() {
-            const turkeyDateInput = document.getElementById('turkeyDateInput');
-            const turkeyTimeInput = document.getElementById('turkeyTimeInput');
-            const usResult = document.getElementById('usResult');
+        // Zaman dilimi dönüşüm fonksiyonları
+        function convertTimes(sourceDate, sourceTime, sourceZone) {
+            // Zaman dilimi farkları (UTC üzerinden)
+            const timezones = {
+                'turkey': 'Europe/Istanbul',
+                'california': 'America/Los_Angeles'
+            };
+
+            // Kaynak zamanı oluştur
+            const [year, month, day] = sourceDate.split('-').map(Number);
+            const [hours, minutes] = sourceTime.split(':').map(Number);
             
-            if (!turkeyDateInput.value || !turkeyTimeInput.value) {
-                usResult.innerHTML = 'Lütfen bir tarih ve saat seçin';
-                return;
-            }
+            const sourceDateTime = new Date(Date.UTC(year, month - 1, day, hours, minutes));
 
-            const turkeyDateTime = new Date(`${turkeyDateInput.value}T${turkeyTimeInput.value}`);
-            const usCaliforniaDate = new Date(turkeyDateTime.toLocaleString('en-US', {timeZone: 'America/Los_Angeles'}));
+            // Hedef zaman dilimlerini ayarla
+            const targetZone = sourceZone === 'turkey' ? 'california' : 'turkey';
+            
+            const sourceFormatter = new Intl.DateTimeFormat('tr-TR', {
+                timeZone: timezones[sourceZone],
+                dateStyle: 'full',
+                timeStyle: 'short'
+            });
 
-            usResult.innerHTML = `
-                ABD California Zamanı:<br>
-                ${usCaliforniaDate.toLocaleString('tr-TR', {
-                    dateStyle: 'full', 
-                    timeStyle: 'long',
-                    hour12: false
-                })}
-            `;
+            const targetFormatter = new Intl.DateTimeFormat('tr-TR', {
+                timeZone: timezones[targetZone],
+                dateStyle: 'full',
+                timeStyle: 'short'
+            });
+
+            // Hedef zamanı hesapla
+            const targetDateTime = new Date(sourceDateTime.toLocaleString('en-US', { 
+                timeZone: timezones[targetZone] 
+            }));
+
+            // Gün bilgisini belirle
+            const dayInfo = sourceDateTime.getDay();
+            const dayNames = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
+
+            // Zaman farkını hesapla
+            const timeDifference = Math.round((targetDateTime - sourceDateTime) / (1000 * 60 * 60));
+
+            return {
+                targetDate: targetDateTime.toISOString().split('T')[0],
+                targetTime: targetDateTime.toTimeString().slice(0, 5),
+                dayInfo: dayNames[dayInfo],
+                timeDifference: timeDifference
+            };
         }
 
-        function convertToTurkeyTime() {
-            const usDateInput = document.getElementById('usDateInput');
-            const usTimeInput = document.getElementById('usTimeInput');
-            const turkeyResult = document.getElementById('turkeyResult');
+        // Olay dinleyicileri
+        document.getElementById('turkey-date').addEventListener('change', function() {
+            const turkeyTime = document.getElementById('turkey-time').value || '00:00';
+            updateCaliforniaTime(this.value, turkeyTime);
+        });
+
+        document.getElementById('turkey-time').addEventListener('change', function() {
+            const turkeyDate = document.getElementById('turkey-date').value || new Date().toISOString().split('T')[0];
+            updateCaliforniaTime(turkeyDate, this.value);
+        });
+
+        document.getElementById('california-date').addEventListener('change', function() {
+            const californiaTime = document.getElementById('california-time').value || '00:00';
+            updateTurkeyTime(this.value, californiaTime);
+        });
+
+        document.getElementById('california-time').addEventListener('change', function() {
+            const californiaDate = document.getElementById('california-date').value || new Date().toISOString().split('T')[0];
+            updateTurkeyTime(californiaDate, this.value);
+        });
+
+        function updateCaliforniaTime(turkeyDate, turkeyTime) {
+            const result = convertTimes(turkeyDate, turkeyTime, 'turkey');
             
-            if (!usDateInput.value || !usTimeInput.value) {
-                turkeyResult.innerHTML = 'Lütfen bir tarih ve saat seçin';
-                return;
-            }
-
-            const usDateTime = new Date(`${usDateInput.value}T${usTimeInput.value}`);
-            const istanbulDate = new Date(usDateTime.toLocaleString('en-US', {timeZone: 'Europe/Istanbul'}));
-
-            turkeyResult.innerHTML = `
-                Türkiye Zamanı:<br>
-                ${istanbulDate.toLocaleString('tr-TR', {
-                    dateStyle: 'full', 
-                    timeStyle: 'long',
-                    hour12: false
-                })}
-            `;
+            document.getElementById('california-date').value = result.targetDate;
+            document.getElementById('california-time').value = result.targetTime;
+            document.getElementById('day-info').textContent = `Gün: ${result.dayInfo}`;
+            document.getElementById('time-difference').textContent = `Zaman Farkı: ${result.timeDifference > 0 ? '+' : ''}${result.timeDifference} saat`;
         }
+
+        function updateTurkeyTime(californiaDate, californiaTime) {
+            const result = convertTimes(californiaDate, californiaTime, 'california');
+            
+            document.getElementById('turkey-date').value = result.targetDate;
+            document.getElementById('turkey-time').value = result.targetTime;
+            document.getElementById('day-info').textContent = `Gün: ${result.dayInfo}`;
+            document.getElementById('time-difference').textContent = `Zaman Farkı: ${result.timeDifference > 0 ? '+' : ''}${result.timeDifference} saat`;
+        }
+
+        // Kopyalama fonksiyonları
+        document.getElementById('turkey-copy-btn').addEventListener('click', function() {
+            const turkeyDate = document.getElementById('turkey-date').value;
+            const turkeyTime = document.getElementById('turkey-time').value;
+            navigator.clipboard.writeText(`Türkiye: ${turkeyDate} ${turkeyTime}`).then(() => {
+                alert('Türkiye zamanı kopyalandı!');
+            });
+        });
+
+        document.getElementById('california-copy-btn').addEventListener('click', function() {
+            const californiaDate = document.getElementById('california-date').value;
+            const californiaTime = document.getElementById('california-time').value;
+            navigator.clipboard.writeText(`California: ${californiaDate} ${californiaTime}`).then(() => {
+                alert('California zamanı kopyalandı!');
+            });
+        });
+
+        // Sayfa yüklendiğinde mevcut zamanı ayarla
+        window.onload = function() {
+            const now = new Date();
+            const turkeyDate = now.toISOString().split('T')[0];
+            const turkeyTime = now.toTimeString().slice(0, 5);
+            
+            document.getElementById('turkey-date').value = turkeyDate;
+            document.getElementById('turkey-time').value = turkeyTime;
+            
+            updateCaliforniaTime(turkeyDate, turkeyTime);
+        };
     </script>
 </body>
 </html>
