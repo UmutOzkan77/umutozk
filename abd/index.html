@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Zaman Dönüştürücü</title>
+    <!-- Luxon kütüphanesi -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.3.0/luxon.min.js" integrity="sha512-VqbxpACSU1Bj1mRKE6QXC9tnMbpNC0VFJVdjjkheV7pYrdC01xJDngvRk6EgjU9BYVaW8xGNxDmD4+nZNdkp8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        /* Genel Stil */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .container {
+            flex: 1;
+            padding: 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .left {
+            background-color: #ffffff;
+            border-right: 1px solid #e0e0e0;
+        }
+        .right {
+            background-color: #ffffff;
+        }
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .flag {
+            width: 80px;
+            height: 60px;
+            background-size: cover;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        input[type="datetime-local"] {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+        input[type="datetime-local"]:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+            color: #555;
+        }
+        /* Mobil Cihazlar İçin Dikey Bölme */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                height: auto;
+            }
+            .left {
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+        }
+        /* Bayraklar */
+        .turkey-flag {
+            background-image: url('https://flagcdn.com/w80/tr.png');
+        }
+        .usa-flag {
+            background-image: url('https://flagcdn.com/w80/us.png');
+        }
+    </style>
+</head>
+<body>
+    <div class="container left">
+        <div class="flag turkey-flag"></div>
+        <h1>Türkiye</h1>
+        <input type="datetime-local" id="turkeyTime">
+        <div class="output" id="californiaTimeOutput"></div>
+    </div>
+    <div class="container right">
+        <div class="flag usa-flag"></div>
+        <h1>ABD California</h1>
+        <input type="datetime-local" id="californiaTime">
+        <div class="output" id="turkeyTimeOutput"></div>
+    </div>
+    <script>
+        const { DateTime } = luxon;
+
+        const turkeyInput = document.getElementById('turkeyTime');
+        const californiaInput = document.getElementById('californiaTime');
+        const californiaOutput = document.getElementById('californiaTimeOutput');
+        const turkeyOutput = document.getElementById('turkeyTimeOutput');
+
+        turkeyInput.addEventListener('input', function() {
+            const turkeyDateTime = DateTime.fromISO(turkeyInput.value, { zone: 'Europe/Istanbul' });
+            const californiaDateTime = turkeyDateTime.setZone('America/Los_Angeles');
+            if (californiaDateTime.isValid) {
+                californiaOutput.textContent = 'California Saati: ' + californiaDateTime.toFormat('yyyy-MM-dd HH:mm');
+                californiaInput.value = californiaDateTime.toISO({ suppressSeconds: true, suppressMilliseconds: true });
+            } else {
+                californiaOutput.textContent = '';
+            }
+        });
+
+        californiaInput.addEventListener('input', function() {
+            const californiaDateTime = DateTime.fromISO(californiaInput.value, { zone: 'America/Los_Angeles' });
+            const turkeyDateTime = californiaDateTime.setZone('Europe/Istanbul');
+            if (turkeyDateTime.isValid) {
+                turkeyOutput.textContent = 'Türkiye Saati: ' + turkeyDateTime.toFormat('yyyy-MM-dd HH:mm');
+                turkeyInput.value = turkeyDateTime.toISO({ suppressSeconds: true, suppressMilliseconds: true });
+            } else {
+                turkeyOutput.textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>
