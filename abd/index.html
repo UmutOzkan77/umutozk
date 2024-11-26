@@ -2,134 +2,143 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zaman Dönüştürücü</title>
-    <!-- Luxon kütüphanesi -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.3.0/luxon.min.js" integrity="sha512-VqbxpACSU1Bj1mRKE6QXC9tnMbpNC0VFJVdjjkheV7pYrdC01xJDngvRk6EgjU9BYVaW8xGNxDmD4+nZNdkp8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <style>
-        /* Genel Stil */
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            height: 100vh;
-            background-color: #f5f5f5;
-        }
-        .container {
-            flex: 1;
-            padding: 40px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .left {
-            background-color: #ffffff;
-            border-right: 1px solid #e0e0e0;
-        }
-        .right {
-            background-color: #ffffff;
-        }
-        h1 {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .flag {
-            width: 80px;
-            height: 60px;
-            background-size: cover;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-        }
-        input[type="datetime-local"] {
-            width: 100%;
-            max-width: 300px;
-            padding: 12px;
-            margin-top: 10px;
-            font-size: 16px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            transition: border-color 0.3s;
-        }
-        input[type="datetime-local"]:focus {
-            border-color: #007BFF;
-            outline: none;
-        }
-        .output {
-            margin-top: 20px;
-            font-size: 20px;
-            text-align: center;
-            color: #555;
-        }
-        /* Mobil Cihazlar İçin Dikey Bölme */
-        @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-                height: auto;
-            }
-            .left {
-                border-right: none;
-                border-bottom: 1px solid #e0e0e0;
-            }
-        }
-        /* Bayraklar */
-        .turkey-flag {
-            background-image: url('https://flagcdn.com/w80/tr.png');
-        }
-        .usa-flag {
-            background-image: url('https://flagcdn.com/w80/us.png');
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container left">
-        <div class="flag turkey-flag"></div>
-        <h1>Türkiye</h1>
-        <input type="datetime-local" id="turkeyTime">
-        <div class="output" id="californiaTimeOutput"></div>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 font-sans min-h-screen flex items-center justify-center p-4 selection:bg-blue-200">
+    <div class="w-full max-w-4xl mx-auto bg-white/90 backdrop-blur-xl rounded-[40px] shadow-2xl ring-1 ring-gray-100 overflow-hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2">
+            <!-- California Tarafı (Sol) -->
+            <div class="bg-gradient-to-br from-blue-50/50 to-blue-100/50 p-10 flex flex-col justify-center">
+                <div class="flex items-center justify-center space-x-4 mb-8">
+                    <span class="text-4xl">🇺🇸</span>
+                    <h2 class="text-3xl font-extrabold text-blue-900 tracking-tight">ABD California</h2>
+                    <span class="text-4xl">⏰</span>
+                </div>
+                
+                <div class="bg-white/80 rounded-3xl shadow-xl ring-1 ring-gray-100 p-6 mb-6 transition-all duration-300 hover:ring-2 hover:ring-blue-300 flex space-x-4">
+                    <div>
+                        <label for="usDateInput" class="block text-gray-700 font-medium mb-2">Tarih</label>
+                        <input 
+                            type="date" 
+                            id="usDateInput" 
+                            class="w-full bg-transparent text-xl text-gray-800 border-none focus:ring-0 focus:outline-none"
+                        >
+                    </div>
+                    <div>
+                        <label for="usTimeInput" class="block text-gray-700 font-medium mb-2">Saat</label>
+                        <input 
+                            type="time" 
+                            id="usTimeInput" 
+                            class="w-full bg-transparent text-xl text-gray-800 border-none focus:ring-0 focus:outline-none"
+                            step="1"
+                        >
+                    </div>
+                </div>
+                
+                <button 
+                    onclick="convertToTurkeyTime()" 
+                    class="w-full py-4 bg-blue-600 text-white rounded-2xl text-lg font-bold tracking-wider uppercase hover:bg-blue-700 transition-colors duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-xl hover:shadow-blue-300/50"
+                >
+                    Türkiye'ye Çevir
+                </button>
+                
+                <div 
+                    id="turkeyResult" 
+                    class="mt-6 p-5 bg-white/80 rounded-2xl shadow-md text-lg text-gray-800 text-center tracking-tight"
+                ></div>
+            </div>
+
+            <!-- Türkiye Tarafı (Sağ) -->
+            <div class="bg-gradient-to-br from-red-50/50 to-red-100/50 p-10 flex flex-col justify-center">
+                <div class="flex items-center justify-center space-x-4 mb-8">
+                    <span class="text-4xl">🇹🇷</span>
+                    <h2 class="text-3xl font-extrabold text-red-900 tracking-tight">Türkiye</h2>
+                    <span class="text-4xl">⏰</span>
+                </div>
+                
+                <div class="bg-white/80 rounded-3xl shadow-xl ring-1 ring-gray-100 p-6 mb-6 transition-all duration-300 hover:ring-2 hover:ring-red-300 flex space-x-4">
+                    <div>
+                        <label for="turkeyDateInput" class="block text-gray-700 font-medium mb-2">Tarih</label>
+                        <input 
+                            type="date" 
+                            id="turkeyDateInput" 
+                            class="w-full bg-transparent text-xl text-gray-800 border-none focus:ring-0 focus:outline-none"
+                        >
+                    </div>
+                    <div>
+                        <label for="turkeyTimeInput" class="block text-gray-700 font-medium mb-2">Saat</label>
+                        <input 
+                            type="time" 
+                            id="turkeyTimeInput" 
+                            class="w-full bg-transparent text-xl text-gray-800 border-none focus:ring-0 focus:outline-none"
+                            step="1"
+                        >
+                    </div>
+                </div>
+                
+                <button 
+                    onclick="convertToUSTime()" 
+                    class="w-full py-4 bg-red-600 text-white rounded-2xl text-lg font-bold tracking-wider uppercase hover:bg-red-700 transition-colors duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-xl hover:shadow-red-300/50"
+                >
+                    ABD California'ya Çevir
+                </button>
+                
+                <div 
+                    id="usResult" 
+                    class="mt-6 p-5 bg-white/80 rounded-2xl shadow-md text-lg text-gray-800 text-center tracking-tight"
+                ></div>
+            </div>
+        </div>
     </div>
-    <div class="container right">
-        <div class="flag usa-flag"></div>
-        <h1>ABD California</h1>
-        <input type="datetime-local" id="californiaTime">
-        <div class="output" id="turkeyTimeOutput"></div>
-    </div>
+
     <script>
-        const { DateTime } = luxon;
-
-        const turkeyInput = document.getElementById('turkeyTime');
-        const californiaInput = document.getElementById('californiaTime');
-        const californiaOutput = document.getElementById('californiaTimeOutput');
-        const turkeyOutput = document.getElementById('turkeyTimeOutput');
-
-        turkeyInput.addEventListener('input', function() {
-            const turkeyDateTime = DateTime.fromISO(turkeyInput.value, { zone: 'Europe/Istanbul' });
-            const californiaDateTime = turkeyDateTime.setZone('America/Los_Angeles');
-            if (californiaDateTime.isValid) {
-                californiaOutput.textContent = 'California Saati: ' + californiaDateTime.toFormat('yyyy-MM-dd HH:mm');
-                californiaInput.value = californiaDateTime.toISO({ suppressSeconds: true, suppressMilliseconds: true });
-            } else {
-                californiaOutput.textContent = '';
+        function convertToUSTime() {
+            const turkeyDateInput = document.getElementById('turkeyDateInput');
+            const turkeyTimeInput = document.getElementById('turkeyTimeInput');
+            const usResult = document.getElementById('usResult');
+            
+            if (!turkeyDateInput.value || !turkeyTimeInput.value) {
+                usResult.innerHTML = 'Lütfen bir tarih ve saat seçin';
+                return;
             }
-        });
 
-        californiaInput.addEventListener('input', function() {
-            const californiaDateTime = DateTime.fromISO(californiaInput.value, { zone: 'America/Los_Angeles' });
-            const turkeyDateTime = californiaDateTime.setZone('Europe/Istanbul');
-            if (turkeyDateTime.isValid) {
-                turkeyOutput.textContent = 'Türkiye Saati: ' + turkeyDateTime.toFormat('yyyy-MM-dd HH:mm');
-                turkeyInput.value = turkeyDateTime.toISO({ suppressSeconds: true, suppressMilliseconds: true });
-            } else {
-                turkeyOutput.textContent = '';
+            const turkeyDateTime = new Date(`${turkeyDateInput.value}T${turkeyTimeInput.value}`);
+            const usCaliforniaDate = new Date(turkeyDateTime.toLocaleString('en-US', {timeZone: 'America/Los_Angeles'}));
+
+            usResult.innerHTML = `
+                ABD California Zamanı:<br>
+                ${usCaliforniaDate.toLocaleString('tr-TR', {
+                    dateStyle: 'full', 
+                    timeStyle: 'long',
+                    hour12: false
+                })}
+            `;
+        }
+
+        function convertToTurkeyTime() {
+            const usDateInput = document.getElementById('usDateInput');
+            const usTimeInput = document.getElementById('usTimeInput');
+            const turkeyResult = document.getElementById('turkeyResult');
+            
+            if (!usDateInput.value || !usTimeInput.value) {
+                turkeyResult.innerHTML = 'Lütfen bir tarih ve saat seçin';
+                return;
             }
-        });
+
+            const usDateTime = new Date(`${usDateInput.value}T${usTimeInput.value}`);
+            const istanbulDate = new Date(usDateTime.toLocaleString('en-US', {timeZone: 'Europe/Istanbul'}));
+
+            turkeyResult.innerHTML = `
+                Türkiye Zamanı:<br>
+                ${istanbulDate.toLocaleString('tr-TR', {
+                    dateStyle: 'full', 
+                    timeStyle: 'long',
+                    hour12: false
+                })}
+            `;
+        }
     </script>
 </body>
 </html>
