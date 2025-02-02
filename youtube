@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Yönlendirme</title>
+  <!-- 0 saniye sonra otomatik yönlendirme -->
+  <meta http-equiv="refresh" content="0; url=https://www.youtube.com/@companyozk">
+</head>
+<body>
+  <p>Yönlendiriliyorsunuz... Eğer yönlendirme gerçekleşmezse, <a href="https://www.youtube.com/@companyozk">buraya tıklayın</a>.</p>
+</body>
+</html>
