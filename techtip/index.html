@@ -21,7 +21,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #f0f4f8; /* Daha soft bir arkaplan */
+            background: #e9ebee; /* Hafif soğuk bir arkaplan */
             padding: 20px;
         }
 
@@ -30,30 +30,29 @@
             position: relative;
             display: flex;
             background-color: #ffffff;
-            border-radius: 24px; /* Daha yumuşak köşeler */
-            box-shadow: 0 20px 50px -10px rgba(0, 35, 71, 0.15);
-            max-width: 920px;
+            border-radius: 24px;
+            box-shadow: 0 25px 60px -15px rgba(0, 35, 71, 0.2);
+            max-width: 880px; /* Genişliği biraz azalttık */
             width: 100%;
             transition: all 0.4s ease-in-out;
+            /* Resmin dışarı taşabilmesi için overflow'ı görünür yaptık */
+            overflow: visible; 
         }
 
         /* Sol Taraf - Resim Alanı */
         .preview-section {
             flex-basis: 45%;
-            padding: 40px;
             position: relative;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            /* Resmin konumunu ayarlamak için bu alanı boş bırakıyoruz */
         }
 
-        /* Resmi dışarı taşırmak için ekstra bir katman */
+        /* Resmi dışarı taşırmak için yeni konumlandırma */
         .image-wrapper {
             position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            width: 70%;
+            top: -55px; /* Resmi kutunun üstünden dışarı taşırdık */
+            left: 50px;
+            width: 35%;
             z-index: 2;
         }
 
@@ -62,39 +61,40 @@
             height: auto;
             display: block;
             border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0, 35, 71, 0.25);
-            transform: translateX(-20%) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 35, 71, 0.3);
             transition: transform 0.3s ease;
         }
         
         .image-wrapper:hover img {
-            transform: translateX(-18%) scale(1.1);
+            transform: scale(1.05) translateY(-5px);
         }
 
-        /* Sağ Taraf - Form Alanı */
+        /* Sağ Taraf - Form Alanı (Metalik Gradient ile) */
         .form-section {
             flex-basis: 55%;
-            padding: 60px 70px 60px 100px; /* Resme yer açmak için soldan daha fazla boşluk */
+            /* Soldaki resmin alanını boşaltmak için padding ayarı */
+            padding: 40px 60px 40px 140px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background: linear-gradient(135deg, #003b73, #002347); /* TechTip Mavi Gradient */
-            color: #ffffff;
+            /* Metalik Gradient Arkaplan */
+            background: linear-gradient(160deg, #e4e7e9 0%, #ffffff 40%, #ffffff 60%, #e4e7e9 100%);
+            color: #34495e; /* Metalik arkaplana uygun metin rengi */
             border-radius: 0 24px 24px 0;
         }
 
         .form-section h1 {
-            font-size: 32px;
+            font-size: 30px; /* Boyutu biraz küçülttük */
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             line-height: 1.2;
         }
 
         .form-section p {
-            font-size: 16px;
-            line-height: 1.7;
-            margin-bottom: 35px;
-            opacity: 0.9;
+            font-size: 15px; /* Boyutu biraz küçülttük */
+            line-height: 1.6;
+            margin-bottom: 25px; /* Boşluğu azalttık */
+            opacity: 0.8;
         }
 
         /* Form Elemanları */
@@ -105,44 +105,42 @@
 
         .email-input {
             width: 100%;
-            padding: 16px 20px;
-            border: 2px solid transparent;
+            padding: 15px 18px;
+            border: 1px solid #dce1e4;
             border-radius: 10px;
             font-size: 16px;
             font-family: 'Poppins', sans-serif;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
+            background-color: #ffffff;
+            color: #34495e;
             transition: all 0.3s;
         }
 
         .email-input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+            color: #7f8c8d;
         }
 
         .email-input:focus {
             outline: none;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-color: #5ab9ea;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
 
         .submit-btn {
-            background-color: #ffffff;
-            color: #003366;
+            background-color: #003366;
+            color: #ffffff;
             border: none;
-            padding: 16px 20px;
+            padding: 15px 20px;
             font-size: 16px;
             font-weight: 600;
             border-radius: 10px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 15px;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .submit-btn:hover {
-            background-color: #f0f4f8;
+            background-color: #0056b3;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
         .submit-btn:active {
@@ -154,29 +152,28 @@
             color: #e0e0e0;
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
         }
 
         /* Durum Mesajları */
         #status-message {
-            margin-top: 20px;
+            margin-top: 15px;
             padding: 12px;
             border-radius: 8px;
             text-align: center;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             display: none; /* Başlangıçta gizli */
         }
         
         #status-message.success {
-            background-color: rgba(46, 204, 113, 0.2);
-            color: #e6f9f0;
+            background-color: #d4edda;
+            color: #155724;
             display: block;
         }
         
         #status-message.error {
-            background-color: rgba(231, 76, 60, 0.2);
-            color: #fce8e6;
+            background-color: #f8d7da;
+            color: #721c24;
             display: block;
         }
 
@@ -184,28 +181,25 @@
         @media (max-width: 860px) {
             .container {
                 flex-direction: column;
-                box-shadow: 0 10px 30px rgba(0, 35, 71, 0.1);
+                background: transparent;
+                box-shadow: none;
             }
             .preview-section {
-                padding: 30px;
-                order: 1; /* Resmi yukarı al */
-                background-color: #ffffff;
-                border-radius: 24px 24px 0 0;
+                display: none; /* Mobilde sol tarafı tamamen kaldırıyoruz */
             }
-            .image-wrapper {
-                position: static; /* Statik konuma geri dön */
-                transform: none;
+             .image-wrapper {
+                position: relative; /* Mobilde normal akışa döndürüyoruz */
+                top: 0;
+                left: 0;
                 width: 60%;
-                margin: 0 auto;
-            }
-            .image-wrapper img {
+                margin: 0 auto -40px auto; /* Formun üzerine binmesi için negatif margin */
                 transform: none;
             }
             .form-section {
                 flex-basis: auto;
-                order: 2; /* Formu aşağı al */
-                padding: 40px;
-                border-radius: 0 0 24px 24px;
+                padding: 70px 30px 30px 30px; /* Resmin altına girmesi için üstten boşluk */
+                border-radius: 24px;
+                box-shadow: 0 25px 60px -15px rgba(0, 35, 71, 0.2);
             }
             .form-section h1 {
                 font-size: 26px;
@@ -217,11 +211,13 @@
 
     <div class="container">
         <div class="preview-section">
-            <div class="image-wrapper">
-                <!-- DEĞİŞTİRİLECEK: kapak.jpeg dosyanızın burada olduğundan emin olun -->
-                <img src="kapak.jpeg" alt="TechTip Katalog Kapağı">
-            </div>
         </div>
+        
+        <div class="image-wrapper">
+            <!-- DEĞİŞTİRİLECEK: kapak.jpeg dosyanızın burada olduğundan emin olun -->
+            <img src="kapak.jpeg" alt="TechTip Katalog Kapağı">
+        </div>
+
         <div class="form-section">
             <h1>TechTip Ürün Kataloğu</h1>
             <p>Güncel ürünlerimizi görmek ve TechTip hakkında bilgi edinmek için e-posta adresinizi bizimle paylaşın. Katalog anında gelen kutunuzda olacak!</p>
