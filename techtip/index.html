@@ -29,13 +29,11 @@
         .container {
             position: relative;
             display: flex;
-            background-color: #ffffff;
             border-radius: 24px;
             box-shadow: 0 25px 60px -15px rgba(0, 35, 71, 0.2);
-            max-width: 880px; /* Genişliği biraz azalttık */
+            max-width: 880px;
             width: 100%;
             transition: all 0.4s ease-in-out;
-            /* Resmin dışarı taşabilmesi için overflow'ı görünür yaptık */
             overflow: visible; 
         }
 
@@ -43,8 +41,8 @@
         .preview-section {
             flex-basis: 45%;
             position: relative;
-            display: flex;
-            /* Resmin konumunu ayarlamak için bu alanı boş bırakıyoruz */
+            background-color: #f4f6f9; /* Griye çalan beyaz arkaplan */
+            border-radius: 24px 0 0 24px;
         }
 
         /* Resmi dışarı taşırmak için yeni konumlandırma */
@@ -69,32 +67,37 @@
             transform: scale(1.05) translateY(-5px);
         }
 
-        /* Sağ Taraf - Form Alanı (Metalik Gradient ile) */
+        /* Sağ Taraf - Form Alanı (Mavi Gradient ile) */
         .form-section {
             flex-basis: 55%;
-            /* Soldaki resmin alanını boşaltmak için padding ayarı */
-            padding: 40px 60px 40px 140px; 
+            padding: 40px 60px 40px 40px; 
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            /* Metalik Gradient Arkaplan */
-            background: linear-gradient(160deg, #e4e7e9 0%, #ffffff 40%, #ffffff 60%, #e4e7e9 100%);
-            color: #34495e; /* Metalik arkaplana uygun metin rengi */
+            align-items: center;
+            justify-content: flex-end; /* İçeriği sağa yasla */
+            background: linear-gradient(135deg, #003b73, #002347); /* Güzel mavi gradient */
+            color: #ffffff;
             border-radius: 0 24px 24px 0;
         }
 
-        .form-section h1 {
-            font-size: 30px; /* Boyutu biraz küçülttük */
+        /* Form içeriğini sarmalayan ve ortalayan bölüm */
+        .form-content {
+            width: 100%;
+            max-width: 380px; /* İçeriğin maksimum genişliği */
+            margin-left: 60px; /* Soldaki resim için boşluk bırak */
+        }
+
+        .form-content h1 {
+            font-size: 30px;
             font-weight: 600;
             margin-bottom: 12px;
             line-height: 1.2;
         }
 
-        .form-section p {
-            font-size: 15px; /* Boyutu biraz küçülttük */
+        .form-content p {
+            font-size: 15px;
             line-height: 1.6;
-            margin-bottom: 25px; /* Boşluğu azalttık */
-            opacity: 0.8;
+            margin-bottom: 25px;
+            opacity: 0.9;
         }
 
         /* Form Elemanları */
@@ -106,28 +109,28 @@
         .email-input {
             width: 100%;
             padding: 15px 18px;
-            border: 1px solid #dce1e4;
+            border: 2px solid transparent;
             border-radius: 10px;
             font-size: 16px;
             font-family: 'Poppins', sans-serif;
-            background-color: #ffffff;
-            color: #34495e;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
             transition: all 0.3s;
         }
 
         .email-input::placeholder {
-            color: #7f8c8d;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .email-input:focus {
             outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: #5ab9ea;
         }
 
         .submit-btn {
-            background-color: #003366;
-            color: #ffffff;
+            background-color: #ffffff;
+            color: #003366;
             border: none;
             padding: 15px 20px;
             font-size: 16px;
@@ -139,7 +142,7 @@
         }
 
         .submit-btn:hover {
-            background-color: #0056b3;
+            background-color: #f0f4f8;
             transform: translateY(-2px);
         }
 
@@ -149,8 +152,6 @@
         
         .submit-btn:disabled {
             background-color: #a0a0a0;
-            color: #e0e0e0;
-            cursor: not-allowed;
             transform: none;
         }
 
@@ -162,18 +163,18 @@
             text-align: center;
             font-size: 14px;
             font-weight: 500;
-            display: none; /* Başlangıçta gizli */
+            display: none;
         }
         
         #status-message.success {
-            background-color: #d4edda;
-            color: #155724;
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #e6f9f0;
             display: block;
         }
         
         #status-message.error {
-            background-color: #f8d7da;
-            color: #721c24;
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #fce8e6;
             display: block;
         }
 
@@ -183,26 +184,30 @@
                 flex-direction: column;
                 background: transparent;
                 box-shadow: none;
+                overflow: hidden; /* Mobil'de taşmayı engelle */
             }
             .preview-section {
-                display: none; /* Mobilde sol tarafı tamamen kaldırıyoruz */
+                 display: none;
             }
-             .image-wrapper {
-                position: relative; /* Mobilde normal akışa döndürüyoruz */
+            .image-wrapper {
+                position: relative;
                 top: 0;
                 left: 0;
                 width: 60%;
-                margin: 0 auto -40px auto; /* Formun üzerine binmesi için negatif margin */
+                margin: 0 auto -40px auto;
                 transform: none;
             }
             .form-section {
                 flex-basis: auto;
-                padding: 70px 30px 30px 30px; /* Resmin altına girmesi için üstten boşluk */
+                justify-content: center;
+                text-align: center;
+                padding: 70px 30px 30px 30px;
                 border-radius: 24px;
                 box-shadow: 0 25px 60px -15px rgba(0, 35, 71, 0.2);
             }
-            .form-section h1 {
-                font-size: 26px;
+            .form-content {
+                margin-left: 0;
+                max-width: 100%;
             }
         }
     </style>
@@ -214,44 +219,38 @@
         </div>
         
         <div class="image-wrapper">
-            <!-- DEĞİŞTİRİLECEK: kapak.jpeg dosyanızın burada olduğundan emin olun -->
             <img src="kapak.jpeg" alt="TechTip Katalog Kapağı">
         </div>
 
         <div class="form-section">
-            <h1>TechTip Ürün Kataloğu</h1>
-            <p>Güncel ürünlerimizi görmek ve TechTip hakkında bilgi edinmek için e-posta adresinizi bizimle paylaşın. Katalog anında gelen kutunuzda olacak!</p>
-            
-            <form class="email-form" id="catalog-form">
-                <input type="email" id="email-input" class="email-input" placeholder="E-posta adresiniz" required>
-                <button type="submit" id="submit-button" class="submit-btn">Kataloğu Anında Gönder</button>
-            </form>
-            <div id="status-message"></div>
+            <div class="form-content">
+                <h1>TechTip Ürün Kataloğu</h1>
+                <p>Güncel ürünlerimizi görmek ve TechTip hakkında bilgi edinmek için e-posta adresinizi bizimle paylaşın. Katalog anında gelen kutunuzda olacak!</p>
+                
+                <form class="email-form" id="catalog-form">
+                    <input type="email" id="email-input" class="email-input" placeholder="E-posta adresiniz" required>
+                    <button type="submit" id="submit-button" class="submit-btn">Kataloğu Anında Gönder</button>
+                </form>
+                <div id="status-message"></div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Form ve elemanlarını seç
         const catalogForm = document.getElementById('catalog-form');
         const emailInput = document.getElementById('email-input');
         const submitButton = document.getElementById('submit-button');
         const statusMessage = document.getElementById('status-message');
 
-        // *** ÖNEMLİ - DEĞİŞTİRİLECEK ***
-        // Google Apps Script'i dağıttıktan sonra aldığınız Web App URL'sini buraya yapıştırın.
         const webAppUrl = 'https://script.google.com/macros/s/BURAYA_KENDİ_WEB_APP_URL_YAPIŞTIRILACAK/exec';
 
-        // Form gönderildiğinde çalışacak fonksiyon
         catalogForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Formun varsayılan gönderimini engelle
-
-            // Butonu devre dışı bırak ve durumu temizle
+            event.preventDefault();
             submitButton.disabled = true;
             submitButton.textContent = 'Gönderiliyor...';
             statusMessage.className = '';
             statusMessage.textContent = '';
             
-            // Fetch API ile Apps Script'e POST isteği gönder
             fetch(webAppUrl, {
                 method: 'POST',
                 headers: {
@@ -259,26 +258,22 @@
                 },
                 body: JSON.stringify({ email: emailInput.value })
             })
-            .then(response => response.json()) // Script'ten gelen JSON yanıtını işle
+            .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    // Başarılı olduğunda
                     statusMessage.className = 'success';
                     statusMessage.textContent = 'Harika! Katalog e-posta adresinize gönderildi. Spam kutunuzu da kontrol edebilirsiniz.';
-                    catalogForm.reset(); // Formu temizle
+                    catalogForm.reset();
                 } else {
-                    // Script bir hata döndürdüğünde
                     throw new Error(data.message || 'Bilinmeyen bir sunucu hatası oluştu.');
                 }
             })
             .catch(error => {
-                // Ağ hatası veya script'ten dönen hata yakalandığında
                 console.error('İstek Hatası:', error);
                 statusMessage.className = 'error';
                 statusMessage.textContent = 'Bir hata oluştu. Lütfen bilgilerinizi kontrol edip tekrar deneyin.';
             })
             .finally(() => {
-                // İşlem bitince butonu tekrar aktif et
                 submitButton.disabled = false;
                 submitButton.textContent = 'Kataloğu Anında Gönder';
             });
