@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechTip Ürün Kataloğu</title>
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        /* Genel Resetleme ve Temel Stiller */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #e0eafc, #cfdef3);
+            padding: 20px;
+        }
+
+        /* Ana Kart */
+        .container {
+            display: flex;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Sol Taraf - PDF Önizleme */
+        .pdf-preview {
+            flex-basis: 45%;
+            background-color: #002347; /* TechTip Koyu Mavi */
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pdf-preview img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sağ Taraf - Form Alanı */
+        .form-section {
+            flex-basis: 55%;
+            padding: 50px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-section h1 {
+            color: #1a2a4c;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .form-section p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        /* Form Elemanları */
+        .email-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+        }
+
+        .submit-btn {
+            background-color: #003366; /* Koyu Mavi */
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3; /* Biraz daha açık mavi */
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .submit-btn:disabled {
+            background-color: #a0a0a0;
+            cursor: not-allowed;
+        }
+
+        /* Durum Mesajları */
+        #status-message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 15px;
+            display: none; /* Başlangıçta gizli */
+        }
+        
+        #status-message.success {
+            background-color: #e6f9f0;
+            color: #0b8f5a;
+            display: block;
+        }
+        
+        #status-message.error {
+            background-color: #fce8e6;
+            color: #c5221f;
+            display: block;
+        }
+
+        /* Mobil Cihazlar için Medya Sorgusu */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .form-section {
+                padding: 40px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="pdf-preview">
+            <img src="kapak.jpg" alt="TechTip Katalog Kapağı">
+        </div>
+        <div class="form-section">
+            <h1>TechTip Ürün Kataloğu</h1>
+            <p>Güncel ürünlerimizi görmek ve TechTip hakkında bilgi edinmek için mail adresinizi bizimle paylaşınız.</p>
+            
+            <form class="email-form" id="catalog-form">
+                <div class="input-wrapper">
+                    <input type="email" id="email-input" class="email-input" placeholder="E-posta adresiniz" required>
+                </div>
+                <button type="submit" id="submit-button" class="submit-btn">Kataloğu Gönder</button>
+            </form>
+            <div id="status-message"></div>
+        </div>
+    </div>
+
+    <script>
+        // Form ve elemanlarını seç
+        const catalogForm = document.getElementById('catalog-form');
+        const emailInput = document.getElementById('email-input');
+        const submitButton = document.getElementById('submit-button');
+        const statusMessage = document.getElementById('status-message');
+
+        // DEĞİŞTİRİLECEK: Google Apps Script'ten aldığınız Web App URL'sini buraya yapıştırın
+        const webAppUrl = 'https://script.google.com/macros/s/BURAYA_WEB_APP_URL_YAPIŞTIRILACAK/exec';
+
+        // Form gönderildiğinde çalışacak fonksiyon
+        catalogForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Formun varsayılan davranışını engelle
+
+            // Butonu devre dışı bırak ve durumu güncelle
+            submitButton.disabled = true;
+            submitButton.textContent = 'Gönderiliyor...';
+            statusMessage.className = '';
+            statusMessage.textContent = '';
+            
+            // Fetch API ile Apps Script'e POST isteği gönder
+            fetch(webAppUrl, {
+                method: 'POST',
+                mode: 'no-cors', // Google Script ile en uyumlu mod
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                // Gövdeyi yönlendirme ile gönderiyoruz, bu no-cors için bir çözüm
+                body: JSON.stringify({ email: emailInput.value })
+            })
+            .then(() => {
+                // 'no-cors' modunda doğrudan yanıtı okuyamayız ama isteğin gittiğini varsayarız.
+                statusMessage.className = 'success';
+                statusMessage.textContent = 'Harika! Katalog e-posta adresinize gönderildi. Lütfen spam kutunuzu da kontrol edin.';
+                catalogForm.reset(); // Formu temizle
+            })
+            .catch(error => {
+                // Ağ hatası veya başka bir sorun olursa
+                statusMessage.className = 'error';
+                statusMessage.textContent = 'Bir hata oluştu. Lütfen tekrar deneyin. Hata: ' + error;
+            })
+            .finally(() => {
+                // İşlem bitince butonu tekrar aktif et
+                submitButton.disabled = false;
+                submitButton.textContent = 'Kataloğu Gönder';
+            });
+        });
+    </script>
+</body>
+</html>
