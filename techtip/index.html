@@ -204,24 +204,28 @@
             // Fetch API ile Apps Script'e POST isteği gönder
             fetch(webAppUrl, {
                 method: 'POST',
-                mode: 'no-cors', // Google Script ile en uyumlu mod
-                cache: 'no-cache',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                // Gövdeyi yönlendirme ile gönderiyoruz, bu no-cors için bir çözüm
                 body: JSON.stringify({ email: emailInput.value })
             })
-            .then(() => {
-                // 'no-cors' modunda doğrudan yanıtı okuyamayız ama isteğin gittiğini varsayarız.
-                statusMessage.className = 'success';
-                statusMessage.textContent = 'Harika! Katalog e-posta adresinize gönderildi. Lütfen spam kutunuzu da kontrol edin.';
-                catalogForm.reset(); // Formu temizle
+            .then(response => response.json()) // Script'ten gelen JSON yanıtını işle
+            .then(data => {
+                // Script'ten gelen yanıta göre işlem yap
+                if (data.status === 'success') {
+                    statusMessage.className = 'success';
+                    statusMessage.textContent = 'Harika! Katalog e-posta adresinize gönderildi. Lütfen spam kutunuzu da kontrol edin.';
+                    catalogForm.reset(); // Formu temizle
+                } else {
+                    // Script bir hata döndürürse
+                    throw new Error(data.message || 'Bilinmeyen bir hata oluştu.');
+                }
             })
             .catch(error => {
                 // Ağ hatası veya başka bir sorun olursa
+                console.error('Fetch Hatası:', error);
                 statusMessage.className = 'error';
-                statusMessage.textContent = 'Bir hata oluştu. Lütfen tekrar deneyin. Hata: ' + error;
+                statusMessage.textContent = 'Bir hata oluştu. Lütfen tekrar deneyin.';
             })
             .finally(() => {
                 // İşlem bitince butonu tekrar aktif et
