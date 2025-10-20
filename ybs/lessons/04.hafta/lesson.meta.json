@@ -1,0 +1,15 @@
+{
+  "id": "ders-04",
+  "title": "YBS1103 · Ders 04: Rekabet Avantajı için Bilişim Sistemleri",
+  "description": "Porter'ın Beş Gücü, değer zinciri ve yıkıcı inovasyon kavramlarıyla rekabet avantajı stratejilerini tartışır.",
+  "date": "2025-10-27",
+  "tags": ["rekabet", "porter", "strateji", "değer-zinciri"],
+  "lessonFile": "lesson.html",
+  "resources": [
+    {
+      "type": "image",
+      "title": "Ders 04 Oturum Görseli",
+      "path": "resources/Finder 2025-10-20 11.37.05.png"
+    }
+  ]
+}
