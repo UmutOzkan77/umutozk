@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YBS1103 - Infografik Sunum</title>
+    <!-- Tailwind CSS'i projemize dahil ediyoruz -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Modern bir görünüm için Google'dan Inter font ailesini yüklüyoruz -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://css.gg/css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Okunabilirliği ve profesyonel bir görünümü sağlamak için temel stiller */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030712; /* Tailwind gray-950 */
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #2dd4bf, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="text-white">
+
+    <!-- Ana Konteyner -->
+    <div class="container mx-auto px-4">
+
+        <!-- BÖLÜM 1: KAPAK SAYFASI -->
+        <section class="min-h-screen flex items-center justify-center">
+            <div class="w-full max-w-4xl mx-auto text-center bg-gray-900/50 backdrop-blur-sm border border-teal-500/20 rounded-2xl p-8 sm:p-12 shadow-2xl shadow-teal-500/10">
+                <p class="text-2xl sm:text-3xl font-bold text-teal-400 tracking-wider mb-4">
+                    YBS1103
+                </p>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter leading-tight mb-6">
+                    Yönetim Bilişim Sistemlerine Giriş
+                </h1>
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-200 mb-8">
+                    Hafta 4: Rekabet Avantajı için Bilişim Sistemleri
+                </h2>
+                <hr class="border-gray-700 w-1/3 mx-auto my-8">
+                <div class="text-gray-400">
+                    <p class="text-lg font-bold text-purple-300 mb-2">
+                        2025-2026 Eğitim-Öğretim Dönemi
+                    </p>
+                    <p class="text-base font-bold text-sky-300">
+                        Doç. Dr. Cemalettin HATİPOĞLU & Arş. Gör. Cemal YÜKSEL
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BÖLÜM 2: DERSİN YOL HARİTASI -->
+        <section class="py-16 sm:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-black gradient-text">Dersin Yol Haritası</h2>
+                <p class="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">Bu derste keşfedeceğimiz temel stratejik kavramlar ve modeller.</p>
+            </div>
+
+            <!-- Flashcard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Kart 1: Stratejinin Kalbinde BS -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-teal-400 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-teal-500/10 border border-teal-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-teal-400"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Stratejinin Kalbinde BS</h3>
+                    <p class="text-gray-400">Bilişim Sistemleri'nin (BS) artık bir maliyet merkezi değil, rekabet avantajı yaratan ve pazarın kurallarını yeniden yazan stratejik bir güç olduğunu anlama.</p>
+                </div>
+
+                <!-- Kart 2: Porter'ın 5 Gücü Modeli -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-teal-400 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-teal-500/10 border border-teal-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-teal-400"><path d="M3 3v18h18"/><path d="M7 12v4h4"/><path d="M11 7v4h4"/><path d="M15 3v4h4"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Porter'ın 5 Gücü Modeli</h3>
+                    <p class="text-gray-400">Bir sektördeki rekabetin dinamiklerini, kârlılık potansiyelini ve endüstri yapısını analiz etmek için kullanılan temel bir çerçeve.</p>
+                </div>
+
+                <!-- Kart 3: Temel Rekabet Stratejileri -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-teal-400 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/10 transform hover:-translate-y-2">
+                     <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-teal-500/10 border border-teal-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-teal-400"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Temel Rekabet Stratejileri</h3>
+                    <p class="text-gray-400">BS kullanarak düşük maliyet liderliği, ürün farklılaştırması, niş pazara odaklanma ve müşteri/tedarikçi yakınlığı gibi stratejiler geliştirme.</p>
+                </div>
+
+                <!-- Kart 4: Mavi Okyanus Stratejisi -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-teal-400 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-teal-500/10 border border-teal-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-teal-400"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.5 21c.6-.5 1.2-1 2.5-1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 17c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.5 17c.6-.5 1.2-1 2.5-1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 13c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.5 13c.6-.5 1.2-1 2.5-1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Mavi Okyanus Stratejisi</h3>
+                    <p class="text-gray-400">Kıyasıya rekabetin olduğu "kırmızı okyanuslar" yerine, rekabetin henüz var olmadığı yeni pazar alanları yaratma ve keşfetme yolları.</p>
+                </div>
+
+                <!-- Kart 5: Değer Zinciri Modeli -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-teal-400 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-teal-500/10 border border-teal-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-teal-400"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Değer Zinciri Modeli</h3>
+                    <p class="text-gray-400">Bir şirketin, hammaddeden son kullanıcıya kadar olan süreçte hangi adımlarda değer yarattığını ve BS'nin bu zinciri nasıl optimize ettiğini analiz etme.</p>
+                </div>
+
+                <!-- Kart 6: Yıkıcı İnovasyon -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-teal-400 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-teal-500/10 border border-teal-500/20 mb-4">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-teal-400"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.75-.75 1.042-1.67 1.302-2.5.524-1.62.547-2.674.547-2.674V7.5c0-2.07-1.5-3.5-3.5-3.5S2 5.43 2 7.5V12c0 1.4.445 2.5 1 3.5l-1.5 1.5Z"/><path d="m22.5 2.5-3 3"/><path d="M13 8 4.8 6.2c-.5-.1-1 .1-1.4.5L.6 10.8c-.4.4-.5 1-.3 1.5L3 16v-2c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2v2l-1.5 1.5c-.3.3-.4.7-.5 1.2l-.2 1.5c-.1.4.2.8.6 1.1.4.3.8.4 1.2.2l1.5-.2c.5-.1.9-.2 1.2-.5L17.8 19.2"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Yıkıcı İnovasyon</h3>
+                    <p class="text-gray-400">Genellikle daha basit ve uygun fiyatlı çözümlerle pazara giren küçük girişimlerin, zamanla pazar devlerini nasıl alt ettiğini ve sektör kurallarını nasıl değiştirdiğini inceleme.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BÖLÜM 3: PORTER'IN REKABET ARENASI -->
+        <section class="py-16 sm:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-black gradient-text">Porter'ın Rekabet Arenası</h2>
+                <p class="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">Bir pazarın ne kadar kârlı olabileceğini anlamak için kullanılan 5 temel güç.</p>
+            </div>
+
+            <!-- Flashcard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Kart 1: Modelin Tanıtımı -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-purple-400 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-purple-500/10 border border-purple-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Porter'ın 5 Gücü Nedir?</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Bir sektörün <span class="font-semibold text-sky-300">"DNA'sını"</span> çıkaran bir analiz aracıdır. Rekabetin sadece rakiplerden ibaret olmadığını, <span class="font-semibold text-sky-300">5 farklı yönden gelen baskıyla</span> şekillendiğini gösterir.</p>
+                </div>
+
+                <!-- Kart 2: Mevcut Rakipler -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-purple-400 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-purple-500/10 border border-purple-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><path d="m14.5 17.5 6-6"/><path d="m11.5 20.5 6-6"/><path d="m8.5 14.5 6-6"/><path d="m5.5 17.5 6-6"/><path d="M16 3l-6 6 4 4 6-6-4-4z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Mevcut Rakiplerin Çekişmesi</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Pazardaki oyuncular ne kadar dişli? <br><b>Örnek:</b> Türkiye'deki online yemek sipariş platformları (GetirYemek, Yemeksepeti). Bu platformlar, <span class="font-semibold text-sky-300">özel indirimler, kurye ağları ve veri analizi</span> gibi bilişim sistemleri araçlarıyla sürekli bir <span class="font-semibold text-sky-300">pazar payı savaşı</span> içindedir.</p>
+                </div>
+
+                <!-- Kart 3: Yeni Girenlerin Tehdidi -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-purple-400 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-purple-500/10 border border-purple-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><path d="M13 4h3a2 2 0 0 1 2 2v14"/><path d="M2 20h3a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2"/><path d="m9 12-3-3 3-3"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Yeni Oyuncuların Tehdidi</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Pazara yeni bir rakibin girmesi ne kadar kolay? <br><b>Örnek:</b> Instagram'a rakip bir sosyal medya platformu kurmak. Asıl engel <span class="font-semibold text-sky-300">"ağ etkisidir"</span>. Milyonlarca kullanıcıyı yönetecek <span class="font-semibold text-sky-300">devasa bir IT altyapısı</span> ve kullanıcıları çekme zorunluluğu, pazara girişi neredeyse imkansız kılar.</p>
+                </div>
+
+                <!-- Kart 4: İkame Ürün/Hizmet Tehdidi -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-purple-400 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-purple-500/10 border border-purple-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><path d="m21 16-4-4 4-4"/><path d="m17 16-4-4 4-4"/><path d="M13 12H3"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">İkame (Alternatif) Ürün Tehdidi</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Müşteriler aynı ihtiyacı başka bir şeyle giderebilir mi? <br><b>Örnek:</b> "Eğlence" ihtiyacı için sinemaya gitmek yerine, bir bilet parasına bir aylık <span class="font-semibold text-sky-300">Netflix veya Exxen üyeliği</span> alabilirsiniz. Dijital yayın platformları, sinema salonları için <span class="font-semibold text-sky-300">güçlü bir ikame tehdididir.</span></p>
+                </div>
+
+                <!-- Kart 5: Müşterilerin Pazarlık Gücü -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-purple-400 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-purple-500/10 border border-purple-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="m21.7 16.4-.9-.3"/><path d="m15.2 21.1-.3-.9"/><path d="m16.4 13.3.9-.3"/><path d="m19.7 19.7-.5-.7"/><path d="m17.7 11.8.8-.5"/><path d="m21.1 15.2-.3-.9"/><path d="m19.1 10.3.7-.5"/><path d="m21.9 12.5-.2-.9"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Müşterilerin Pazarlık Gücü</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Alıcılar fiyatları düşürmek için ne kadar baskı yapabilir? <br><b>Örnek:</b> E-ticaret platformları (Amazon, Trendyol) sayesinde <span class="font-semibold text-sky-300">fiyatları anında karşılaştırma</span> ve <span class="font-semibold text-sky-300">kullanıcı yorumlarını okuma</span> gücüne sahibiz. Başka bir satıcıya geçmenin maliyeti <span class="font-semibold text-sky-300">sadece bir tık</span> olduğu için alıcının gücü zirvededir.</p>
+                </div>
+
+                <!-- Kart 6: Tedarikçilerin Pazarlık Gücü -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-purple-400 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-purple-500/10 border border-purple-500/20 mb-4">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Tedarikçilerin Pazarlık Gücü</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Mal ve hizmet aldığınız firmalar fiyatları artırabilir mi? <br><b>Örnek:</b> Akıllı telefon üreticileri için işletim sistemi tedarikçileri <span class="font-semibold text-sky-300">sadece Google (Android) ve Apple'dır (iOS)</span>. Bu iki firma, telefonun "beynini" sağladığı ve alternatifi olmadığı için <span class="font-semibold text-sky-300">üreticiler üzerinde muazzam güce sahiptir.</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BÖLÜM 4: BS OYUNU NASIL DEĞİŞTİRİYOR? -->
+        <section class="py-16 sm:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-black gradient-text">BS Oyunu Nasıl Değiştiriyor?</h2>
+                <p class="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">Bilişim sistemlerinin Porter'ın 5 gücünü nasıl yeniden şekillendirdiğine yakından bakış.</p>
+            </div>
+
+            <!-- Flashcard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Kart 1: Müşteri Kral, Pazarlar Şeffaf -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-amber-400 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-amber-500/10 border border-amber-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-400"><path d="M17 18a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M12 8v4"/><path d="M12 12h.01"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Müşteri Kral, Pazar Şeffaf</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Artık güç müşteride! Fiyat karşılaştırma siteleri (<span class="font-semibold text-teal-300">Akakçe</span>) ve sosyal medya sayesinde tam şeffaflık var. Tek bir olumsuz <span class="font-semibold text-teal-300">yorum</span>, markaları daha iyi hizmet vermeye zorluyor.</p>
+                </div>
+
+                <!-- Kart 2: Dijitalleşme Kuralları Yıkıyor -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-amber-400 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-amber-500/10 border border-amber-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-400"><path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z"/><path d="M9 8c-2.65 0-4.8 2.15-4.8 4.8 0 1.07.35 2.07.94 2.86L3 18l2.14-2.14c.79.59 1.79.94 2.86.94 2.65 0 4.8-2.15 4.8-4.8S11.65 8 9 8Z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Dijitalleşme Kuralları Yıkıyor</h3>
+                    <p class="text-gray-300 text-base leading-relaxed"><span class="font-semibold text-teal-300">Shopify</span> ile bir gecede e-ticaret sitesi açmak mümkün. Bu durum, <span class="font-semibold text-teal-300">Spotify</span>'ın müzik endüstrisini, <span class="font-semibold text-teal-300">Uber</span>'in ise ulaşımı değiştirmesi gibi yepyeni ve yıkıcı iş modellerinin önünü açıyor.</p>
+                </div>
+
+                <!-- Kart 3: Rekabet Küreselleşti -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-amber-400 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-amber-500/10 border border-amber-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-400"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Rekabet Küreselleşti</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">İnternetle sınırlar kalktı. Artık yerel bir işletme, sadece caddedeki rakibiyle değil, <span class="font-semibold text-teal-300">Amazon veya Zara'nın</span> online mağazasıyla da rekabet ediyor. Rekabet artık <span class="font-semibold text-teal-300">küresel ve 7/24 devam ediyor.</span></p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- BÖLÜM 5: VAKA ANALİZİ: STRATEJİK KÖRLÜKLER -->
+        <section class="py-16 sm:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-black gradient-text">Vaka Analizi: Stratejik Körlükler</h2>
+                <p class="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">Teknolojideki değişimi okuyamayan devlerin ibretlik hikayeleri.</p>
+            </div>
+
+            <!-- Flashcard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Kart 1: Kodak -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-red-400 transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-red-500/10 border border-red-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-400"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-2.5Z"/><circle cx="12" cy="13" r="3"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Kodak: Geleceği İcat Edip Görememek</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Kodak, <span class="font-semibold text-red-300">ilk dijital kamerayı</span> icat etmesine rağmen battı. Neden? Dijital teknolojiyi, kârlı film işleri için bir <span class="font-semibold text-red-300">"ikame (alternatif) tehdidi"</span> olarak gördüler. Yeni pazarı inşa etmek yerine, eski iş modellerini korumaya odaklandılar.</p>
+                </div>
+
+                <!-- Kart 2: Nokia -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-red-400 transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-red-500/10 border border-red-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-400"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/><path d="M4 4h16"/><path d="M4 20h16"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Nokia: Donanıma Takılıp Yazılımı Kaçırmak</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Nokia telefon pazarının kralıyken, iPhone ve Android ile tahtını kaybetti. Hataları? Rekabetin artık sağlam telefon (donanım) değil, <span class="font-semibold text-red-300">yazılım ve uygulama ekosistemi (App Store)</span> olduğunu göremediler. Rekabetin kuralları BS ile yeniden yazılmıştı.</p>
+                </div>
+
+                <!-- Kart 3: Yeni Kural -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-red-400 transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-red-500/10 border border-red-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-400"><path d="M12 12v-2"/><path d="M12 8V4H8"/><path d="M12 4h4"/><path d="M12 12H8v4H4"/><path d="M8 16H4"/><path d="M12 12h4v4h4"/><path d="M16 16h4"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Yeni Kural: Sektör Yok, Ekosistem Var</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Bu hatalar gösteriyor ki bilişim sistemleri, <span class="font-semibold text-red-300">sektör sınırlarını</span> yok ediyor. <span class="font-semibold text-red-300">Apple</span> sadece Samsung'la değil; Google (yazılım), Spotify (müzik) ve bankalarla (Apple Pay) da rekabet ediyor. Şirketler artık tek bir sektörde değil, birbiriyle bağlantılı bir <span class="font-semibold text-red-300">"ekosistemde"</span> yarışıyor.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- BÖLÜM 6: TEMEL REKABET STRATEJİLERİ -->
+        <section class="py-16 sm:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-black gradient-text">Temel Rekabet Stratejileri</h2>
+                <p class="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">Şirketlerin pazarda avantaj kazanmak için kullandığı temel oyun planları.</p>
+            </div>
+
+            <!-- Flashcard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Kart 1: Düşük Maliyetli Liderlik -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-green-400 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-green-500/10 border border-green-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Strateji 1: Düşük Maliyet Liderliği</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Amaç basit: Rakiplerle <span class="font-semibold text-green-300">aynı kalitedeki ürünü veya hizmeti</span> herkesten daha ucuza mal etmek. Bu sayede <span class="font-semibold text-green-300">daha ucuza satıp pazar payı kazanabilir</span> ya da aynı fiyata satıp daha fazla kâr edebilirsin.</p>
+                </div>
+
+                <!-- Kart 2: Verimliliğin Sırrı: BS -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-green-400 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-green-500/10 border border-green-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 9h2"/><path d="M2 15h2"/><path d="M20 9h2"/><path d="M20 15h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Verimliliğin Sırrı: Bilişim Sistemleri</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Maliyetleri düşürmenin yolu verimlilikten geçer. Şirketler, <span class="font-semibold text-green-300">ERP sistemleriyle</span> kaynaklarını planlar, <span class="font-semibold text-green-300">SCM ile</span> tedarik zincirini optimize eder ve <span class="font-semibold text-green-300">RPA (Robotik Süreç Otomasyonu)</span> ile tekrarlayan işleri otomatikleştirerek israfı önler.</p>
+                </div>
+
+                <!-- Kart 3: Vaka Analizi: Pegasus -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-green-400 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-green-500/10 border border-green-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 22 5 22 3.5a2.5 2.5 0 0 0-2.5-2.5c-1.5 0-2.5 1-3.5 2.5L13 8 4.8 6.2c-.5-.1-1 .1-1.4.5l-2.8 2.8c-.4.4-.5 1-.3 1.5L3 16v-2c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2v2l-1.5 1.5c-.3.3-.4.7-.5 1.2l-.2 1.5c-.1.4.2.8.6 1.1.4.3.8.4 1.2.2l1.5-.2c.5-.1.9-.2 1.2-.5L17.8 19.2z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Vaka Analizi: Pegasus Hava Yolları</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Pegasus'un "ucuza uçurma" sırrı, bilişim sistemleridir. <span class="font-semibold text-green-300">Online biletleme</span> ile acente maliyetini sıfırlar, <span class="font-semibold text-green-300">veri analiziyle</span> rota ve yakıt verimliliğini en üst düzeye çıkarır ve <span class="font-semibold text-green-300">dinamik fiyatlandırma algoritmaları</span> ile doluluğu maksimize eder. Her adımda maliyet düşüren bir BS stratejisi izler.</p>
+                </div>
+
+                <!-- Kart 4: Ürün Farklılaştırması -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-cyan-400 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-cyan-500/10 border border-cyan-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Strateji 2: Ürün Farklılaştırması</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">"En ucuz" olmak yerine <span class="font-semibold text-cyan-300">"en farklı"</span> olmayı hedeflersin. Amacın, müşterilerin daha fazla ödemeyi göze alacağı <span class="font-semibold text-cyan-300">benzersiz bir özellik, tasarım veya deneyim</span> sunarak fiyat rekabetinden kaçmaktır.</p>
+                </div>
+
+                <!-- Kart 5: Farklılaşmanın Motoru: BS -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-cyan-400 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-cyan-500/10 border border-cyan-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><path d="M12 20v-4"/><path d="M12 14V4"/><path d="M12 4H8"/><path d="M12 14h-4"/><path d="m8 10 8 4"/><path d="m16 10-8 4"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Farklılaşmanın Motoru: Bilişim Sistemleri</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Günümüzde fark yaratmak, sadece ürünün kendisiyle değil, <span class="font-semibold text-cyan-300">etrafındaki dijital deneyimle</span> olur. Farklılaşmanın merkezinde <span class="font-semibold text-cyan-300">veri, yazılım ve bağlantı teknolojileri</span> vardır. Ürünü bir hizmete dönüştüren de bilişim sistemleridir.</p>
+                </div>
+                
+                <!-- Kart 6: Vaka Analizi: Spotify -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-cyan-400 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-cyan-500/10 border border-cyan-500/20 mb-4">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><circle cx="12" cy="12" r="10"/><path d="M8 12a4 4 0 1 0 8 0"/><path d="M8 12a4 4 0 0 0-4 4"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Vaka Analizi: Spotify</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Spotify sadece müzik satmaz, <span class="font-semibold text-cyan-300">kişiselleştirilmiş bir müzik deneyimi</span> sunar. Asıl farkı yaratan, <span class="font-semibold text-cyan-300">"Haftalık Keşif"</span> gibi listeleri oluşturan <span class="font-semibold text-cyan-300">veri analizi ve yapay zeka algoritmalarıdır.</span> Bu, kopyalanması zor, tamamen BS'ye dayalı bir farklılaşma stratejisidir.</p>
+                </div>
+
+                <!-- Kart 7: Niş Pazara Odaklanma -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-fuchsia-400 transition-all duration-300 hover:shadow-2xl hover:shadow-fuchsia-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-fuchsia-500/10 border border-fuchsia-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-fuchsia-400"><path d="M16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76z"/><circle cx="12" cy="12" r="10"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Strateji 3: Niş Pazara Odaklanma</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">"Herkese" satmaya çalışmak yerine, pazarın <span class="font-semibold text-fuchsia-300">küçük ama özel bir dilimine</span> odaklanırsın. Amaç, o küçük grubun ihtiyaçlarını herkesten daha iyi anlayıp karşılayarak <span class="font-semibold text-fuchsia-300">o alanın vazgeçilmezi</span> olmaktır.</p>
+                </div>
+
+                <!-- Kart 8: Niş Pazarı Bulmak: BS'nin Rolü -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-fuchsia-400 transition-all duration-300 hover:shadow-2xl hover:shadow-fuchsia-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-fuchsia-500/10 border border-fuchsia-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-fuchsia-400"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Niş Pazarı Bulmak: Bilişim Sistemleri</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Bilişim sistemleri, nişleri bulmak için birer radardır. <span class="font-semibold text-fuchsia-300">Sosyal medya analitik araçları</span> ile belirli bir hobisi olan grupları keşfedebilir, <span class="font-semibold text-fuchsia-300">hedefli dijital reklamlarla</span> doğrudan o küçük kitleye çok düşük maliyetle ulaşabilirsin.</p>
+                </div>
+                
+                <!-- Kart 9: Vaka Analizi: Strava -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-fuchsia-400 transition-all duration-300 hover:shadow-2xl hover:shadow-fuchsia-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-fuchsia-500/10 border border-fuchsia-500/20 mb-4">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-fuchsia-400"><path d="M15.5 5.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5z"/><path d="M12 12H4.5a.5.5 0 0 0 0 1H11v1.5a.5.5 0 0 0 1 0V13h1.5a.5.5 0 0 0 0-1H12z"/><path d="M18.5 8.5a.5.5 0 0 0 0-1H14v-3a.5.5 0 0 0-1 0V8h4.5a.5.5 0 0 0 0-1h-3a.5.5 0 0 0 0 1H18.5z"/><path d="M2.5 17.5a.5.5 0 0 0 0-1H7V13a.5.5 0 0 0-1 0v4h4.5a.5.5 0 0 0 0-1h-3a.5.5 0 0 0 0 1H2.5z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Vaka Analizi: Strava</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Strava, Facebook gibi herkese hitap etmez; niş pazarı <span class="font-semibold text-fuchsia-300">"ciddi amatör sporculardır"</span> (koşucular, bisikletçiler). Onlara <span class="font-semibold text-fuchsia-300">GPS tabanlı performans takibi, rota segmentleri ve detaylı veri analizi</span> gibi genel bir sosyal ağın sunamayacağı özel hizmetler sunarak bu pazarın lideri olmuştur.</p>
+                </div>
+
+                <!-- Kart 10: Müşteri & Tedarikçi Yakınlığı -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-orange-400 transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-orange-500/10 border border-orange-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-400"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08v0a2.17 2.17 0 0 0 3.08 0v0a2.17 2.17 0 0 0 0-3.08Z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Strateji 4: Müşteri & Tedarikçi Yakınlığı</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Amaç, müşteriyi veya tedarikçiyi sistemlerine o kadar entegre etmektir ki, rakibe geçmesi <span class="font-semibold text-orange-300">çok zor ve maliyetli</span> hale gelir. Buna <span class="font-semibold text-orange-300">"kilitlenme etkisi" (lock-in effect)</span> denir.</p>
+                </div>
+
+                <!-- Kart 11: Yakınlığın Omurgası: BS -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-orange-400 transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-orange-500/10 border border-orange-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-400"><path d="M12 12v-2"/><path d="M12 8V4H8"/><path d="M12 4h4"/><path d="M12 12H8v4H4"/><path d="M8 16H4"/><path d="M12 12h4v4h4"/><path d="M16 16h4"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Yakınlığın Omurgası: Bilişim Sistemleri</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Bu stratejinin beyni bilişim sistemleridir. <span class="font-semibold text-orange-300">CRM</span> sistemleri müşteri verilerini toplayıp kişiselleştirilmiş deneyimler sunarken, <span class="font-semibold text-orange-300">SCM</span> sistemleri tedarikçilerle anlık veri akışı sağlayarak operasyonları birleştirir.</p>
+                </div>
+                
+                <!-- Kart 12: Vaka Analizi: THY Miles&Smiles -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-orange-400 transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-orange-500/10 border border-orange-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-400"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Vaka Analizi: THY Miles&Smiles</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">THY, sadece uçak bileti satmaz. <span class="font-semibold text-orange-300">Miles&Smiles CRM programı</span> ile her uçuşunuzu kaydeder. Biriken milleriniz, size özel kampanyalar ve statü avantajları (lounge kullanımı vb.) sizi <span class="font-semibold text-orange-300">rakip firmaya geçmekten alıkoyar.</span> Bu, veri ile örülmüş modern bir sadakattir.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- BÖLÜM 7: MOLA SAYFASI -->
+        <section class="min-h-screen flex items-center justify-center">
+            <div class="w-full max-w-4xl mx-auto text-center bg-gray-900/50 backdrop-blur-sm border border-sky-500/20 rounded-2xl p-8 sm:p-12 shadow-2xl shadow-sky-500/10">
+                <div class="flex justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M10 2c-.5 0-1 .5-1 1v2c0 .5.5 1 1 1h4c.5 0 1-.5 1-1V3c0-.5-.5-1-1-1H10Z"/><path d="M2 6h20v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2Z"/><path d="M16 2v2"/><path d="M8 2v2"/><path d="M12 18v.01"/></svg>
+                </div>
+                <h2 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-gray-100">
+                    <span class="gradient-text">10 Dakikalık</span> Kısa Bir Mola
+                </h2>
+            </div>
+        </section>
+
+        <!-- BÖLÜM 8: MAVİ OKYANUS STRATEJİSİ -->
+        <section class="py-16 sm:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-black gradient-text">Mavi Okyanus Stratejisi</h2>
+                <p class="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">Rekabetle savaşmak yerine, rekabeti anlamsız kılmak.</p>
+            </div>
+
+            <!-- Flashcard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Kart 1: Kırmızı vs Mavi Okyanus -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-blue-400 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400"><path d="M22 12c-3.33 1-4.33 4-8 4s-4.67-3-8-4"/><path d="M18 16c-3.33 1-4.33 4-8 4s-4.67-3-8-4"/><path d="M22 8c-3.33 1-4.33 4-8 4S8.67 9 5 8"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Kırmızı Okyanus vs. Mavi Okyanus</h3>
+                    <p class="text-gray-300 text-base leading-relaxed"><span class="font-semibold text-red-400">Kırmızı Okyanus:</span> Rakiplerin pazar payı için kanlı bir savaş verdiği, herkesin bildiği mevcut pazarlar (Örn: Coca-Cola vs. Pepsi).<br><br><span class="font-semibold text-blue-300">Mavi Okyanus:</span> Henüz kimsenin keşfetmediği, rekabetin olmadığı, bilişim sistemleri ile yepyeni bir pazar yaratmak.</p>
+                </div>
+
+                <!-- Kart 2: Değer İnovasyonu -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-blue-400 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400"><path d="M15.07 18.61a6 6 0 1 1 4.24-4.24"/><path d="m21.5 21.5-3.5-3.5"/><path d="M12 7h.01"/><path d="M12 12h.01"/><path d="M7 12h.01"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Mavi Okyanusun Anahtarı: Değer İnovasyonu</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Sadece teknolojik bir yenilik yapmak değildir. Asıl sır, bilişim sistemlerini kullanarak <span class="font-semibold text-blue-300">maliyetleri düşürürken</span> aynı anda müşteri için <span class="font-semibold text-blue-300">değeri sıçramalı bir şekilde artırmaktır.</span></p>
+                </div>
+
+                <!-- Kart 3: Vaka Analizi: Yemeksepeti -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-blue-400 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400"><path d="M5 12V2H19V12"/><path d="M2 12H22"/><path d="M18 12L12 22L6 12"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Vaka Analizi: Yemeksepeti</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Yemeksepeti kurulduğunda rakibi restoran broşürleriydi. Yüzlerce restoranı <span class="font-semibold text-blue-300">tek bir dijital platformda</span> toplayarak, menü karşılaştırma ve kolay sipariş imkanı sundu. <span class="font-semibold text-blue-300">Türkiye'de daha önce var olmayan "online yemek siparişi" pazarını</span> yaratarak kendi Mavi Okyanusunu oluşturdu.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- BÖLÜM 9: MAVİ OKYANUS VAKA ANALİZLERİ -->
+        <section class="py-16 sm:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-black gradient-text">Mavi Okyanus Vaka Analizleri</h2>
+                <p class="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">Rekabeti anlamsız kılan başarılı teknoloji şirketleri.</p>
+            </div>
+
+            <!-- Flashcard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Kart 1: Vaka Analizi: Netflix -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-red-400 transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-red-500/10 border border-red-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-400"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Vaka Analizi: Netflix</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Netflix, Blockbuster gibi DVD kiralama devleriyle savaşmak yerine, <span class="font-semibold text-red-300">"gecikme cezası olmayan"</span> abonelik modeliyle yeni bir pazar yarattı. Geniş bant internetin yaygınlaşmasıyla <span class="font-semibold text-red-300">streaming'e (anlık akış)</span> geçerek, eğlenceyi "kiralanan bir ürün" olmaktan çıkarıp, <span class="font-semibold text-red-300">"erişilen bir hizmete"</span> dönüştürdü ve rekabeti anlamsız kıldı.</p>
+                </div>
+
+                <!-- Kart 2: Vaka Analizi: Airbnb -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-red-400 transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-red-500/10 border border-red-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-400"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Vaka Analizi: Airbnb</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Airbnb, Hilton gibi dev otel zincirleriyle rekabet etmek için yeni oteller inşa etmedi. Bunun yerine bir <span class="font-semibold text-red-300">dijital platform</span> kurarak daha önce var olmayan bir kaynağı, yani <span class="font-semibold text-red-300">insanların boş odalarını</span>, konaklama pazarına dahil etti. Böylece hem ev sahipleri hem de gezginler için yepyeni bir pazar (mavi okyanus) oluşturdu.</p>
+                </div>
+
+                <!-- Kart 3: Vaka Analizi: Nintendo Wii -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-red-400 transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-red-500/10 border border-red-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-400"><path d="M20 10c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8h1a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-1Z"/><path d="M7 10v4"/><path d="M11 10v4"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Vaka Analizi: Nintendo Wii</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">PlayStation ve Xbox, grafik gücü savaşları verirken (kırmızı okyanus), Nintendo tamamen farklı bir şey yaptı. <span class="font-semibold text-red-300">Harekete duyarlı basit kontrollerle,</span> daha önce oyun oynamayan <span class="font-semibold text-red-300">aileleri ve yaşlıları hedefledi.</span> "Oyuncu olmayanlar" için yepyeni bir pazar yaratarak oyun endüstrisinde bir devrim yaptı.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- BÖLÜM 10: BAŞARISIZ MAVİ OKYANUS DENEMELERİ -->
+        <section class="py-16 sm:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-black gradient-text">Başarısız Mavi Okyanus Denemeleri</h2>
+                <p class="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">Teknoloji harikası olmak neden başarıyı garantilemez?</p>
+            </div>
+
+            <!-- Flashcard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Kart 1: Vaka Analizi: Segway -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-orange-400 transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-orange-500/10 border border-orange-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-400"><path d="M8 18V7.5a3.5 3.5 0 0 1 7 0V18"/><path d="M5 18h14"/><path d="M10 4h4"/><circle cx="12" cy="18" r="3"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Vaka Analizi: Segway</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">2001'de tanıtılan Segway, kendi kendini dengeleyen yapısıyla <span class="font-semibold text-orange-300">teknolojik bir devrimdi</span> ama ticari bir <span class="font-semibold text-orange-300">fiyasko</span> oldu. Ulaşımı kökten değiştirmesi beklenirken, garip ve pahalı bir oyuncak olarak kaldı. Bu, harika teknolojinin her zaman harika bir iş modeli anlamına gelmediğinin kanıtıdır.</p>
+                </div>
+
+                <!-- Kart 2: Segway Neden Battı? -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-orange-400 transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-orange-500/10 border border-orange-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-400"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Segway Neden Battı? Beş Ölümcül Hata</h3>
+                    <ol class="text-gray-300 text-base leading-relaxed list-decimal list-inside space-y-1">
+                        <li><span class="font-semibold text-orange-300">Problem Çözmedi:</span> Gerçek bir ihtiyacı karşılamadı.</li>
+                        <li><span class="font-semibold text-orange-300">Hedef Kitle Yoktu:</span> "Herkes kullanacak" dediler ama kimse kullanmadı.</li>
+                        <li><span class="font-semibold text-orange-300">Fiyatı Çok Yüksekti:</span> Sunduğu faydaya göre fahiş bir fiyata sahipti.</li>
+                        <li><span class="font-semibold text-orange-300">Uyumsuzdu:</span> Ne kaldırıma ne de yola sığdı.</li>
+                        <li><span class="font-semibold text-orange-300">Sosyal Kabul Görmedi:</span> Kullanıcılar "garip" görünmekten çekindi.</li>
+                    </ol>
+                </div>
+
+                <!-- Kart 3: Ders: Google Glass ve Metaverse -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-orange-400 transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-orange-500/10 border border-orange-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-400"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z"/><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z"/><path d="M12 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Ders: Google Glass ve Metaverse İçin de Geçerli</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Aynı hatalar <span class="font-semibold text-orange-300">Google Glass</span> için de yapıldı. YBS öğrencisi için ders şudur: <span class="font-semibold text-orange-300">Teknoloji, bir amaca hizmet eden bir araçtır, amacın kendisi değil.</span> Yeni bir teknoloji, eğer gerçek bir sorunu çözmüyor ve insanların hayatına uyum sağlamıyorsa, başarısız olmaya mahkumdur.</p>
+                </div>
+
+                <!-- Kart 4: Vaka Analizi: Google Glass -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-rose-400 transition-all duration-300 hover:shadow-2xl hover:shadow-rose-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-rose-500/10 border border-rose-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-400"><path d="M6 15H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/><path d="M12 15V9a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v6"/><path d="M20 6V5a1 1 0 0 0-1-1h-1"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Vaka Analizi: Google Glass</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Google'ın giyilebilir teknoloji devrimi vaadi, <span class="font-semibold text-rose-300">teknik olarak büyüleyici</span> ama sosyal olarak kabul görmeyen bir fiyaskoya dönüştü. "Gelecekten gelen" bu ürün, teknolojinin <span class="font-semibold text-rose-300">toplumsal dinamikleri</span> görmezden geldiğinde nasıl başarısız olabileceğinin en net örneklerinden biridir.</p>
+                </div>
+
+                <!-- Kart 5: Google Glass Neden Battı? -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-rose-400 transition-all duration-300 hover:shadow-2xl hover:shadow-rose-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-rose-500/10 border border-rose-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-400"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Google Glass Neden Battı? Üç Ölümcül Günah</h3>
+                     <ol class="text-gray-300 text-base leading-relaxed list-decimal list-inside space-y-1">
+                        <li><span class="font-semibold text-rose-300">Çözüm Arayan Teknoloji:</span> Hangi gerçek sorunu çözdüğü belirsizdi.</li>
+                        <li><span class="font-semibold text-rose-300">Pazarlama Fiyaskosu:</span> Geliştirici prototipi, bitmiş bir lüks ürün gibi pazarlandı.</li>
+                        <li><span class="font-semibold text-rose-300">Sosyal Reddedilme:</span> "Glasshole" teriminin doğmasına neden olan gizlilik endişeleri en büyük darbeydi.</li>
+                    </ol>
+                </div>
+                
+                <!-- Kart 6: Ana Ders: Ekosistem Şart! -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-rose-400 transition-all duration-300 hover:shadow-2xl hover:shadow-rose-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-rose-500/10 border border-rose-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-400"><path d="M10 20.5c.5-.5.8-1.2 1.2-2s.8-1.5 1.3-2.5c.5-1 1.2-2 2-3 .8-1 1.5-2.2 2-3.5 .5-1.2.8-2.5 1-4.5"/><path d="m21.5 21.5-2-2"/><path d="m13 14 2-2"/><path d="m10 11 2-2"/><path d="M5 22s2.5-2.5 4-4"/><path d="m14 5 3 3"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Ana Ders: Ekosistem Desteği Şart!</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">YBS öğrencisi için ders şudur: <span class="font-semibold text-rose-300">En parlak teknoloji bile, onu destekleyecek bir ekosistem olmadan işe yaramaz.</span> Başarılı inovasyonlar (Netflix, Airbnb) sadece koddan ibaret değildir; <span class="font-semibold text-rose-300">sosyal kabul, yasal altyapı ve doğru zamanlama</span> gibi faktörlere de bağlıdır.</p>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- BÖLÜM 11: YIKICI İNOVASYON: KURALLARI YENİDEN YAZMAK -->
+        <section class="py-16 sm:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-black gradient-text">Yıkıcı İnovasyon: Kuralları Yeniden Yazmak</h2>
+                <p class="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">Küçüklerin devleri nasıl yendiğinin ve pazar kurallarının nasıl yeniden yazıldığının hikayesi.</p>
+            </div>
+
+            <!-- Flashcard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Kart 1: Yıkıcı İnovasyon Nedir? -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-indigo-400 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-indigo-500/10 border border-indigo-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-400"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M15.5 8.5 12 12l-3.5 3.5"/><path d="M12 12 8.5 8.5 12 5l3.5 3.5L12 12z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Yıkıcı İnovasyon Nedir?</h3>
+                    <p class="text-gray-300 text-base leading-relaxed"><span class="font-semibold text-indigo-300">Sürdürülebilir İnovasyon:</span> Mevcut ürünü daha iyi yapmak (daha hızlı araba).<br><br><span class="font-semibold text-indigo-300">Yıkıcı İnovasyon:</span> Genellikle daha <span class="font-semibold text-indigo-300">basit, ucuz ve erişilebilir</span> bir alternatif sunarak pazarın kurallarını tamamen değiştirmek. Büyük firmalar başta bu tehdidi küçümser.</p>
+                </div>
+
+                <!-- Kart 2: Yıkıcılığın İki Yüzü -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-indigo-400 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-indigo-500/10 border border-indigo-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-400"><path d="M12 3v18"/><path d="M18 9a6 6 0 0 1-12 0"/><path d="M6 9a6 6 0 0 1 12 0"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Yıkıcılığın İki Yüzü</h3>
+                    <p class="text-gray-300 text-base leading-relaxed"><span class="font-semibold text-indigo-300">1. Düşük Uçlu Yıkıcılık:</span> Pazarın en alttaki, en az kârlı müşterilerine "yeterince iyi" bir ürün sunmak.<br><br><span class="font-semibold text-indigo-300">2. Yeni Pazar Yıkıcılığı:</span> Daha önce ürünü hiç kullanmayan <span class="font-semibold text-indigo-300">"tüketici olmayanları"</span> hedef alarak yepyeni bir pazar yaratmak.</p>
+                </div>
+
+                <!-- Kart 3: Vaka Analizi: Netflix vs. Blockbuster -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-indigo-400 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-indigo-500/10 border border-indigo-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-400"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Vaka Analizi: Netflix vs. Blockbuster</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Netflix, başlangıçta Blockbuster'ın ilgilenmediği, "gecikme cezası istemeyen" niş bir kitleyi hedefledi (Yeni Pazar Yıkıcılığı). Blockbuster bu küçük rakibi <span class="font-semibold text-indigo-300">küçümsedi</span>. İnternet yaygınlaşınca Netflix, <span class="font-semibold text-indigo-300">streaming teknolojisiyle</span> ana pazara tırmandı ve devi yok etti.</p>
+                </div>
+
+                <!-- Kart 4: Vaka Analizi: Canva vs. Adobe -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-indigo-400 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-indigo-500/10 border border-indigo-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-400"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Vaka Analizi: Canva vs. Adobe Photoshop</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Adobe, profesyonellere karmaşık ve pahalı yazılımlar satarken, Canva <span class="font-semibold text-indigo-300">"tüketici olmayanları"</span> hedefledi: Basit bir sosyal medya gönderisi tasarlamak isteyen ama Photoshop öğrenmek istemeyen milyonlarca insan. <span class="font-semibold text-indigo-300">Basit, web tabanlı ve ücretsiz bir modelle</span> yepyeni bir pazar yarattı.</p>
+                </div>
+
+                <!-- Kart 5: Tartışma: Uber Yıkıcı mı? -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-indigo-400 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-indigo-500/10 border border-indigo-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-400"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Tartışma: Uber Yıkıcı mı?</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Teoriye göre <span class="font-semibold text-indigo-300">hayır</span>. Uber, pazarın en altını veya "tüketici olmayanları" hedeflemedi. Doğrudan taksi müşterilerine, <span class="font-semibold text-indigo-300">BS destekli daha iyi bir hizmet</span> sundu. Bu, pazarın kurallarını değiştiren bir <span class="font-semibold text-indigo-300">"sürdürülebilir inovasyon"</span> olarak da görülebilir.</p>
+                </div>
+
+                <!-- Kart 6: YBS Öğrencisi İçin Ders -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-indigo-400 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-indigo-500/10 border border-indigo-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-400"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">YBS Öğrencisi İçin Ders</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Kavramları ezberlemeyin, <span class="font-semibold text-indigo-300">eleştirel analiz yapın</span>. Bir teknoloji veya iş modeli, teorik bir tanıma tam olarak uymasa bile pazarı kökten değiştirebilir. Önemli olan, <span class="font-semibold text-indigo-300">BS'nin bu değişimi nasıl mümkün kıldığını</span> anlamaktır.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- BÖLÜM 12: DEĞER ZİNCİRİ: BİR FİKRİN ÜRÜNE YOLCULUĞU -->
+        <section class="py-16 sm:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-black gradient-text">Değer Zinciri: Bir Fikrin Ürüne Yolculuğu</h2>
+                <p class="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">Bir şirketin, bir fikri müşteriye ulaşan bir değere nasıl dönüştürdüğünün haritası.</p>
+            </div>
+
+            <!-- Flashcard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Kart 1: Değer Zinciri Nedir? -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-pink-400 transition-all duration-300 hover:shadow-2xl hover:shadow-pink-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-pink-500/10 border border-pink-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-400"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Değer Zinciri Nedir?</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Bir şirketin <span class="font-semibold text-pink-300">fikirden müşteriye giden yolculuğudur.</span> Hammaddenin alınıp, ürüne dönüştürülüp, pazarlanıp, satılmasına ve destek verilmesine kadar her adımı inceler. <br><b>Örnek:</b> Trendyol'da gördüğünüz bir tişörtün size ulaşana kadarki tüm serüveni.</p>
+                </div>
+
+                <!-- Kart 2: Birincil Faaliyetler (Sahne Önü - 1) -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-pink-400 transition-all duration-300 hover:shadow-2xl hover:shadow-pink-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-pink-500/10 border border-pink-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-400"><path d="M5 18H3c-1.1 0-2-.9-2-2V8c0-1.1.9-2 2-2h3.8c.4 0 .8.2 1 .5L10 8"/><path d="M19 18h2c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-3.8c-.4 0-.8.2-1 .5L14 8"/><path d="M12 12.5V16.5"/><path d="M12 8V6"/><path d="M7 18v-5.5C7 10.4 9.2 9 12 9s5 1.4 5 3.5V18"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Birincil Faaliyetler (Sahne Önü - 1)</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Ürünün fiziksel yolculuğu: <br>• <span class="font-semibold text-pink-300">İç Lojistik:</span> Kumaşın depoya gelmesi (WMS ile stok takibi).<br>• <span class="font-semibold text-pink-300">Operasyonlar:</span> Kumaşın tişörte dönüşmesi (Üretim Planlama Yazılımları).<br>• <span class="font-semibold text-pink-300">Dış Lojistik:</span> Tişörtün kargoya verilmesi (Rota Optimizasyonu).</p>
+                </div>
+
+                <!-- Kart 3: Birincil Faaliyetler (Sahne Önü - 2) -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-pink-400 transition-all duration-300 hover:shadow-2xl hover:shadow-pink-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-pink-500/10 border border-pink-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-400"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Birincil Faaliyetler (Sahne Önü - 2)</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Müşteriyle temas anları: <br>• <span class="font-semibold text-pink-300">Pazarlama ve Satış:</span> Instagram reklamları, "sana özel" indirimler (Veri Analizi, CRM).<br>• <span class="font-semibold text-pink-300">Servis:</span> Yanlış beden geldiğinde kolay iade süreci (Müşteri Hizmetleri Yazılımları).</p>
+                </div>
+
+                <!-- Kart 4: Destek Faaliyetleri (Sahne Arkası) -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-pink-400 transition-all duration-300 hover:shadow-2xl hover:shadow-pink-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-pink-500/10 border border-pink-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-400"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.78 1.28a2 2 0 0 0 .73 2.73l.04.02a2 2 0 0 1 .97 1.91v.44a2 2 0 0 1-.97 1.91l-.04.02a2 2 0 0 0-.73 2.73l.78 1.28a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.78-1.28a2 2 0 0 0-.73-2.73l-.04-.02a2 2 0 0 1-.97-1.91v-.44a2 2 0 0 1 .97-1.91l.04-.02a2 2 0 0 0 .73-2.73l-.78-1.28a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Destek Faaliyetleri (Sahne Arkası)</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Sahne önünü destekleyen görünmez kahramanlar: <br>• <span class="font-semibold text-pink-300">Altyapı:</span> Muhasebe (ERP Sistemleri).<br>• <span class="font-semibold text-pink-300">İK Yönetimi:</span> İşe alım (İK Yazılımları).<br>• <span class="font-semibold text-pink-300">Teknoloji Geliştirme:</span> Mobil uygulamanın iyileştirilmesi.<br>• <span class="font-semibold text-pink-300">Tedarik:</span> En iyi kumaşı bulma (Tedarikçi Yönetim Sistemleri).</p>
+                </div>
+
+                <!-- Kart 5: Zincirin Sırrı: Bilgi Akışı -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-pink-400 transition-all duration-300 hover:shadow-2xl hover:shadow-pink-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-pink-500/10 border border-pink-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-400"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M10 7V3"/><path d="M10 21v-4"/><path d="M14 10H3"/><path d="M21 10h-7"/><path d="M14 21v-7"/><path d="M14 3v7"/><path d="M21 14h-7"/><path d="M3 14h7"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">Zincirin Sırrı: Entegre Bilgi Akışı</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Asıl sihir, bu adımları birbirine bağlayan <span class="font-semibold text-pink-300">bilgi akışıdır.</span> Müşterinin bir tişörtü çok beğenmesi (Pazarlama verisi), anında üretim planını (Operasyonlar) ve kumaş siparişini (Tedarik) etkilemelidir. Bu entegrasyonu sağlayan şey bilişim sistemleridir.</p>
+                </div>
+
+                <!-- Kart 6: YBS'ci İçin Ana Fikir -->
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-pink-400 transition-all duration-300 hover:shadow-2xl hover:shadow-pink-500/10 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-pink-500/10 border border-pink-500/20 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-400"><path d="M12 2a10 10 0 0 0-10 10c0 4.42 2.87 8.17 6.84 9.5.6.11.82-.26.82-.57v-2.26c-2.78.6-3.37-1.34-3.37-1.34-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.08-.72.08-.72 1.19.08 1.82 1.23 1.82 1.23 1.06 1.81 2.78 1.29 3.46.99.11-.77.41-1.29.76-1.59-2.64-.3-5.42-1.32-5.42-5.88 0-1.3.47-2.36 1.24-3.19-.13-.3-.54-1.51.12-3.15 0 0 1-.32 3.28 1.22a11.3 11.3 0 0 1 3-.4c1.02.01 2.05.14 3 .4 2.28-1.54 3.28-1.22 3.28-1.22.66 1.64.25 2.85.12 3.15.77.83 1.24 1.89 1.24 3.19 0 4.58-2.78 5.58-5.44 5.88.42.36.81 1.09.81 2.2v3.28c0 .31.22.69.82.57A10 10 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">YBS'ci İçin Ana Fikir</h3>
+                    <p class="text-gray-300 text-base leading-relaxed">Rekabet avantajı, sadece iyi bir ürünle değil, o ürünü müşteriye ulaştıran <span class="font-semibold text-pink-300">tüm zinciri bilişim sistemleriyle akıllıca yönetmekle</span> kazanılır. YBS'cinin görevi, bu zincirin halkalarını <span class="font-semibold text-pink-300">ERP, SCM, CRM gibi sistemlerle</span> birbirine bağlayarak şirketi daha hızlı, verimli ve kârlı yapmaktır.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <script src="../../lessons-data.js"></script>
+    <script src="../../resource-viewer.js"></script>
+    <script src="../../lesson-resources.js"></script>
+    <script>
+        initLessonResources("ders-04");
+    </script>
+</body>
+</html>

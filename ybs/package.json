@@ -1,0 +1,9 @@
+{
+  "name": "ybs-ders-merkezi",
+  "version": "1.0.0",
+  "description": "YBS ders içerikleri için statik ders dizini üretimi",
+  "type": "module",
+  "scripts": {
+    "generate-lessons": "node scripts/generate-lessons.mjs"
+  }
+}
