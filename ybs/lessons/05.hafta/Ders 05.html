@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hafta 5: Veri Yönetimi Sunumu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+            color: #020617; /* Slate 950 */
+            /* a single page view -> scrollable view */
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #1d4ed8, #3b82f6); /* Blue 700 to Blue 500 */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* General slide structure */
+        .slide {
+            min-height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+        }
+
+        /* Subtle background shapes */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+            z-index: 0;
+            animation: float 40s infinite ease-in-out;
+        }
+        .shape-1 { 
+            width: 500px; 
+            height: 500px; 
+            background-color: #3b82f6; /* Blue 500 */
+            top: -10%; 
+            left: -15%; 
+            animation-duration: 45s; 
+        }
+        .shape-2 { 
+            width: 350px; 
+            height: 350px; 
+            background-color: #1d4ed8; /* Blue 700 */
+            bottom: -15%; 
+            right: -10%; 
+            animation-duration: 35s; 
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-30px) translateX(20px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+        
+        .content-container {
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease-out forwards 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Flashcard styles */
+        .flash-card {
+            background-color: white;
+            border-radius: 1rem; /* rounded-2xl */
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+            border: 1px solid #e2e8f0; /* slate-200 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align content to the start */
+        }
+        
+        .flash-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        .text-highlight {
+            color: #1d4ed8; /* Blue-700 */
+            font-weight: 600; /* semibold */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Kapak Sayfası -->
+    <section class="slide">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+
+        <div class="content-container text-center p-8 max-w-4xl mx-auto">
+            <!-- Ders Kodu -->
+            <div class="mb-4">
+                <span class="bg-blue-100 text-blue-800 text-sm font-bold tracking-widest uppercase px-4 py-1 rounded-full">
+                    YBS1103
+                </span>
+            </div>
+            
+            <!-- Ana Başlık -->
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight">
+                Yönetim Bilişim Sistemlerine Giriş
+            </h1>
+            
+            <!-- Konu Başlığı -->
+            <p class="mt-4 text-xl md:text-2xl font-semibold gradient-text">
+                Hafta 5: Veri Yönetimi ve Veritabanı Yönetimi Sistemleri
+            </p>
+            
+            <!-- Alt Bilgiler -->
+            <div class="mt-8 border-t border-slate-200 pt-6">
+                <p class="text-lg text-slate-700 font-bold">
+                    2025-2026 Eğitim-Öğretim Dönemi
+                </p>
+                <p class="mt-2 text-md text-slate-800 font-bold">
+                    Doç. Dr. Cemalettin HATİPOĞLU & Arş. Gör. Cemal YÜKSEL
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Bölüm 1: Giriş ve Flashcardlar -->
+    <section class="slide bg-slate-50">
+        <div class="content-container w-full max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+                    <span class="gradient-text">Veri Çağında YBS:</span> Yeni Rolümüz
+                </h2>
+                <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">
+                    Günümüz iş dünyasında "veri" en değerli varlıktır. Peki bu dünyada bir YBS profesyonelinin rolü nedir? Gelin yakından bakalım.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Flashcard 1: Veri Çağında İş Dünyası -->
+                <div class="flash-card">
+                    <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Veri: Modern Dünyanın Petrolü</h3>
+                    <p class="text-slate-600 text-base leading-relaxed">
+                        Eskiden petrol ne kadar değerliyse, bugün <span class="text-highlight">veri</span> o kadar değerli. Şirketler artık müşterilerinin davranışlarını anlamak ve doğru kararlar almak için sürekli veri topluyor.
+                        <br><br>
+                        <strong>Sektör Örneği:</strong> <span class="text-highlight">Netflix</span>, hangi diziyi kaç saat izlediğiniz verisini kullanarak size yeni dizi önerileri sunar. <span class="text-highlight">Trendyol</span>, hangi ürünlere tıkladığınız verisiyle ana sayfanızı size özel hale getirir.
+                    </p>
+                </div>
+
+                <!-- Flashcard 2: YBS Profesyonelinin Yeni Rolü -->
+                <div class="flash-card">
+                    <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20V16"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Dijital Orkestra Şefi</h3>
+                    <p class="text-slate-600 text-base leading-relaxed">
+                        Bir YBS uzmanı, bir şirketin <span class="text-highlight">dijital sinir sistemini</span> tasarlar. Verinin toplanmasından işlenmesine ve yöneticilere anlamlı bir rapor olarak sunulmasına kadar tüm süreci yönetir.
+                        <br><br>
+                        <strong>Sektör Örnekleri:</strong>
+                        <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li><strong>Spotify:</strong> Dinlediğiniz her şarkı verisini analiz edip size özel "Haftalık Keşif" listesi oluşturan sistemleri tasarlar.</li>
+                           <li><strong>Kargo Şirketi:</strong> Bir paketin anlık konum verisini, trafik verisiyle birleştirip en hızlı rotayı çizen ve size "kargonuz yolda" bildirimini gönderen altyapıyı kurar.</li>
+                        </ul>
+                    </p>
+                </div>
+
+<!-- Flashcard 3: Dersin Yol Haritası -->
+<div class="flash-card">
+    <div class="bg-blue-100 p-3 rounded-xl mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="text-blue-700">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+        </svg>
+    </div>
+    <h3 class="text-xl font-bold text-slate-900 mb-2">Verinin Yapı Taşları</h3>
+    <p class="text-slate-600 text-base leading-relaxed">
+        Veriyi anlamak, bilgiyi düzenlemenin ilk adımıdır. Bir kütüphanedeki bilgi sistemini düşünelim:
+        <br><br>
+        <strong>Kütüphane Benzetmesi:</strong>
+        <ul class="list-disc list-inside mt-2 space-y-1">
+            <li><span class="text-highlight">Bit & Byte:</span> “U” veya “z” gibi tek karakter.</li>
+            <li><span class="text-highlight">Field (Alan):</span> “Umut” gibi anlamlı bir kelime — örneğin “Ad”.</li>
+            <li><span class="text-highlight">Record (Kayıt):</span> “Umut Özkan, 12345, YBS”.</li>
+            <li><span class="text-highlight">File (Dosya):</span> Tüm öğrenci kayıtlarını içeren “Öğrenciler” dosyası.</li>
+            <li><span class="text-highlight">Database (Veritabanı):</span> “Öğrenciler”, “Dersler”, “Notlar” gibi dosyaların bütünüdür.</li>
+        </ul>
+    </p>
+</div>
+
+    </section>
+
+    <!-- Bölüm 2: Veritabanı Nedir? -->
+    <section class="slide">
+        <div class="content-container w-full max-w-7xl mx-auto">
+           <div class="text-center mb-12">
+               <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+                   <span class="gradient-text">Veritabanı (Database)</span> Nedir?
+               </h2>
+               <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">
+                   Verilerimizi nerede ve nasıl sakladığımız, onlardan ne kadar değer üretebileceğimizi belirler. Gelin bu dijital kütüphanelere yakından bakalım.
+               </p>
+           </div>
+          
+           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+               <!-- Flashcard 1: Tanım -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">Süper Akıllı Rehber</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Veritabanını, dağınık bir not defteri (Excel gibi) yerine, her bilginin kendi özel yerinde olduğu, akıllı ve organize bir dijital kütüphane gibi düşünün. Amacı, milyonlarca veriyi <span class="text-highlight">hızlı, güvenli ve hatasız</span> bir şekilde yönetmektir.
+                       <br><br>
+                       <strong>Analoji:</strong> Telefonunuzdaki <span class="text-highlight">"Kişiler"</span> uygulaması basit bir veritabanıdır. Her kişinin adı, numarası, e-postası belirli alanlarda, düzenli bir şekilde tutulur.
+                   </p>
+               </div>
+
+               <!-- Flashcard 2: Üstünlükler -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">Veritabanının Süper Güçleri</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Veritabanları, basit tablolardan çok daha fazlasını yapar:
+                       <ul class="list-disc list-inside mt-2 space-y-2">
+                          <li><span class="text-highlight">Tekrarı Önler:</span> Instagram'da profil bilginiz tek bir yerde tutulur, her fotoğraf için kopyalanmaz.</li>
+                          <li><span class="text-highlight">Tutarlılık Sağlar:</span> Trendyol'da stokta 1 kalan bir ürünü aynı anda 2 kişi satın alamaz.</li>
+                           <li><span class="text-highlight">Hızlıdır:</span> Spotify'da milyonlarca şarkı arasından birini saniyeler içinde bulmanızı sağlar.</li>
+                          <li><span class="text-highlight">Güvenlidir:</span> Banka uygulamanızda sadece kendi hesap bilgilerinizi görmenizi sağlar.</li>
+                       </ul>
+                   </p>
+               </div>
+
+               <!-- Flashcard 3: Kullanım Alanları -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M10 21h7a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-7"></path><path d="M10 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"></path><path d="M10 21V3"></path></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">Aslında Her Yerde!</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Kullandığınız neredeyse her modern uygulama gücünü bir veritabanından alır. Onlar olmasaydı dijital dünya kaosa sürüklenirdi.
+                       <br><br>
+                       <strong>Örnekler:</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li><strong>Öğrenci Bilgi Sistemi:</strong> Notlarınız, dersleriniz, devamsızlığınız.</li>
+                           <li><strong>e-Devlet:</strong> Tüm vatandaşlık bilgilerimiz.</li>
+                           <li><strong>Hastane Randevuları (MHRS):</strong> Doktor, hasta ve randevu bilgileri.</li>
+                       </ul>
+                   </p>
+               </div>
+           </div>
+       </div>
+   </section>
+
+    <!-- Bölüm 3: Veritabanının Anatomisi -->
+    <section class="slide bg-slate-50">
+        <div class="content-container w-full max-w-7xl mx-auto">
+           <div class="text-center mb-12">
+               <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+                   <span class="gradient-text">Veritabanının Anatomisi:</span> Excel'den Fazlası
+               </h2>
+               <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">
+                   Bir veritabanını daha yakından inceleyelim. Tıpkı bir Excel tablosu gibi görünse de, her parçasının özel bir adı ve görevi vardır.
+               </p>
+           </div>
+          
+           <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Sol Taraf: Açıklama Kartları -->
+                <div class="flex flex-col gap-6">
+                    <!-- Kart 1: Tablo & Alan -->
+                    <div class="flash-card !p-6 flex-row items-center gap-4">
+                        <div class="bg-blue-100 p-3 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M12 3v18"/><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">Tablo & Alan (Sütun)</h3>
+                            <p class="text-slate-600 text-sm"><strong>Tablo</strong>, "Öğrenciler" gibi bir konunun verilerini tutar. <strong>Alan</strong> ise "Ad", "Soyad" gibi bir bilgi başlığıdır.</p>
+                        </div>
+                    </div>
+                    <!-- Kart 2: Kayıt & Hücre -->
+                    <div class="flash-card !p-6 flex-row items-center gap-4">
+                        <div class="bg-blue-100 p-3 rounded-lg">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">Kayıt (Satır) & Hücre</h3>
+                            <p class="text-slate-600 text-sm"><strong>Kayıt</strong>, bir öğrencinin tüm bilgilerini içeren satırdır. <strong>Hücre</strong> ise o öğrencinin sadece adı gibi tek bir veridir.</p>
+                        </div>
+                    </div>
+                </div>
+
+               <!-- Sağ Taraf: Görsel Tablo Örneği -->
+               <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-200">
+                    <h4 class="text-lg font-bold text-center text-slate-800 mb-4">"Öğrenciler" Tablosu</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="bg-slate-100">
+                                    <th class="p-3 font-semibold text-slate-600 rounded-tl-lg whitespace-nowrap"><span class="bg-blue-200 text-blue-800 px-2 py-1 rounded-md">Alan (Sütun)</span><br>OgrenciNo</th>
+                                    <th class="p-3 font-semibold text-slate-600">Ad</th>
+                                    <th class="p-3 font-semibold text-slate-600 rounded-tr-lg">Soyad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-slate-100">
+                                    <td class="p-3 text-slate-800 font-medium">101</td>
+                                    <td class="p-3 text-slate-800 font-medium relative">
+                                        <span class="absolute -top-2 -left-2 text-xs font-bold text-white bg-blue-600 px-2 py-1 rounded-full animate-pulse">Hücre</span>
+                                        Ayşenur
+                                    </td>
+                                    <td class="p-3 text-slate-800 font-medium">YÜKSEL</td>
+                                </tr>
+                                <tr class="border-b border-slate-100 relative">
+                                    <td class="p-3 text-slate-800 font-medium">102</td>
+                                    <td class="p-3 text-slate-800 font-medium">Defne</td>
+                                    <td class="p-3 text-slate-800 font-medium">KURT</td>
+                                    <td class="absolute left-full top-1/2 -translate-y-1/2 ml-2 text-xs font-bold text-white bg-blue-600 px-2 py-1 rounded-full whitespace-nowrap"><- Kayıt (Satır)</td>
+                                </tr>
+                                <tr class="">
+                                    <td class="p-3 text-slate-800 font-medium rounded-bl-lg">103</td>
+                                    <td class="p-3 text-slate-800 font-medium">Berk</td>
+                                    <td class="p-3 text-slate-800 font-medium rounded-br-lg">ERGÜL</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+               </div>
+           </div>
+       </div>
+   </section>
+
+    <!-- Bölüm 4: Veritabanı Yönetim Sistemleri (VTYS) -->
+    <section class="slide">
+        <div class="content-container w-full max-w-7xl mx-auto">
+           <div class="text-center mb-12">
+               <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+                   <span class="gradient-text">Veritabanı Yönetim Sistemi</span> (VTYS)
+               </h2>
+               <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">
+                   Veritabanı kütüphane ise, VTYS de o kütüphaneyi yöneten süper güçlü bir kütüphanecidir. Gelin bu yazılımların görevlerine bakalım.
+               </p>
+           </div>
+          
+           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+               <!-- Flashcard 1: VTYS Nedir? -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">Veritabanının Beyni</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       VTYS, veritabanını yöneten özel bir yazılımdır. Bizim ve kullandığımız uygulamaların (Instagram, Otoyol Uygulaması vb.) veritabanı ile <span class="text-highlight">güvenli bir şekilde konuşmasını sağlayan bir tercümandır.</span> 
+                       <br><br>
+                       <strong>Analoji:</strong> Bilgisayarınızdaki <span class="text-highlight">Windows veya macOS</span> gibidir. Siz mouse ile bir ikona tıklarsınız, işletim sistemi bu komutu donanımın anlayacağı dile çevirir. VTYS de "bana bu kullanıcıyı göster" komutunu veritabanının anlayacağı dile çevirir.
+                   </p>
+               </div>
+
+               <!-- Flashcard 2: Temel Görevleri -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">Kütüphanecinin Günlük İşleri</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       VTYS'nin her gün yaptığı temel işler vardır:
+                       <ul class="list-disc list-inside mt-2 space-y-2">
+                          <li><span class="text-highlight">Veri Ekleme/Silme/Güncelleme:</span> Instagram'a yeni bir fotoğraf yüklemeniz (Ekleme), yorumu silmeniz (Silme) veya profilinizi güncellemeniz (Güncelleme).</li>
+                          <li><span class="text-highlight">Veri Sorgulama:</span> Google'da arama yaptığınızda veya Trendyol'da "kırmızı ayakkabı" diye filtrelediğinizde arka planda VTYS çalışır.</li>
+                           <li><span class="text-highlight">Güvenlik:</span> Banka uygulamanızda sadece kendi hesap bilgilerinizi görmenizi sağlar.</li>
+                       </ul>
+                   </p>
+               </div>
+
+               <!-- Flashcard 3: Gelişmiş Görevleri -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"></path><path d="M7.07 14.94c-1.66 0-3 1.34-3 3 0 1.31-1.16 2.37-2.62 2.37a2.38 2.38 0 0 1-1.38-4.22V17a2.99 2.99 0 0 1 5.44-1.64h.26Z"></path></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">Arka Planın Kahramanları</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       VTYS, biz farkında olmadan kritik görevler de üstlenir:
+                       <br><br>
+                       <strong>Örnekler:</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li><strong>Trafik Polisliği:</strong> Biletix'te son konseri biletini almak için yüzlerce kişi aynı anda butona bastığında, bileti <span class="text-highlight">sadece bir kişiye satar</span> ve sistemi çökertmez.</li>
+                           <li><strong>Sigorta:</strong> Bankanızın sunucuları çökse bile, para transferi gibi işlemlerin <span class="text-highlight">kaybolmamasını sağlamak</span> için sürekli yedek alır ve gerektiğinde sistemi kurtarır.</li>
+                       </ul>
+                   </p>
+               </div>
+           </div>
+       </div>
+   </section>
+
+    <!-- Bölüm 5: Veri Türleri -->
+    <section class="slide bg-slate-50">
+        <div class="content-container w-full max-w-7xl mx-auto">
+           <div class="text-center mb-12">
+               <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+                   <span class="gradient-text">Verinin Farklı Yüzleri</span>
+               </h2>
+               <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">
+                   Topladığımız her veri aynı değildir. Verileri, ne kadar düzenli olduklarına göre üç ana kategoriye ayırabiliriz.
+               </p>
+           </div>
+          
+           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+               <!-- Flashcard 1: Yapısal Veri -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><rect x="3" y="3" width="18" height="18" rx="1"></rect><rect x="7" y="7" width="3" height="9"></rect><rect x="14" y="7" width="3" height="5"></rect></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">Yapısal Veri: Mükemmel Düzen</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Bu veri türü, bir Excel tablosu gibi <span class="text-highlight">mükemmel bir düzene sahiptir.</span> Her bilginin yeri bellidir (satırlar ve sütunlar). Bilgisayarların anlaması ve işlemesi en kolay veri türüdür.
+                       <br><br>
+                       <strong>Örnekler:</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                          <li>Öğrenci bilgi sistemindeki not tablosu (Öğrenci No, Ders Kodu, Not).</li>
+                          <li>Bir bankanın müşteri listesi (Müşteri ID, Ad, Soyad, Bakiye).</li>
+                           <li>Trendyol'daki ürünler tablosu (Ürün Kodu, Fiyat, Stok).</li>
+                       </ul>
+                   </p>
+               </div>
+
+               <!-- Flashcard 2: Yarı-Yapısal ve Yapısal Olmayan Veri -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">Diğer Veri Türleri: Esnek ve Dağınık</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       <strong>Yarı-Yapısal:</strong> Tamamen düzensiz değildir ama katı bir tablo yapısı da yoktur. Etiketler (tags) ile organize edilir.
+                        <ul class="list-disc list-inside mt-1 mb-2"><li>Örnek: Bir e-postanın "Kime", "Konu" gibi alanları vardır ama mesaj kısmı serbest metindir.</li></ul>
+                       
+                       <strong>Yapısal Olmayan:</strong> Belirli bir formatı veya düzeni olmayan, en yaygın veri türüdür. Dünyadaki verinin yaklaşık %80'i bu şekildedir.
+                        <ul class="list-disc list-inside mt-1">
+                            <li>Örnekler: Instagram'a yüklediğiniz bir <span class="text-highlight">fotoğraf</span>, bir doktorun yazdığı <span class="text-highlight">reçete (PDF)</span>, bir arkadaşınıza gönderdiğiniz <span class="text-highlight">sesli mesaj</span>.</li>
+                        </ul>
+                   </p>
+               </div>
+
+               <!-- Flashcard 3: Kaosu Düzene Sokmak -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M6 20v-2.5a.5.5 0 0 1 .5-.5H8"/><path d="M6 14v-2.5a.5.5 0 0 1 .5-.5H8"/><path d="M6 8V5.5a.5.5 0 0 1 .5-.5H8"/><path d="M12 20v-2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5V20"/><path d="M12 14v-2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5V14"/><path d="M12 8V5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5V8"/><path d="M18 20v-2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5V20"/><path d="M18 14v-2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5V14"/><path d="M18 8V5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5V8"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">Kaosu Bilgisayar Diline Çevirmek</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                      Bilgisayarlar metin veya resimden doğrudan anlam çıkaramaz; onlar sadece <span class="text-highlight">sayılardan</span> anlar. YBS'cilerin görevi, bu dağınık verileri bilgisayarın anlayacağı sayılsal formatlara çevirmektir.
+                       <br><br>
+                       <strong>Örnek 1: Metni Vektöre Çevirmek (Word2Vec)</strong>
+                       <p class="text-xs p-2 bg-slate-100 rounded-md italic">"Bu telefonun kamerası çok iyi."</p>
+                       <p class="text-sm font-bold mt-1">→ Bilgisayarın Anladığı (Sayısal Vektörler):</p>
+                       <p class="text-xs p-2 bg-green-100 rounded-md font-mono">
+                          'kamera': [0.12, -0.45, 0.81, ...]<br>
+                          'çok': [0.05, 0.67, -0.23, ...]<br>
+                          'iyi': [0.91, 0.33, 0.54, ...]
+                       </p>
+                       
+                       <strong class="mt-2">Örnek 2: Rengi Sayıya Çevirmek (RGB)</strong>
+                       <div class="flex items-center gap-2 mt-1">
+                            <div class="w-8 h-8 rounded-md" style="background-color: #9370DB;"></div>
+                            <p class="text-xs p-2 bg-slate-100 rounded-md italic">Görüntüdeki eflatun rengi bir piksel</p>
+                       </div>
+                       <p class="text-sm font-bold mt-1">→ Bilgisayarın Anladığı (RGB Kodu):</p>
+                       <p class="text-xs p-2 bg-green-100 rounded-md font-mono">
+                          Kırmızı: 147, Yeşil: 112, Mavi: 219
+                       </p>
+                   </p>
+               </div>
+           </div>
+       </div>
+   </section>
+
+    <!-- Bölüm 6: Veritabanı Türleri -->
+    <section class="slide">
+        <div class="content-container w-full max-w-7xl mx-auto">
+           <div class="text-center mb-12">
+               <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+                   <span class="gradient-text">Her İşe Farklı Alet:</span> Veritabanı Türleri
+               </h2>
+               <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">
+                   Nasıl ki her iş için aynı aleti kullanmazsak, her veri türü için de aynı veritabanını kullanmayız. Gelin en yaygın iki türe bakalım.
+               </p>
+           </div>
+          
+           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+               <!-- Flashcard 1: İlişkisel (RDBMS) -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M12 3v18"/><path d="M21 3H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">İlişkisel (SQL): Düzenin Kalesi</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Bu veritabanları, her verinin <span class="text-highlight">nereye gideceği önceden belli olan</span>, katı kurallara sahip, takım elbiseli bir yönetici gibidir. Veri tutarlılığı ve güvenliği en üst düzeydedir.
+                       <br><br>
+                       <strong>Ne Zaman Kullanılır?</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                          <li>Bankacılık işlemleri (Para transferi hatasız olmalı).</li>
+                          <li>Öğrenci not sistemleri (Notlar karışmamalı).</li>
+                          <li>E-ticaret siparişleri (Stok ve sipariş tutarlı olmalı).</li>
+                       </ul>
+                       <p class="text-xs font-semibold mt-2 text-slate-500">Popüler Olanlar: MySQL, PostgreSQL, Oracle</p>
+                   </p>
+               </div>
+
+               <!-- Flashcard 2: NoSQL -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="m12 9 4 7H8l4-7Z"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">NoSQL: Esnekliğin Gücü</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Bu veritabanları ise <span class="text-highlight">kuralları daha esnek olan</span>, her türlü veriyi (metin, resim, video) hızla depolayabilen yaratıcı bir sanatçı gibidir. Özellikle çok büyük ve hızla değişen veriler için idealdir.
+                       <br><br>
+                        <strong>Ne Zaman Kullanılır?</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                          <li>Sosyal medya akışları (Milyonlarca post ve yorum).</li>
+                          <li>Online oyunlardaki anlık oyuncu verileri.</li>
+                          <li>Nesnelerin İnterneti (IoT) cihazlarından gelen sensör verileri.</li>
+                       </ul>
+                       <p class="text-xs font-semibold mt-2 text-slate-500">Popüler Olanlar: MongoDB, Redis, Cassandra</p>
+                   </p>
+               </div>
+
+               <!-- Flashcard 3: Hibrit Yaklaşım -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M7 20h4a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2Z"/><path d="M17 20h-4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2Z"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">En İyisi: İkisini de Kullanmak!</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Modern şirketler genellikle tek bir tür seçmez, işin gereğine göre <span class="text-highlight">ikisini birden (hibrit)</span> kullanır. YBS uzmanı, hangi veri için hangi veritabanının daha uygun olduğuna karar veren kişidir.
+                       <br><br>
+                       <strong>Sektör Örneği: Trendyol</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li><strong>SQL Kullanır:</strong> Müşteri hesaplarınız, verdiğiniz siparişler ve ödeme bilgileri gibi <span class="text-highlight">asla hata olmaması gereken</span> veriler için.</li>
+                           <li><strong>NoSQL Kullanır:</strong> Ürünlere yaptığınız <span class="text-highlight">yorumlar</span>, "sepetinize ekledikleriniz" veya ana sayfada size gösterilen ürün önerileri gibi <span class="text-highlight">hızlı ve esnek olması gereken</span> veriler için.</li>
+                       </ul>
+                   </p>
+               </div>
+           </div>
+       </div>
+   </section>
+    
+    <!-- Bölüm 7: Stratejik Konular -->
+    <section class="slide bg-slate-50">
+        <div class="content-container w-full max-w-7xl mx-auto">
+           <div class="text-center mb-12">
+               <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+                   <span class="gradient-text">Stratejik Kararlar:</span> Kalite ve Mimari
+               </h2>
+               <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">
+                   Doğru veriye sahip olmak ve bu veriyi doğru altyapıda saklamak, bir şirketin başarısını doğrudan etkiler.
+               </p>
+           </div>
+          
+           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+               <!-- Flashcard 1: Veri Kalitesi -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">"Çöp Giren, Çöp Çıkar"</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Bu, veri dünyasının en temel kuralıdır. Eğer sisteminize <span class="text-highlight">yanlış, eksik veya tutarsız</span> veri girerseniz, alacağınız tüm raporlar ve yapacağınız tüm analizler de çöp olur.
+                       <br><br>
+                       <strong>Analoji:</strong> En iyi şef bile olsanız, çürük domateslerle lezzetli bir menemen yapamazsınız. Veri de böyledir; kaliteli değilse, sonuç da kaliteli olmaz.
+                   </p>
+               </div>
+
+               <!-- Flashcard 2: Veri Kalitesinin Etkileri -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">İyi Veri vs. Kötü Veri</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Veri kalitesi, şirketler için milyonlarca liralık fark yaratabilir.
+                       <br><br>
+                       <strong class="text-green-600">İyi Veri Senaryosu:</strong>
+                       <p class="text-sm mt-1">Bir e-ticaret sitesi, müşterilerinin <span class="text-highlight">doğru adres verilerine</span> sahiptir. Yılbaşı kampanyasında yaptıkları indirim broşürleri doğru kişilere ulaşır ve satışlar patlar.</p>
+                       
+                       <strong class="text-red-600 mt-4">Kötü Veri Senaryosu:</strong>
+                       <p class="text-sm mt-1">Aynı site, müşterilerinin <span class="text-highlight">adreslerini eksik veya hatalı</span> toplamıştır. Gönderilen binlerce broşür "adres bulunamadı" diye geri döner. Kampanya için harcanan tüm para çöpe gider.</p>
+                   </p>
+               </div>
+               
+               <!-- Flashcard 3: Ara -->
+               <div class="flash-card items-center justify-center text-center bg-blue-50 border-blue-200">
+                   <div class="bg-blue-100 p-4 rounded-full mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" x2="6" y1="2" y2="4"/><line x1="10" x2="10" y1="2" y2="4"/><line x1="14" x2="14" y1="2" y2="4"/></svg>
+                   </div>
+                   <h3 class="text-2xl font-bold text-slate-900 mb-2">10 Dakikalık Ara</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Bir kahve alıp gelelim!
+                   </p>
+               </div>
+           </div>
+       </div>
+   </section>
+
+    <!-- Bölüm 8: İlişkisel Modelin Altın Kuralları -->
+    <section class="slide">
+        <div class="content-container w-full max-w-7xl mx-auto">
+           <div class="text-center mb-12">
+               <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+                   <span class="gradient-text">İlişkisel Modelin Altın Kuralları</span>
+               </h2>
+               <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">
+                   İlişkisel veritabanlarını bu kadar güvenilir ve popüler yapan şey, temelindeki basit ama güçlü felsefesi ve kurallarıdır.
+               </p>
+           </div>
+          
+           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+               <!-- Flashcard 1: İlişkisel Model Nedir? -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M11 20A7 7 0 0 1 4 13V6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v7a7 7 0 0 1-7 7Zm-6-7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6H5Z"/><path d="M12 13a3 3 0 0 1-3-3V6h6v4a3 3 0 0 1-3 3Z"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">Temel Taş: İlişkisel Model</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       1970'lerde ortaya atılan bu model, 50 yıldır veri dünyasının temelidir. Başarısının sırrı, <span class="text-highlight">LEGO parçaları gibi</span> basit ve standart parçalardan (tablolar) oluşması ve bu parçaların belirli kurallarla (ilişkiler) birleşerek karmaşık sistemler oluşturabilmesidir.
+                       <br><br>
+                       Bu yapı, veriyi hem insanlar hem de bilgisayarlar için <span class="text-highlight">anlaşılır ve yönetilir</span> kılar.
+                   </p>
+               </div>
+
+               <!-- Flashcard 2: Temel Felsefesi -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">Her Şey Tablolardan İbaret</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       İlişkisel modelin kalbinde, birbiriyle mantıksal olarak bağlantılı tablolar vardır. Her tablo sadece tek bir konuya odaklanır.
+                       <br><br>
+                       <strong>Sektör Örneği: Spotify</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                          <li>Bir <span class="text-highlight">"Kullanicilar"</span> tablosu (kullanıcı bilgileri için).</li>
+                          <li>Bir <span class="text-highlight">"Sarkicilar"</span> tablosu (şarkıcı bilgileri için).</li>
+                           <li>Bir de <span class="text-highlight">"Sarkilar"</span> tablosu (şarkıların adı, süresi ve hangi şarkıcıya ait olduğu bilgisi için).</li>
+                       </ul>
+                       Bu tablolar birbirine bağlanarak "hangi kullanıcı hangi şarkıyı dinliyor" gibi karmaşık sorulara cevap verir.
+                   </p>
+               </div>
+
+               <!-- Flashcard 3: Güvenin 3 Sütunu -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">Modeli Sağlam Yapan Ne?</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Bu modeli bu kadar güvenilir yapan üç temel direktif vardır. Bunları sonraki derslerde detaylıca göreceğiz:
+                       <br><br>
+                       <ol class="list-decimal list-inside mt-2 space-y-2">
+                           <li><strong>Anahtarlar (Keys):</strong> Her kaydın T.C. Kimlik No gibi <span class="text-highlight">benzersiz bir kimliğe</span> sahip olmasını sağlar. Verilerin karışmasını önler.</li>
+                           <li><strong>Veri Bütünlüğü (Integrity):</strong> Sisteme <span class="text-highlight">saçma veya mantıksız veri girilmesini</span> engelleyen kurallar bütünüdür.</li>
+                           <li><strong>ACID Prensipleri:</strong> Bir banka havalesi gibi işlemlerin <span class="text-highlight">"ya hep ya hiç"</span> mantığıyla, yani asla yarım kalmayacak şekilde yapılmasını garanti eder.</li>
+                       </ol>
+                   </p>
+               </div>
+           </div>
+       </div>
+   </section>
+
+    <!-- BÖLÜM 9: Anahtarlar ve Veri Bütünlüğü -->
+    <section class="slide bg-slate-50">
+        <div class="content-container w-full max-w-7xl mx-auto">
+           <div class="text-center mb-12">
+               <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+                   <span class="gradient-text">Veritabanı Kuralları:</span> Anahtarlar ve Bütünlük
+               </h2>
+               <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">
+                   Veritabanının düzenini ve güvenilirliğini sağlayan en kritik yapı taşları, Birincil ve Yabancı Anahtarlardır.
+               </p>
+           </div>
+          
+           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+               <!-- Flashcard 1: Birincil Anahtar (PK) -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><circle cx="12" cy="12" r="10"/><line x1="12" y1="17" x2="12" y2="17.01"/><path d="M12 7V13"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">1. Birincil Anahtar (PK): Kimlik Kartı</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Bir tablodaki her bir satırı <span class="text-highlight">benzersiz</span> olarak tanımlayan alandır. İki kişinin aynı T.C. Kimlik Numarasına sahip olamaması gibidir.
+                       <br><br>
+                       <strong>Temel Kurallar:</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li><span class="text-highlight">Benzersiz Olmalıdır (Uniqueness):</span> Tekrar edemez.</li>
+                           <li><span class="text-highlight">Boş Olamaz (Not Null):</span> Her kaydın bir kimliği olmalıdır.</li>
+                       </ul>
+                       <br>
+                       <strong>Sektör Örneği (HES Kodu):</strong>
+                       Tüm vatandaşların <span class="text-highlight">HES Kodu</span>, ilgili veritabanında PK'dır. Bu sayede, aynı kişinin farklı aşı kayıtları ya da test sonuçları birbirine karışmaz.
+                   </p>
+               </div>
+
+               <!-- Flashcard 2: Yabancı Anahtar (FK) -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">2. Yabancı Anahtar (FK): Köprü</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       İki tablo arasında mantıksal bir <span class="text-highlight">bağlantı kuran</span> alandır. Bir tablonun PK'sını, başka bir tabloda kullanarak köprü görevi görür.
+                       <br><br>
+                       <strong>Görevi:</strong> İlişkisel veri modelinin anahtarıdır. Verilerin tutarlılığını sağlamak için referans gösterdiği kaydın mutlaka var olmasını zorunlu kılar.
+                       <br><br>
+                       <strong>Sektör Örneği (Trendyol):</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li>**"Siparişler"** tablosu, <span class="text-highlight">MusteriID (FK)</span> alanını kullanır.</li>
+                           <li>Bu alan, **"Müşteriler"** tablosunun <span class="text-highlight">MusteriID (PK)</span> alanına işaret eder.</li>
+                       </ul>
+                       Böylece, sistem var olmayan bir müşteri için sipariş kaydetmenizi **engeller**.
+                   </p>
+               </div>
+
+               <!-- Flashcard 3: Veri Bütünlüğü -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">3. Veri Bütünlüğü: Güvenilirlik</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Verilerin <span class="text-highlight">doğru, tutarlı ve güvenilir</span> olmasını sağlayan kurallar bütünüdür. Anahtarlar, bu bütünlüğü korumak için kullanılır.
+                       <br><br>
+                       <strong>İki Ana Kural:</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li><span class="text-highlight">Varlık Bütünlüğü:</span> PK kurallarını (Benzersiz ve Boş Olmama) zorlar. (Aynı öğrenciyi iki kez kaydetme!)</li>
+                           <li><span class="text-highlight">Referans Bütünlüğü:</span> FK kurallarını zorlar. (Var olmayan bir derse öğrenci notu girme!)</li>
+                       </ul>
+                       <br>
+                       <strong>Sektör Örneği (MHRS):</strong>
+                       Referans Bütünlüğü sayesinde, MHRS sistemi <span class="text-highlight">kaydı silinmiş bir doktora</span> randevu almanızı imkansız hale getirir. Bu, sistemin tutarlı kalmasını sağlar.
+                   </p>
+               </div>
+           </div>
+       </div>
+   </section>
+
+    <!-- Varlık-İlişki Diyagramları (ERD) -->
+    <section class="slide">
+        <div class="content-container w-full max-w-7xl mx-auto">
+           <div class="text-center mb-12">
+               <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+                   <span class="gradient-text">Varlık-İlişki Diyagramları (ERD)</span>
+               </h2>
+               <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">
+                   Veritabanı oluşturmadan önceki ilk adım: Tasarımın Mavi Kopyasını (Blueprint) oluşturmak!
+               </p>
+           </div>
+          
+           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+               <!-- Flashcard 1: ER Diyagramı (ERD) Nedir? -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M12 18v-6h4"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">1. ERD: Veritabanının Mavi Kopyası</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Veritabanını oluşturmadan önce, tabloların, özelliklerin ve bağlantıların mantıksal yapısını gösteren <span class="text-highlight">görsel bir haritadır.</span>
+                       <br><br>
+                       <strong>Görevi:</strong> Binayı yapmadan önce mimarın çizdiği detaylı plan gibi, veritabanı yapısını tüm paydaşların (YBS uzmanı, yazılımcı, yönetici) <span class="text-highlight">ortak dilde</span> anlamasını sağlar.
+                   </p>
+               </div>
+
+               <!-- Flashcard 2: Varlık (Entity) -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">2. Varlık: Ana Nesneler (Tablolar)</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Hakkında veri toplamak istediğimiz temel <span class="text-highlight">nesne, kişi veya kavramdır.</span> Veritabanında bir <span class="text-highlight">Tabloya</span> karşılık gelir.
+                       <br><br>
+                       <strong>Görsel Temsil:</strong> Dikdörtgen
+                       <br>
+                       <strong>Sektör Örneği (E-Ticaret):</strong>
+                       Sistemdeki ana varlıklar şunlardır: **MÜŞTERİ**, **ÜRÜN**, **SİPARİŞ**. Her biri veritabanında ayrı bir tablo olacaktır.
+                   </p>
+               </div>
+
+               <!-- Flashcard 3: Nitelik (Attribute) -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">3. Nitelik: Özellikler (Sütunlar)</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Varlıkları <span class="text-highlight">tanımlayan, onlara ait özelliklerdir</span>. Veritabanında tablonun <span class="text-highlight">Sütununa (Alanına)</span> karşılık gelir.
+                       <br><br>
+                       <strong>Görsel Temsil:</strong> Oval
+                       <br>
+                       <strong>Örnek:</strong> **ÜRÜN** varlığının nitelikleri:
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li>`UrunKodu` (PK - Altı çizili)</li>
+                           <li>`UrunAdi`, `Fiyat`, `StokAdedi`</li>
+                       </ul>
+                   </p>
+               </div>
+
+               <!-- Flashcard 4: İlişki (Relationship) -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M22 10s-5-5-10-5S2 10 2 10"/><path d="M2 14s5 5 10 5s10-5 10-5"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">4. İlişki: Varlıklar Arası Bağlantı</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       İki varlık arasındaki <span class="text-highlight">mantıksal etkileşimi</span> ifade eden eylemlerdir (fiiller). Veritabanında <span class="text-highlight">Yabancı Anahtarların (FK)</span> kurulmasını sağlar.
+                       <br><br>
+                       <strong>Görsel Temsil:</strong> Baklava (Eşkenar Dörtgen)
+                       <br>
+                       <strong>Örnek (Kargo Şirketi):</strong>
+                       ARABA **TAŞIR** PAKET'i. (TAŞIR ilişki, araba ve paket varlıkları arasında bir bağ kurar.)
+                   </p>
+               </div>
+
+               <!-- Flashcard 5: Kompozit ve Çok Değerli Nitelikler -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M12 2v20"/><path d="M17 5H7a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4z"/><path d="M12 9v6"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">5. Detay Nitelikler I: Gruplama ve Tekrar</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       <strong>Kompozit Nitelik (Adres):</strong> Bir verinin birden çok ayrı parçadan oluşması. (Örn: Adres: Sokak, Şehir, Posta Kodu)
+                       <br><br>
+                       <strong>Çok Değerli Nitelik (Telefon):</strong> Bir varlığa ait özelliğin birden fazla değer alabilmesi.
+                       <br>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li>**Örnek:** Bir müşterinin 3 farklı telefon numarası olması: Ev, İş, Cep.</li>
+                           <li>**Görsel Temsil:** Çift Oval.</li>
+                       </ul>
+                   </p>
+               </div>
+               
+               <!-- Flashcard 6: Türetilmiş Nitelik -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z"/><path d="M12 8v8M8 12h8"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">6. Detay Nitelikler II: Hesaplanan Veriler</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       <strong>Türetilmiş Nitelik:</strong> Başka bir nitelikten <span class="text-highlight">hesaplayarak elde edilen</span> özelliktir. Veritabanında gereksiz yer kaplamamak için saklanmaz.
+                       <br><br>
+                       <strong>Görsel Temsil:</strong> Kesikli Oval
+                       <br>
+                       <strong>Sektör Örneği (E-Devlet):</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li>Veritabanı sadece `DoğumTarihi`'ni tutar.</li>
+                           <li><span class="text-highlight">Yaş</span> bilgisi, her sorgulandığında bugünün tarihinden `DoğumTarihi` çıkarılarak hesaplanır.</li>
+                       </ul>
+                   </p>
+               </div>
+           </div>
+       </div>
+   </section>
+
+    <!-- İlişki Dereceleri ve Kardinalite -->
+    <section class="slide bg-slate-50">
+        <div class="content-container w-full max-w-7xl mx-auto">
+           <div class="text-center mb-12">
+               <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+                   <span class="gradient-text">İlişkilerin Gücü:</span> Kardinalite
+               </h2>
+               <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-600">
+                   Varlıklar birbirine ne kadar ve nasıl bağlanabilir? İşte veritabanı tasarımında ilişki türlerinin anatomisi.
+               </p>
+           </div>
+          
+           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+               <!-- Flashcard 1: İlişki Derecesi Nedir? -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M2 12c.5 4.5 3 8.3 7 10 4-1.7 6.5-5.5 7-10"/><path d="M12 2v20"/><path d="M22 12c-.5-4.5-3-8.3-7-10-4 1.7-6.5 5.5-7 10"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">1. Kardinalite Nedir? (İlişki Gücü)</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       İlişki derecesi (Kardinalite), bir varlıktaki kaç kaydın, ilişkili olduğu diğer varlıktaki <span class="text-highlight">kaç kayda bağlanabileceğini</span> tanımlar. Bu, veritabanının mantıksal yapısını belirleyen kuraldır.
+                       <br><br>
+                       <strong>Analoji:</strong> Bir çalışan ile projeler arasındaki ilişki kuralı gibidir: “Bir çalışan, kaç projede görev alabilir?”
+                   </p>
+               </div>
+
+               <!-- Flashcard 2: Bire-Bir (1-1) İlişki -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><circle cx="7" cy="12" r="3"/><circle cx="17" cy="12" r="3"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">2. Bire-Bir (1-1): Tek Eşleşme</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       A varlığındaki bir kayıt, B varlığındaki <span class="text-highlight">en fazla bir</span> kayıtla ilişkilidir. Bu durum, her iki yönde de tek ve kesin bir eşleşme olduğunu gösterir.
+                       <br><br>
+                       <strong>Sektör Örneği (E-Devlet/Pasaport):</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li>Bir **KİŞİ**'nin sadece bir **PASAPORTU** olabilir.</li>
+                           <li>Bir **PASAPORT** da sadece bir **KİŞİ**'ye aittir.</li>
+                       </ul>
+                       <p class="text-xs font-semibold mt-2 text-slate-500">Kullanım: Büyük tablolardaki gizli veya nadiren kullanılan veriyi ayırmak için.</p>
+                   </p>
+               </div>
+
+               <!-- Flashcard 3: Bire-Çok (1-N) İlişki -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><circle cx="7" cy="12" r="3"/><path d="M14 10l3 2-3 2"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">3. Bire-Çok (1-N): En Yaygın İlişki</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       A varlığındaki bir kayıt, B varlığındaki <span class="text-highlight">birden çok</span> kayıtla ilişkilidir. Ancak, B'deki bir kayıt A'daki sadece **bir** kayda bağlıdır.
+                       <br><br>
+                       <strong>Sektör Örneği (E-Ticaret/Sipariş):</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li>Bir **MÜŞTERİ** birden çok **SİPARİŞ** verebilir.</li>
+                           <li>Ancak her **SİPARİŞ** sadece **bir MÜŞTERİ**'ye aittir.</li>
+                       </ul>
+                       <p class="text-xs font-semibold mt-2 text-slate-500">Kullanım: Hiyerarşi ve sahiplik ilişkilerini kurmak için (Departman-Çalışan gibi).</p>
+                   </p>
+               </div>
+               
+               <!-- Flashcard 4: Çoka-Çok (N-N) İlişki -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M7 10l3 2-3 2"/><path d="M17 10l-3 2 3 2"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">4. Çoka-Çok (N-N): Karmaşık Etkileşim</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Her iki varlıktaki kayıtların da birbirleriyle <span class="text-highlight">birden çok kez eşleşebildiği</span> durumdur. Bu ilişki doğrudan veritabanına aktarılamaz, mutlaka <span class="text-highlight">ara bir tablo</span> ile 1-N ve N-1 olarak çözülmelidir.
+                       <br><br>
+                       <strong>Sektör Örneği (Üniversite Otomasyonu):</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li>Bir **ÖĞRENCİ** birden çok **DERS** alabilir.</li>
+                           <li>Bir **DERS** birden çok **ÖĞRENCİ** tarafından alınabilir.</li>
+                       </ul>
+                       <p class="text-xs font-semibold mt-2 text-slate-500">Çözüm: Bu ilişkiyi çözmek için araya **"ALINAN_DERSLER"** tablosu konur.</p>
+                   </p>
+               </div>
+
+               <!-- Flashcard 5: 1-N Sektör Örneği (Netflix) -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><path d="M12 3v18"/><path d="M3 15h18"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">5. Sektör Örneği: 1-N (Netflix)</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Netflix'in izleme geçmişi bu ilişkinin en güzel örneğidir:
+                       <br><br>
+                       <strong class="text-highlight">1 MÜŞTERİ → N İZLEME KAYDI</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li>Her bir **MÜŞTERİ** (1), **izleme geçmişi**nde (N) yüzlerce kayıt oluşturur.</li>
+                           <li>Ancak bir **izleme kaydı** (O kullanıcı şu filmi şu saniyede izledi), sadece **bir MÜŞTERİ**'ye aittir.</li>
+                       </ul>
+                       <p class="text-xs font-semibold mt-2 text-slate-500">Müşteri ID'si, İzleme Kaydı tablosunda Yabancı Anahtardır (FK).</p>
+                   </p>
+               </div>
+               
+               <!-- Flashcard 6: N-N Sektör Örneği (Film Kategorileri) -->
+               <div class="flash-card">
+                   <div class="bg-blue-100 p-3 rounded-xl mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-700"><path d="M17.5 19H9c-3.89 0-7-3.11-7-7s3.11-7 7-7h8.5c3.59 0 6.5 2.91 6.5 6.5s-2.91 6.5-6.5 6.5z"/></svg>
+                   </div>
+                   <h3 class="text-xl font-bold text-slate-900 mb-2">6. Sektör Örneği: N-N (IMDb/Film)</h3>
+                   <p class="text-slate-600 text-base leading-relaxed">
+                       Bir filmin birden çok türe ait olması, klasik N-N örneğidir.
+                       <br><br>
+                       <strong class="text-highlight">N FİLM ↔ N KATEGORİ</strong>
+                       <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li>**Film A** hem Komedi hem de Macera olabilir.</li>
+                           <li>**Macera** kategorisinde de yüzlerce film olabilir.</li>
+                       </ul>
+                       <p class="text-xs font-semibold mt-2 text-slate-500">Çözüm: Arada **"Film_Kategorileri"** isminde bir tablo (ilişki tablosu) kullanılır. Bu tablo, hangi Filmin ID'sinin, hangi Kategorinin ID'si ile eşleştiğini tutar.</p>
+                   </p>
+               </div>
+           </div>
+       </div>
+   </section>
+
+</body>
+</html>
