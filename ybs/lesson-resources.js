@@ -99,25 +99,31 @@
       .join("/");
   }
 
-  function getSiteBasePath() {
-    const marker = "/lessons/";
-    const index = window.location.pathname.indexOf(marker);
-    if (index === -1) {
+  const SCRIPT_BASE_PATH = (() => {
+    const current = document.currentScript;
+    const candidate = current?.src
+      ? current
+      : Array.from(document.getElementsByTagName("script")).find((script) => script.src && script.src.includes("lesson-resources.js"));
+    if (!candidate?.src) {
       return "";
     }
-    return window.location.pathname.slice(0, index);
-  }
+    try {
+      const url = new URL(candidate.src, window.location.href);
+      return url.pathname.replace(/\/lesson-resources\.js.*$/, "");
+    } catch (_) {
+      return "";
+    }
+  })();
 
   function combineWithBase(path) {
-    const base = getSiteBasePath();
     const normalised = path.startsWith("/") ? path : `/${path}`;
-    if (!base) {
+    if (!SCRIPT_BASE_PATH) {
       return normalised;
     }
-    if (base.endsWith("/")) {
-      return `${base}${normalised.slice(1)}`;
+    if (SCRIPT_BASE_PATH.endsWith("/")) {
+      return `${SCRIPT_BASE_PATH}${normalised.slice(1)}`;
     }
-    return `${base}${normalised}`;
+    return `${SCRIPT_BASE_PATH}${normalised}`;
   }
 
   function injectStyles() {
@@ -863,8 +869,8 @@
 
     const providerRow = document.createElement("div");
     providerRow.className = "lesson-ai-provider";
-    const providerLabel = document.createElement("label");
-    providerLabel.textContent = "Sağlayıcı:";
+    const providerLabelEl = document.createElement("label");
+    providerLabelEl.textContent = "Sağlayıcı:";
 
     const providerSelect = document.createElement("select");
     PROVIDERS.forEach((provider) => {
@@ -876,7 +882,7 @@
       }
       providerSelect.appendChild(option);
     });
-    providerRow.appendChild(providerLabel);
+    providerRow.appendChild(providerLabelEl);
     providerRow.appendChild(providerSelect);
     panel.appendChild(providerRow);
 
@@ -1270,4 +1276,3 @@
     }
   };
 })();
-*** End Patch
