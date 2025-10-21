@@ -57,6 +57,11 @@
     currentLesson: null
   };
 
+  const directoryCache = {
+    data: null,
+    promise: null
+  };
+
   function currentKey() {
     return state.keys[state.provider] || "";
   }
@@ -660,6 +665,43 @@
     return [];
   }
 
+  async function loadDirectory() {
+    if (directoryCache.data) {
+      return directoryCache.data;
+    }
+
+    if (Array.isArray(window.LESSON_DIRECTORY) && window.LESSON_DIRECTORY.length) {
+      directoryCache.data = window.LESSON_DIRECTORY;
+      return directoryCache.data;
+    }
+
+    if (!directoryCache.promise) {
+      const indexPath = combineWithBase("/lessons.index.json");
+      directoryCache.promise = fetch(indexPath, { cache: "no-store" })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`lessons.index.json yüklenemedi (${response.status})`);
+          }
+          return response.json();
+        })
+        .then((payload) => {
+          if (Array.isArray(payload?.lessons)) {
+            directoryCache.data = payload.lessons;
+          } else {
+            directoryCache.data = [];
+          }
+          return directoryCache.data;
+        })
+        .catch((error) => {
+          console.warn("Ders dizini alınamadı:", error);
+          directoryCache.data = [];
+          return directoryCache.data;
+        });
+    }
+
+    return directoryCache.promise;
+  }
+
   function appendAiMessage(role, content, isHtml = false) {
     if (!state.aiMessagesContainer) {
       return;
@@ -1197,22 +1239,21 @@
     document.body.appendChild(widget);
   }
 
-  function initialise(lessonId) {
-    const directory = Array.isArray(window.LESSON_DIRECTORY) ? window.LESSON_DIRECTORY : null;
+  async function initialise(lessonId) {
+    injectStyles();
 
-    if (!directory || directory.length === 0) {
-      console.warn("LESSON_DIRECTORY verisi bulunamadı veya boş.");
+    const directory = await loadDirectory();
+    if (!directory.length) {
+      console.warn("Ders dizini boş olduğundan kaynak paneli oluşturulamadı.");
       return;
     }
 
     const lesson = directory.find((entry) => entry.id === lessonId);
-
     if (!lesson) {
       console.warn(`Ders verisi bulunamadı: ${lessonId}`);
       return;
     }
 
-    injectStyles();
     renderLessonNavigation(lesson, directory);
     renderResourcesWidget(lesson);
   }
