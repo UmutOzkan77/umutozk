@@ -5,6 +5,9 @@
     pdf: "📄",
     video: "🎬",
     image: "🖼️",
+    audio: "🎧",
+    slides: "🗂️",
+    html: "💡",
     link: "🔗",
     default: "📁"
   };
@@ -32,38 +35,77 @@
     const style = document.createElement("style");
     style.id = STYLE_ID;
     style.textContent = `
-      .lesson-resource-home-link {
+      .lesson-resource-nav {
         position: fixed;
-        top: 1.5rem;
-        left: 1.5rem;
+        top: 0.75rem;
+        left: 0;
+        right: 0;
         z-index: 9990;
-        background: rgba(15, 23, 42, 0.85);
-        color: #f8fafc;
+        display: flex;
+        justify-content: center;
+        padding: 0 1.5rem;
+        pointer-events: none;
+      }
+
+      .lesson-resource-nav-inner {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        background: rgba(15, 23, 42, 0.92);
         border: 1px solid rgba(148, 163, 184, 0.35);
         border-radius: 9999px;
-        padding: 0.55rem 1.2rem;
+        padding: 0.6rem 1.6rem;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.28);
+        backdrop-filter: blur(14px);
+        pointer-events: all;
+      }
+
+      .lesson-resource-home-link {
+        color: #f8fafc;
         font-size: 0.95rem;
         font-weight: 600;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
-        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.35);
-        backdrop-filter: blur(12px);
-        transition: transform 0.25s ease, background 0.25s ease;
+        transition: opacity 0.2s ease;
       }
 
       .lesson-resource-home-link:hover {
-        transform: translateY(-2px);
-        background: rgba(30, 41, 59, 0.9);
+        opacity: 0.85;
+      }
+
+      .lesson-resource-switcher {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        color: #cbd5f5;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .lesson-resource-switcher select {
+        background: rgba(30, 41, 59, 0.85);
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        border-radius: 9999px;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+        padding: 0.45rem 1.3rem;
+        appearance: none;
+        box-shadow: 0 14px 28px rgba(15, 23, 42, 0.35);
       }
 
       .lesson-resource-widget {
         position: fixed;
-        bottom: 1.75rem;
-        right: 1.75rem;
+        bottom: 2rem;
+        right: 2rem;
         z-index: 9990;
         font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: flex-end;
+        gap: 0.75rem;
       }
 
       .lesson-resource-toggle {
@@ -88,7 +130,7 @@
       }
 
       .lesson-resource-panel {
-        margin-top: 1rem;
+        margin: 0;
         width: min(22rem, 90vw);
         background: rgba(15, 23, 42, 0.88);
         border-radius: 1rem;
@@ -97,7 +139,7 @@
         box-shadow: 0 24px 60px rgba(15, 23, 42, 0.4);
         backdrop-filter: blur(18px);
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(12px);
         pointer-events: none;
         transition: opacity 0.3s ease, transform 0.3s ease;
       }
@@ -174,11 +216,30 @@
       }
 
       @media (max-width: 640px) {
+        .lesson-resource-nav {
+          top: 0.6rem;
+          padding: 0 1rem;
+        }
+
+        .lesson-resource-nav-inner {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.5rem;
+          padding: 0.75rem 1.1rem;
+          border-radius: 1.1rem;
+        }
+
         .lesson-resource-home-link {
-          top: 1rem;
-          left: 1rem;
-          padding: 0.5rem 1rem;
-          font-size: 0.85rem;
+          justify-content: center;
+        }
+
+        .lesson-resource-switcher {
+          justify-content: space-between;
+        }
+
+        .lesson-resource-switcher select {
+          width: 100%;
+          text-align: center;
         }
 
         .lesson-resource-widget {
@@ -189,6 +250,19 @@
         .lesson-resource-toggle {
           padding: 0.7rem 1.2rem;
         }
+      }
+
+      @media (max-width: 420px) {
+        .lesson-resource-nav {
+          top: 1rem;
+          left: 1rem;
+        }
+
+        .lesson-resource-home-link,
+        .lesson-resource-switcher {
+          font-size: 0.85rem;
+        }
+
       }
     `;
 
@@ -202,6 +276,27 @@
     return ICONS[type] || ICONS.default;
   }
 
+  function getSiteBasePath() {
+    const marker = "/lessons/";
+    const index = window.location.pathname.indexOf(marker);
+    if (index === -1) {
+      return "";
+    }
+    return window.location.pathname.slice(0, index);
+  }
+
+  function combineWithBase(path) {
+    const base = getSiteBasePath();
+    const normalised = path.startsWith("/") ? path : `/${path}`;
+    if (!base) {
+      return normalised;
+    }
+    if (base.endsWith("/")) {
+      return `${base}${normalised.slice(1)}`;
+    }
+    return `${base}${normalised}`;
+  }
+
   function inferTypeFromUrl(url, fallback) {
     if (fallback) {
       return fallback;
@@ -213,28 +308,48 @@
     if (normalized.endsWith(".pdf")) {
       return "pdf";
     }
-    if (normalized.endsWith(".png") || normalized.endsWith(".jpg") || normalized.endsWith(".jpeg") || normalized.endsWith(".gif") || normalized.endsWith(".webp")) {
+    if (/\.(png|jpe?g|gif|webp)$/.test(normalized)) {
       return "image";
     }
-    if (normalized.endsWith(".mp4") || normalized.endsWith(".webm") || normalized.endsWith(".mov")) {
+    if (/\.(mp4|webm|mov)$/.test(normalized)) {
       return "video";
+    }
+    if (/\.(mp3|wav|aac)$/.test(normalized)) {
+      return "audio";
+    }
+    if (/\.(ppt|pptx|key)$/.test(normalized)) {
+      return "slides";
+    }
+    if (normalized.endsWith(".html") || normalized.endsWith(".htm")) {
+      return "html";
     }
     return "default";
   }
 
-  function resolveMaterialUrl(material) {
+  function resolveMaterialUrl(lesson, material) {
     if (material.external && material.url) {
       return material.url;
     }
-    if (material.path) {
-      return material.path;
-    }
-    if (material.file && material.folder) {
-      return `${material.folder}/${material.file}`;
-    }
+
+    const folder = lesson.folder || lesson.folderName || "";
+
     if (material.file) {
-      return material.file;
+      const cleaned = material.file.replace(/^\.\//, "");
+      const relative = folder ? `lessons/${folder}/${cleaned}` : cleaned;
+      const encoded = normaliseResourcePath(relative);
+      return combineWithBase(encoded);
     }
+
+    if (material.path) {
+      const cleaned = material.path.replace(/^\//, "");
+      const encoded = normaliseResourcePath(cleaned);
+      return combineWithBase(encoded);
+    }
+
+    if (material.url) {
+      return material.url;
+    }
+
     return "";
   }
 
@@ -279,7 +394,7 @@
     panelHeader.appendChild(closeBtn);
     panel.appendChild(panelHeader);
 
-    if (!materials || materials.length === 0) {
+    if (!materials.length) {
       const emptyState = document.createElement("div");
       emptyState.className = "lesson-resource-empty";
       emptyState.textContent = "Bu ders için henüz ek materyal eklenmemiş.";
@@ -293,11 +408,10 @@
         item.className = "lesson-resource-item";
 
         const link = document.createElement("a");
-        const materialUrl = resolveMaterialUrl(material);
-        const normalisedUrl = normaliseResourcePath(materialUrl);
-        link.href = normalisedUrl;
+        const materialUrl = resolveMaterialUrl(lesson, material);
+        link.href = materialUrl;
         link.rel = "noopener";
-        link.target = "_blank";
+        link.target = material.external ? "_blank" : "_self";
         const displayLabel = material.label || material.title || material.filename || "Materyal";
         link.textContent = displayLabel;
 
@@ -307,13 +421,13 @@
 
         link.prepend(icon);
         link.addEventListener("click", (event) => {
-          if (window.ResourceViewer) {
+          if (!material.external && window.ResourceViewer) {
             event.preventDefault();
             window.ResourceViewer.open({
-              url: normalisedUrl,
+              url: materialUrl,
               label: displayLabel,
               type: resolvedType,
-              downloadUrl: material.external ? null : normalisedUrl,
+              downloadUrl: materialUrl,
               external: Boolean(material.external)
             });
           }
@@ -328,11 +442,7 @@
 
     toggle.addEventListener("click", () => {
       const isOpen = panel.classList.toggle("open");
-      if (isOpen) {
-        toggle.setAttribute("aria-expanded", "true");
-      } else {
-        toggle.setAttribute("aria-expanded", "false");
-      }
+      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
     });
 
     closeBtn.addEventListener("click", () => {
@@ -352,12 +462,59 @@
     document.body.appendChild(widget);
   }
 
-  function renderHomeLink() {
-    const link = document.createElement("a");
-    link.className = "lesson-resource-home-link";
-    link.href = "../../index.html";
-    link.innerHTML = "← Ders Merkezi";
-    document.body.appendChild(link);
+  function renderLessonNavigation(currentLesson, directory) {
+    const nav = document.createElement("div");
+    nav.className = "lesson-resource-nav";
+
+    const navInner = document.createElement("div");
+    navInner.className = "lesson-resource-nav-inner";
+
+    const homeLink = document.createElement("a");
+    homeLink.className = "lesson-resource-home-link";
+    homeLink.href = combineWithBase("/index.html");
+    homeLink.innerHTML = "← Ders Merkezi";
+    navInner.appendChild(homeLink);
+
+    const switcherWrapper = document.createElement("div");
+    switcherWrapper.className = "lesson-resource-switcher";
+
+    const switcherLabel = document.createElement("span");
+    switcherLabel.textContent = "Hafta";
+    switcherWrapper.appendChild(switcherLabel);
+
+    const select = document.createElement("select");
+    select.setAttribute("aria-label", "Diğer dersler");
+
+    directory
+      .slice()
+      .sort((a, b) => a.week - b.week)
+      .forEach((lesson) => {
+        const option = document.createElement("option");
+        option.value = lesson.id;
+        option.textContent = `Hafta ${String(lesson.week).padStart(2, "0")}`;
+        if (lesson.id === currentLesson.id) {
+          option.selected = true;
+        }
+        select.appendChild(option);
+      });
+
+    select.addEventListener("change", (event) => {
+      const targetLesson = directory.find((entry) => entry.id === event.target.value);
+      if (!targetLesson) {
+        return;
+      }
+      const path = targetLesson.lessonPath || targetLesson.htmlFile;
+      if (!path) {
+        return;
+      }
+      const encoded = normaliseResourcePath(path);
+      window.location.href = combineWithBase(encoded);
+    });
+
+    switcherWrapper.appendChild(select);
+    navInner.appendChild(switcherWrapper);
+    nav.appendChild(navInner);
+    document.body.appendChild(nav);
   }
 
   function initialise(lessonId) {
@@ -376,15 +533,19 @@
     }
 
     injectStyles();
-    renderHomeLink();
+    renderLessonNavigation(lesson, directory);
     renderResources(lesson);
   }
 
   window.initLessonResources = function initLessonResources(lessonId) {
     if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", () => {
-        initialise(lessonId);
-      }, { once: true });
+      document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+          initialise(lessonId);
+        },
+        { once: true }
+      );
       return;
     }
     initialise(lessonId);

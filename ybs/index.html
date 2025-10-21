@@ -1,45 +1,15 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="dark">
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Lesson Portal · YBS</title>
+  <title>YBS DERS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      color-scheme: light;
-      --color-bg: #f8fafc;
-      --color-surface: rgba(255, 255, 255, 0.82);
-      --color-surface-alt: rgba(248, 250, 252, 0.92);
-      --color-border: rgba(148, 163, 184, 0.35);
-      --color-text: #0f172a;
-      --color-text-muted: #475569;
-      --color-accent: #2563eb;
-      --color-accent-soft: rgba(59, 130, 246, 0.15);
-      --color-badge: rgba(37, 99, 235, 0.12);
-      --color-card-shadow: rgba(15, 23, 42, 0.08);
-      --color-tag-bg: rgba(99, 102, 241, 0.12);
-      --color-tag-text: #4338ca;
-      --color-scrollbar: rgba(99, 102, 241, 0.35);
-    }
-
-    :root[data-theme="dark"] {
       color-scheme: dark;
-      --color-bg: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
-      --color-surface: rgba(15, 23, 42, 0.72);
-      --color-surface-alt: rgba(30, 41, 59, 0.78);
-      --color-border: rgba(148, 163, 184, 0.25);
-      --color-text: #e2e8f0;
-      --color-text-muted: #94a3b8;
-      --color-accent: #6366f1;
-      --color-accent-soft: rgba(99, 102, 241, 0.18);
-      --color-badge: rgba(99, 102, 241, 0.22);
-      --color-card-shadow: rgba(15, 23, 42, 0.55);
-      --color-tag-bg: rgba(168, 85, 247, 0.18);
-      --color-tag-text: #c4b5fd;
-      --color-scrollbar: rgba(129, 140, 248, 0.45);
     }
 
     * {
@@ -49,624 +19,253 @@
     body {
       margin: 0;
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--color-bg);
-      color: var(--color-text);
+      background: radial-gradient(circle at top, rgba(37, 99, 235, 0.18), rgba(15, 23, 42, 0.95) 45%), #0f172a;
       min-height: 100vh;
+      color: #e2e8f0;
       display: flex;
       flex-direction: column;
-      transition: background 0.3s ease, color 0.3s ease;
     }
 
-    a {
-      color: inherit;
-    }
-
-    ::-webkit-scrollbar {
-      width: 10px;
-      height: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--color-scrollbar);
-      border-radius: 9999px;
-    }
-
-    .app-shell {
-      display: flex;
+    main {
       flex: 1;
-      min-height: 0;
-      position: relative;
+      width: min(1100px, 92vw);
+      margin: 0 auto 4rem;
     }
 
-    .sidebar {
-      width: 280px;
-      flex-shrink: 0;
-      background: var(--color-surface);
-      border-right: 1px solid var(--color-border);
-      backdrop-filter: blur(18px);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.35s ease;
-      position: relative;
-      z-index: 20;
+    header {
+      text-align: center;
+      padding: 4.5rem 1rem 2rem;
     }
 
-    .sidebar-header {
-      padding: 1.75rem 1.5rem 1.25rem;
-      border-bottom: 1px solid var(--color-border);
+    .hero-eyebrow {
+      letter-spacing: 0.45rem;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      color: rgba(226, 232, 240, 0.6);
     }
 
-    .sidebar-title {
-      margin: 0;
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
+    h1 {
+      margin: 1.2rem 0;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      background: linear-gradient(120deg, #38bdf8, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .sidebar-subtitle {
-      margin-top: 0.35rem;
-      color: var(--color-text-muted);
-      font-size: 0.9rem;
-      line-height: 1.4;
+    .hero-paragraph {
+      margin: 0 auto;
+      max-width: 640px;
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      line-height: 1.6;
+      color: rgba(226, 232, 240, 0.78);
     }
 
-    .lesson-list {
-      list-style: none;
-      margin: 0;
-      padding: 0.5rem 0 1.5rem;
-      overflow-y: auto;
-      flex: 1;
-    }
-
-    .lesson-nav-item {
-      margin: 0.15rem 0;
-    }
-
-    .lesson-nav-button {
-      appearance: none;
-      border: none;
-      width: calc(100% - 1.5rem);
-      margin: 0.2rem 0.75rem;
-      padding: 0.7rem 0.95rem;
-      border-radius: 0.9rem;
-      text-align: left;
-      background: transparent;
-      color: var(--color-text);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      cursor: pointer;
-      transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
-    }
-
-    .lesson-nav-button .week {
-      font-weight: 700;
-      font-size: 0.85rem;
-      padding: 0.15rem 0.55rem;
-      border-radius: 9999px;
-      background: var(--color-badge);
-    }
-
-    .lesson-nav-button:hover {
-      background: var(--color-accent-soft);
-      transform: translateX(4px);
-    }
-
-    .lesson-nav-button.is-active {
-      background: var(--color-accent-soft);
-      color: var(--color-accent);
-      box-shadow: inset 0 0 0 1px var(--color-border);
-    }
-
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      backdrop-filter: blur(18px);
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.5rem clamp(1.5rem, 3vw, 2.5rem) 1rem;
-      border-bottom: 1px solid var(--color-border);
-      background: var(--color-surface-alt);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .search-box {
-      flex: 1;
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .search-input {
-      width: 100%;
-      padding: 0.85rem 1rem 0.85rem 2.75rem;
-      border-radius: 0.9rem;
-      border: 1px solid var(--color-border);
-      background: rgba(255, 255, 255, 0.6);
-      color: var(--color-text);
-      font-size: 0.95rem;
-      outline: none;
-      transition: border 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      backdrop-filter: blur(8px);
-    }
-
-    :root[data-theme="dark"] .search-input {
-      background: rgba(15, 23, 42, 0.45);
-    }
-
-    .search-input:focus {
-      border-color: var(--color-accent);
-      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.15);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 0.95rem;
-      font-size: 1.15rem;
-      color: var(--color-text-muted);
-      pointer-events: none;
-    }
-
-    .search-clear {
-      position: absolute;
-      right: 0.75rem;
-      border: none;
-      background: transparent;
-      color: var(--color-text-muted);
-      cursor: pointer;
-      font-size: 1rem;
-      padding: 0;
-      display: none;
-    }
-
-    .search-clear.is-visible {
-      display: inline-flex;
-    }
-
-    .topbar-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .icon-button {
-      border: 1px solid var(--color-border);
-      background: rgba(255, 255, 255, 0.45);
-      color: var(--color-text);
-      font-size: 1.1rem;
-      width: 2.75rem;
-      height: 2.75rem;
-      border-radius: 0.85rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      backdrop-filter: blur(12px);
-    }
-
-    .icon-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 24px var(--color-card-shadow);
-    }
-
-    .filters-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 1.1rem clamp(1.5rem, 3vw, 2.5rem);
-    }
-
-    .filter-label {
-      font-weight: 600;
-      font-size: 0.85rem;
-      color: var(--color-text-muted);
-    }
-
-    .tag-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .tag-chip {
-      border: 1px solid transparent;
-      padding: 0.45rem 0.85rem;
-      border-radius: 9999px;
-      background: var(--color-tag-bg);
-      color: var(--color-tag-text);
-      font-weight: 600;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
-    }
-
-    .tag-chip.is-active {
-      border-color: var(--color-accent);
-      box-shadow: 0 14px 24px var(--color-card-shadow);
-      transform: translateY(-2px);
-    }
-
-    .cards-section {
-      padding: 0 clamp(1.5rem, 3vw, 2.5rem) 2rem;
-      overflow-y: auto;
-      flex: 1;
-    }
-
-    .cards-grid {
+    .lessons-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 1.5rem;
+      padding-bottom: 3rem;
     }
 
     .lesson-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 1.25rem;
-      padding: 1.4rem;
-      box-shadow: 0 18px 42px var(--color-card-shadow);
-      position: relative;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 1.35rem;
+      padding: 1.65rem;
       display: flex;
       flex-direction: column;
-      gap: 0.9rem;
-      overflow: hidden;
+      gap: 1rem;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 28px 60px rgba(15, 23, 42, 0.45);
       transition: transform 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lesson-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(140deg, rgba(99, 102, 241, 0.18), rgba(236, 72, 153, 0.12));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
     }
 
     .lesson-card:hover {
       transform: translateY(-6px);
-      border-color: rgba(99, 102, 241, 0.4);
-      box-shadow: 0 28px 60px var(--color-card-shadow);
+      border-color: rgba(94, 234, 212, 0.45);
+      box-shadow: 0 32px 72px rgba(15, 23, 42, 0.55);
     }
 
-    .lesson-card .badge {
+    .lesson-card:hover::after {
+      opacity: 1;
+    }
+
+    .lesson-week {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-      background: var(--color-badge);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.18);
+      border: 1px solid rgba(56, 189, 248, 0.35);
       font-weight: 700;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
       width: fit-content;
     }
 
-    .lesson-card h3 {
+    .lesson-title {
       margin: 0;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      letter-spacing: -0.015em;
+      letter-spacing: -0.01em;
     }
 
-    .lesson-card p {
+    .lesson-description {
       margin: 0;
-      color: var(--color-text-muted);
-      font-size: 0.93rem;
-      line-height: 1.5;
+      color: rgba(226, 232, 240, 0.75);
+      font-size: 0.96rem;
+      line-height: 1.55;
     }
 
-    .lesson-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      font-size: 0.82rem;
-      color: var(--color-text-muted);
-    }
-
-    .lesson-meta .pill {
-      background: var(--color-accent-soft);
-      border-radius: 9999px;
-      padding: 0.3rem 0.75rem;
-      font-weight: 600;
-    }
-
-    .resource-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .resource-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      border-radius: 0.8rem;
-      padding: 0.45rem 0.85rem;
-      border: 1px solid rgba(99, 102, 241, 0.25);
-      background: rgba(99, 102, 241, 0.12);
-      color: var(--color-text);
-      font-weight: 600;
+    .materials-count {
       font-size: 0.8rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      font-weight: 600;
+      color: rgba(148, 163, 184, 0.85);
+      background: rgba(148, 163, 184, 0.18);
+      border-radius: 999px;
+      padding: 0.35rem 0.8rem;
+      width: fit-content;
     }
 
-    .resource-chip:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px var(--color-card-shadow);
+    .materials-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .materials-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.92rem;
+      color: rgba(226, 232, 240, 0.85);
+    }
+
+    .materials-item a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(94, 234, 212, 0.55);
+      transition: color 0.2s ease;
+    }
+
+    .materials-item a:hover {
+      color: #5eead4;
     }
 
     .card-actions {
       display: flex;
-      flex-wrap: wrap;
       gap: 0.75rem;
+      flex-wrap: wrap;
       margin-top: auto;
     }
 
     .card-button {
       border: none;
-      border-radius: 0.8rem;
-      padding: 0.65rem 1.2rem;
-      font-size: 0.9rem;
+      border-radius: 999px;
+      padding: 0.6rem 1.3rem;
       font-weight: 600;
+      font-size: 0.9rem;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .card-button.primary {
-      background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
-      color: #f8fafc;
-      box-shadow: 0 18px 40px rgba(99, 102, 241, 0.35);
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      color: #edf2ff;
+      box-shadow: 0 18px 42px rgba(99, 102, 241, 0.45);
     }
 
     .card-button.secondary {
-      background: var(--color-accent-soft);
-      color: var(--color-accent);
+      background: rgba(148, 163, 184, 0.22);
+      color: rgba(226, 232, 240, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.35);
     }
 
     .card-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 18px 40px var(--color-card-shadow);
+      box-shadow: 0 20px 48px rgba(15, 23, 42, 0.55);
     }
 
-    .results-info {
-      font-size: 0.85rem;
-      color: var(--color-text-muted);
-      margin-left: auto;
-    }
-
-    .viewer {
-      border-top: 1px solid var(--color-border);
-      background: var(--color-surface-alt);
-      display: flex;
-      flex-direction: column;
-      min-height: 260px;
-    }
-
-    .viewer-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 1rem clamp(1.5rem, 3vw, 2.5rem);
-    }
-
-    .viewer-title {
-      font-weight: 700;
-      font-size: 1rem;
-      margin: 0;
-    }
-
-    .viewer-actions {
-      display: flex;
-      gap: 0.75rem;
-      margin-left: auto;
-    }
-
-    .viewer-action {
-      border: 1px solid var(--color-border);
-      border-radius: 0.75rem;
-      padding: 0.55rem 1rem;
-      background: rgba(148, 163, 184, 0.15);
-      color: inherit;
-      font-weight: 600;
-      font-size: 0.85rem;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .viewer-action:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 24px var(--color-card-shadow);
-    }
-
-    .viewer-resource-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      padding: 0  clamp(1.5rem, 3vw, 2.5rem) 1rem;
-    }
-
-    .viewer-resource-button {
-      border: none;
-      background: rgba(148, 163, 184, 0.15);
-      border-radius: 0.75rem;
-      padding: 0.5rem 0.95rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .viewer-resource-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 24px var(--color-card-shadow);
-    }
-
-    .viewer-frame {
-      flex: 1;
-      border: none;
-      width: 100%;
-      min-height: 320px;
-      background: rgba(15, 23, 42, 0.4);
-    }
-
-    .empty-state {
-      padding: 3rem;
-      border: 1px dashed var(--color-border);
-      border-radius: 1.25rem;
+    footer {
       text-align: center;
-      color: var(--color-text-muted);
-      background: rgba(148, 163, 184, 0.08);
-      font-size: 0.95rem;
+      padding: 2rem 1rem;
+      color: rgba(148, 163, 184, 0.6);
+      font-size: 0.85rem;
     }
 
-    .mobile-nav-toggle {
-      display: none;
-    }
-
-    @media (max-width: 1080px) {
-      .cards-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      }
-    }
-
-    @media (max-width: 900px) {
-      .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        transform: translateX(-100%);
-        box-shadow: 18px 0 40px rgba(15, 23, 42, 0.35);
+    @media (max-width: 640px) {
+      header {
+        padding: 3rem 1.2rem 1.5rem;
       }
 
-      body.sidebar-open .sidebar {
-        transform: translateX(0);
-      }
-
-      .mobile-nav-toggle {
-        display: inline-flex;
-      }
-
-      .topbar {
-        padding-right: 1rem;
+      .lessons-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       }
     }
   </style>
 </head>
 <body>
-  <div class="app-shell" id="app-shell">
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <h1 class="sidebar-title">YBS Ders Merkezi</h1>
-        <p class="sidebar-subtitle">Haftalık ders içerikleri, sunumlar ve destek materyalleri tek yerde.</p>
-      </div>
-      <ul class="lesson-list" id="lesson-list" aria-label="Dersler listesi">
-        <!-- dynamically filled -->
-      </ul>
-    </aside>
-    <main class="main">
-      <header class="topbar">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input id="search-input" class="search-input" type="search" placeholder="Ders başlığı, konu, içerik veya etiket arayın…" autocomplete="off" aria-label="Derslerde ara">
-          <button id="search-clear" class="search-clear" type="button" aria-label="Aramayı temizle">✕</button>
-        </div>
-        <div class="topbar-actions">
-          <button id="theme-toggle" class="icon-button" type="button" aria-label="Tema değiştir">🌙</button>
-          <button id="mobile-nav-toggle" class="icon-button mobile-nav-toggle" type="button" aria-label="Ders listesini aç">☰</button>
-        </div>
-      </header>
+  <main>
+    <header>
+      <div class="hero-eyebrow">Yönetim Bilişim Sistemleri</div>
+      <h1>YBS Ders Merkezi</h1>
+      <p class="hero-paragraph">
+        Haftalık ders sunumları ve destek materyallerine tek ekrandan ulaşın. Yeni bir ders klasörü eklediğinizde
+        bu arayüz otomatik olarak güncellenir.
+      </p>
+    </header>
 
-      <section class="filters-bar">
-        <span class="filter-label">Etiketler:</span>
-        <div class="tag-list" id="tag-list">
-          <!-- tags -->
-        </div>
-        <span class="results-info" id="results-info"></span>
-      </section>
+    <section class="lessons-grid" id="lessons-grid">
+      <!-- cards -->
+    </section>
+  </main>
 
-      <section class="cards-section" id="cards-section">
-        <div class="cards-grid" id="cards-grid">
-          <!-- lesson cards -->
-        </div>
-      </section>
+  <footer>
+    YBS1103 · Yönetim Bilişim Sistemlerine Giriş &mdash; Umut Özkan
+  </footer>
 
-      <section class="viewer" aria-live="polite">
-        <div class="viewer-header">
-          <h2 class="viewer-title" id="viewer-title">Bir ders seçin</h2>
-          <div class="viewer-actions">
-            <a id="open-new-tab" class="viewer-action" href="#" target="_blank" rel="noopener">🔗 Yeni sekmede aç</a>
-          </div>
-        </div>
-        <div class="viewer-resource-list" id="viewer-resources"></div>
-        <iframe src="about:blank" id="lesson-frame" class="viewer-frame" title="Ders içeriği"></iframe>
-      </section>
-    </main>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js" integrity="sha384-hI7w3NjQG0rYUAK2BC7SNlR2uv+mMeqrEPCaBzmDctasIo8HCMBb8H6SayIyBn4m" crossorigin="anonymous"></script>
   <script src="lessons-data.js"></script>
   <script src="resource-viewer.js"></script>
   <script>
     (function () {
-      const state = {
-        lessons: [],
-        filteredLessons: [],
-        activeTags: new Set(),
-        searchQuery: "",
-        fuse: null,
-        lessonById: new Map(),
-        contentCache: new Map(),
-        selectedLessonId: null
+      const grid = document.getElementById("lessons-grid");
+
+      const MATERIAL_ICONS = {
+        pdf: "📄",
+        video: "🎬",
+        image: "🖼️",
+        audio: "🎧",
+        slides: "🗂️",
+        html: "💡",
+        link: "🔗",
+        default: "📁"
       };
 
-      const elements = {
-        sidebar: document.getElementById("lesson-list"),
-        cardsGrid: document.getElementById("cards-grid"),
-        tagList: document.getElementById("tag-list"),
-        resultsInfo: document.getElementById("results-info"),
-        searchInput: document.getElementById("search-input"),
-        searchClear: document.getElementById("search-clear"),
-        themeToggle: document.getElementById("theme-toggle"),
-        mobileNavToggle: document.getElementById("mobile-nav-toggle"),
-        viewerTitle: document.getElementById("viewer-title"),
-        viewerResources: document.getElementById("viewer-resources"),
-        openNewTab: document.getElementById("open-new-tab"),
-        lessonFrame: document.getElementById("lesson-frame")
-      };
-
-      function applyTheme(theme) {
-        const normalized = theme === "light" ? "light" : "dark";
-        document.documentElement.setAttribute("data-theme", normalized);
-        localStorage.setItem("ybs-theme", normalized);
-        elements.themeToggle.textContent = normalized === "dark" ? "☀️" : "🌙";
-        elements.themeToggle.setAttribute("aria-label", normalized === "dark" ? "Açık temaya geç" : "Koyu temaya geç");
-      }
-
-      function restoreTheme() {
-        const saved = localStorage.getItem("ybs-theme");
-        if (saved) {
-          applyTheme(saved);
-        } else {
-          applyTheme("dark");
+      function normalisePath(value) {
+        if (!value || /^https?:/i.test(value)) {
+          return value;
         }
-      }
-
-      function toggleTheme() {
-        const current = document.documentElement.getAttribute("data-theme");
-        applyTheme(current === "dark" ? "light" : "dark");
+        return value.split("/").map((segment) => encodeURIComponent(segment)).join("/");
       }
 
       async function loadLessons() {
@@ -679,285 +278,41 @@
             }
           }
         } catch (error) {
-          console.warn("lessons.index.json alınamadı, lessons-data.js kullanılacak:", error);
+          console.warn("lessons.index.json okunamadı, lessons-data.js kullanılacak:", error);
         }
-        if (Array.isArray(window.LESSON_DIRECTORY)) {
-          return window.LESSON_DIRECTORY;
+        return Array.isArray(window.LESSON_DIRECTORY) ? window.LESSON_DIRECTORY : [];
+      }
+
+      function resolveWeek(lesson, index) {
+        const candidate = Number.parseInt(lesson.week ?? lesson.number ?? index + 1, 10);
+        return Number.isNaN(candidate) ? index + 1 : candidate;
+      }
+
+      function resolveResources(lesson) {
+        if (Array.isArray(lesson.resources)) {
+          return lesson.resources;
+        }
+        if (Array.isArray(lesson.materials)) {
+          return lesson.materials;
         }
         return [];
       }
 
-      function normalisePath(pathValue) {
-        if (!pathValue || /^https?:/i.test(pathValue)) {
-          return pathValue;
-        }
-        return pathValue.split("/").map((segment) => encodeURIComponent(segment)).join("/");
-      }
-
-      function getLessonWeek(lesson) {
-        const weekValue = typeof lesson.week === "number" ? lesson.week : parseInt(lesson.week, 10);
-        if (!Number.isNaN(weekValue)) {
-          return weekValue;
-        }
-        const fallback = typeof lesson.number === "number" ? lesson.number : parseInt(lesson.number, 10);
-        return Number.isNaN(fallback) ? 0 : fallback;
-      }
-
-      function updateSearchIndex() {
-        const dataset = state.lessons.map((lesson) => ({
-          id: lesson.id,
-          title: lesson.title,
-          description: lesson.description,
-          tags: (lesson.tags || []).join(" "),
-          content: lesson.content || ""
-        }));
-
-        state.fuse = new Fuse(dataset, {
-          includeScore: true,
-          threshold: 0.35,
-          ignoreLocation: true,
-          minMatchCharLength: 2,
-          keys: [
-            { name: "title", weight: 0.5 },
-            { name: "description", weight: 0.25 },
-            { name: "tags", weight: 0.15 },
-            { name: "content", weight: 0.1 }
-          ]
-        });
-      }
-
-      async function prefetchLessonContent(lesson) {
-        if (!lesson || state.contentCache.has(lesson.id) || !lesson.lessonPath) {
-          return;
-        }
-        try {
-          const response = await fetch(normalisePath(lesson.lessonPath), { cache: "force-cache" });
-          if (!response.ok) {
-            return;
-          }
-          const html = await response.text();
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, "text/html");
-          const textContent = (doc.body ? doc.body.textContent : "") || "";
-          const normalised = textContent.replace(/\s+/g, " ").trim();
-          state.contentCache.set(lesson.id, normalised);
-          lesson.content = normalised;
-          updateSearchIndex();
-        } catch (error) {
-          console.warn(`Ders içeriği alınamadı (${lesson.lessonPath}):`, error);
-        }
-      }
-
-      function buildSidebar(lessons) {
-        elements.sidebar.innerHTML = "";
-        lessons.forEach((lesson) => {
-          const item = document.createElement("li");
-          item.className = "lesson-nav-item";
-
-          const button = document.createElement("button");
-          button.className = "lesson-nav-button";
-          button.dataset.lessonId = lesson.id;
-          const week = getLessonWeek(lesson);
-          button.innerHTML = `<span class="week">${week.toString().padStart(2, "0")}.</span> <span>${lesson.title}</span>`;
-          button.addEventListener("click", () => selectLesson(lesson.id));
-
-          item.appendChild(button);
-          elements.sidebar.appendChild(item);
-        });
-      }
-
-      function buildTagFilters(lessons) {
-        const allTags = new Set();
-        lessons.forEach((lesson) => {
-          (lesson.tags || []).forEach((tag) => {
-            if (tag) {
-              allTags.add(tag);
-            }
-          });
-        });
-
-        elements.tagList.innerHTML = "";
-
-        if (allTags.size === 0) {
-          const placeholder = document.createElement("span");
-          placeholder.className = "filter-label";
-          placeholder.textContent = "Etiket bulunamadı";
-          elements.tagList.appendChild(placeholder);
-          return;
-        }
-
-        Array.from(allTags).sort((a, b) => a.localeCompare(b, "tr")).forEach((tag) => {
-          const chip = document.createElement("button");
-          chip.className = "tag-chip";
-          chip.type = "button";
-          chip.dataset.tag = tag;
-          chip.textContent = `#${tag}`;
-          chip.addEventListener("click", () => toggleTag(tag, chip));
-          elements.tagList.appendChild(chip);
-        });
-      }
-
-      function toggleTag(tag, chipElement) {
-        if (state.activeTags.has(tag)) {
-          state.activeTags.delete(tag);
-          chipElement.classList.remove("is-active");
-        } else {
-          state.activeTags.add(tag);
-          chipElement.classList.add("is-active");
-        }
-        applyFilters();
-      }
-
-      function renderCards(lessons) {
-        elements.cardsGrid.innerHTML = "";
-
-        if (!lessons.length) {
-          const empty = document.createElement("div");
-          empty.className = "empty-state";
-          empty.innerHTML = "Aradığınız kriterlere uygun ders bulunamadı. Filtreleri değiştirerek yeniden deneyin.";
-          elements.cardsGrid.appendChild(empty);
-          return;
-        }
-
-        lessons.forEach((lesson) => {
-          const card = document.createElement("article");
-          card.className = "lesson-card";
-          card.dataset.lessonId = lesson.id;
-
-          const badge = document.createElement("span");
-          badge.className = "badge";
-          const week = getLessonWeek(lesson);
-          badge.textContent = `Hafta ${week.toString().padStart(2, "0")}`;
-          card.appendChild(badge);
-
-          const title = document.createElement("h3");
-          title.textContent = lesson.title;
-          card.appendChild(title);
-
-          if (lesson.description) {
-            const description = document.createElement("p");
-            description.textContent = lesson.description;
-            card.appendChild(description);
-          }
-
-          const metaRow = document.createElement("div");
-          metaRow.className = "lesson-meta";
-          const resourceCount = lesson.resources?.length ?? lesson.materials?.length ?? 0;
-          const resourcePill = document.createElement("span");
-          resourcePill.className = "pill";
-          resourcePill.textContent = `${resourceCount} materyal`;
-          metaRow.appendChild(resourcePill);
-
-          if (lesson.date) {
-            const datePill = document.createElement("span");
-            datePill.className = "pill";
-            datePill.textContent = new Date(lesson.date).toLocaleDateString("tr-TR", { day: "2-digit", month: "long", year: "numeric" });
-            metaRow.appendChild(datePill);
-          }
-
-          card.appendChild(metaRow);
-
-          if (lesson.tags && lesson.tags.length) {
-            const tagsRow = document.createElement("div");
-            tagsRow.className = "resource-chips";
-            lesson.tags.forEach((tag) => {
-              const tagChip = document.createElement("span");
-              tagChip.className = "resource-chip";
-              tagChip.textContent = `#${tag}`;
-              tagChip.addEventListener("click", () => {
-                const chip = elements.tagList.querySelector(`.tag-chip[data-tag="${tag}"]`);
-                if (chip) {
-                  chip.click();
-                }
-              });
-              tagsRow.appendChild(tagChip);
-            });
-            card.appendChild(tagsRow);
-          }
-
-          const resources = lesson.resources || lesson.materials || [];
-          if (resources.length) {
-            const chipsRow = document.createElement("div");
-            chipsRow.className = "resource-chips";
-            resources.slice(0, 4).forEach((resource) => {
-              const chip = document.createElement("button");
-              chip.type = "button";
-              chip.className = "resource-chip";
-              const icon = resolveResourceIcon(resource.type);
-              chip.innerHTML = `${icon} ${resource.title || resource.label || resource.filename || "Materyal"}`;
-              chip.addEventListener("click", () => {
-                openResource(resource, lesson);
-              });
-              chipsRow.appendChild(chip);
-            });
-            if (resources.length > 4) {
-              const moreChip = document.createElement("button");
-              moreChip.type = "button";
-              moreChip.className = "resource-chip";
-              moreChip.textContent = `+${resources.length - 4} diğer materyal`;
-              moreChip.addEventListener("click", () => openResourceList(lesson));
-              chipsRow.appendChild(moreChip);
-            }
-            card.appendChild(chipsRow);
-          }
-
-          const actions = document.createElement("div");
-          actions.className = "card-actions";
-
-          const openButton = document.createElement("button");
-          openButton.type = "button";
-          openButton.className = "card-button primary";
-          openButton.innerHTML = "📘 Dersi Aç";
-          openButton.addEventListener("click", () => selectLesson(lesson.id));
-
-          const materialsButton = document.createElement("button");
-          materialsButton.type = "button";
-          materialsButton.className = "card-button secondary";
-          materialsButton.innerHTML = "📎 Materyaller";
-          materialsButton.addEventListener("click", () => openResourceList(lesson));
-
-          actions.appendChild(openButton);
-          actions.appendChild(materialsButton);
-          card.appendChild(actions);
-
-          elements.cardsGrid.appendChild(card);
-        });
-      }
-
-      function resolveResourceIcon(type) {
-        switch (type) {
-          case "pdf":
-            return "📄";
-          case "video":
-            return "🎬";
-          case "image":
-            return "🖼️";
-          case "audio":
-            return "🎧";
-          case "slides":
-            return "🗂️";
-          case "link":
-            return "🔗";
-          default:
-            return "📁";
-        }
-      }
-
-      function openResource(resource, lesson) {
+      function openResource(resource) {
         const url = normalisePath(resource.path || resource.url);
         if (!url) {
           return;
         }
-        if (resource.external && resource.url) {
-          window.open(resource.url, "_blank", "noopener");
+        if (resource.external) {
+          window.open(url, "_blank", "noopener");
           return;
         }
         if (window.ResourceViewer) {
           window.ResourceViewer.open({
             url,
-            label: resource.title || resource.label || resource.filename,
-            type: resource.type,
-            downloadUrl: resource.external ? null : url,
+            label: resource.title || resource.label || resource.filename || "Materyal",
+            type: resource.type || "default",
+            downloadUrl: url,
             external: Boolean(resource.external)
           });
         } else {
@@ -965,193 +320,114 @@
         }
       }
 
-      function openResourceList(lesson) {
-        const resources = lesson.resources || lesson.materials || [];
-        if (!resources.length) {
-          return;
-        }
-        selectLesson(lesson.id);
-
-        if (window.ResourceViewer) {
-          const resource = resources[0];
-          openResource(resource, lesson);
-        }
+      function handleResourceClick(event, resource) {
+        event.preventDefault();
+        openResource(resource);
       }
 
-      function setActiveNavItem(lessonId) {
-        const buttons = document.querySelectorAll(".lesson-nav-button");
-        buttons.forEach((button) => {
-          if (button.dataset.lessonId === lessonId) {
-            button.classList.add("is-active");
-            button.setAttribute("aria-current", "true");
-          } else {
-            button.classList.remove("is-active");
-            button.removeAttribute("aria-current");
-          }
+      function createMaterialsList(lesson, resources) {
+        if (!resources.length) {
+          return null;
+        }
+        const list = document.createElement("ul");
+        list.className = "materials-list";
+        resources.forEach((resource) => {
+          const item = document.createElement("li");
+          item.className = "materials-item";
+          const icon = document.createElement("span");
+          const typeKey = resource.type && MATERIAL_ICONS[resource.type] ? resource.type : "default";
+          icon.textContent = MATERIAL_ICONS[typeKey];
+
+          const link = document.createElement("a");
+          link.href = normalisePath(resource.path || resource.url);
+          link.textContent = resource.title || resource.label || resource.filename || "Materyal";
+          link.target = resource.external ? "_blank" : "_self";
+          link.rel = resource.external ? "noopener" : "";
+          link.addEventListener("click", (event) => handleResourceClick(event, resource));
+
+          item.appendChild(icon);
+          item.appendChild(link);
+          list.appendChild(item);
         });
+        return list;
       }
 
-      function updateViewer(lesson) {
-        if (!lesson) {
-          elements.viewerTitle.textContent = "Bir ders seçin";
-          elements.viewerResources.innerHTML = "";
-          elements.lessonFrame.src = "about:blank";
-          elements.openNewTab.setAttribute("href", "#");
-          elements.openNewTab.setAttribute("aria-disabled", "true");
+      function renderLessons(lessons) {
+        grid.innerHTML = "";
+        if (!lessons.length) {
+          const empty = document.createElement("div");
+          empty.className = "lesson-card";
+          empty.innerHTML = "<p>Henüz ders eklenmedi. Yeni bir ders klasörü oluşturduğunuzda liste otomatik güncellenecek.</p>";
+          grid.appendChild(empty);
           return;
         }
 
-        elements.viewerTitle.textContent = lesson.title;
-        elements.openNewTab.setAttribute("href", normalisePath(lesson.lessonPath));
-        elements.openNewTab.removeAttribute("aria-disabled");
+        lessons
+          .slice()
+          .sort((a, b) => resolveWeek(a, 0) - resolveWeek(b, 0))
+          .forEach((lesson, index) => {
+            const weekNumber = resolveWeek(lesson, index);
+            const resources = resolveResources(lesson);
+            const card = document.createElement("article");
+            card.className = "lesson-card";
 
-        elements.lessonFrame.src = normalisePath(lesson.lessonPath);
-        elements.viewerResources.innerHTML = "";
-        const resources = lesson.resources || lesson.materials || [];
-        if (!resources.length) {
-          const empty = document.createElement("span");
-          empty.className = "filter-label";
-          empty.textContent = "Bu ders için ek materyal bulunmuyor.";
-          elements.viewerResources.appendChild(empty);
-        } else {
-          resources.forEach((resource) => {
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = "viewer-resource-button";
-            button.innerHTML = `${resolveResourceIcon(resource.type)} ${resource.title || resource.label || resource.filename || "Materyal"}`;
-            button.addEventListener("click", () => openResource(resource, lesson));
-            elements.viewerResources.appendChild(button);
-          });
-        }
-      }
+            const weekBadge = document.createElement("span");
+            weekBadge.className = "lesson-week";
+            weekBadge.textContent = `Hafta ${weekNumber.toString().padStart(2, "0")}`;
+            card.appendChild(weekBadge);
 
-      function selectLesson(lessonId) {
-        const lesson = state.lessonById.get(lessonId);
-        if (!lesson) {
-          return;
-        }
-        state.selectedLessonId = lessonId;
-        setActiveNavItem(lessonId);
-        updateViewer(lesson);
-        prefetchLessonContent(lesson);
-        document.body.classList.remove("sidebar-open");
-      }
+            const title = document.createElement("h2");
+            title.className = "lesson-title";
+            title.textContent = lesson.title || `Ders ${weekNumber}`;
+            card.appendChild(title);
 
-      function updateResultsInfo(allCount, filteredCount) {
-        const totalText = `${allCount} ders`;
-        if (allCount === filteredCount) {
-          elements.resultsInfo.textContent = totalText;
-        } else {
-          elements.resultsInfo.textContent = `${totalText} · ${filteredCount} sonuç`;
-        }
-      }
-
-      function applyFilters() {
-        const query = state.searchQuery.trim();
-        let results = [...state.lessons];
-
-        if (state.activeTags.size > 0) {
-          results = results.filter((lesson) => {
-            const tags = new Set((lesson.tags || []).map((tag) => (tag || "").toLowerCase()));
-            for (const tag of state.activeTags) {
-              if (!tags.has(tag.toLowerCase())) {
-                return false;
-              }
+            if (lesson.description) {
+              const description = document.createElement("p");
+              description.className = "lesson-description";
+              description.textContent = lesson.description;
+              card.appendChild(description);
             }
-            return true;
+
+            const materialsCount = document.createElement("span");
+            materialsCount.className = "materials-count";
+            materialsCount.textContent = `Materyal sayısı: ${resources.length}`;
+            card.appendChild(materialsCount);
+
+            const list = createMaterialsList(lesson, resources);
+            if (list) {
+              card.appendChild(list);
+            }
+
+            const actions = document.createElement("div");
+            actions.className = "card-actions";
+
+            const lessonUrl = normalisePath(lesson.lessonPath || lesson.htmlFile || "");
+
+            if (lessonUrl) {
+              const openButton = document.createElement("a");
+              openButton.className = "card-button primary";
+              openButton.href = lessonUrl;
+              openButton.textContent = "📘 Dersi Aç";
+              actions.appendChild(openButton);
+            }
+
+            if (resources.length) {
+              const materialsButton = document.createElement("button");
+              materialsButton.type = "button";
+              materialsButton.className = "card-button secondary";
+              materialsButton.textContent = "📎 Materyalleri Gör";
+              materialsButton.addEventListener("click", () => openResource(resources[0]));
+              actions.appendChild(materialsButton);
+            }
+
+            card.appendChild(actions);
+            grid.appendChild(card);
           });
-        }
-
-        if (query.length >= 2 && state.fuse) {
-          const fuseResults = state.fuse.search(query);
-          const matchedIds = new Set(fuseResults.map((entry) => entry.item.id));
-          results = results.filter((lesson) => matchedIds.has(lesson.id));
-          results.sort((a, b) => {
-            const scoreA = fuseResults.find((entry) => entry.item.id === a.id)?.score ?? 1;
-            const scoreB = fuseResults.find((entry) => entry.item.id === b.id)?.score ?? 1;
-            return scoreA - scoreB;
-          });
-        } else if (query.length > 0 && query.length < 2) {
-          // ignore short queries but show hint
-        }
-
-        results.sort((a, b) => getLessonWeek(a) - getLessonWeek(b));
-        state.filteredLessons = results;
-
-        renderCards(results);
-        updateResultsInfo(state.lessons.length, results.length);
-      }
-
-      function handleSearchInput(event) {
-        state.searchQuery = event.target.value;
-        if (state.searchQuery.length) {
-          elements.searchClear.classList.add("is-visible");
-        } else {
-          elements.searchClear.classList.remove("is-visible");
-        }
-        applyFilters();
-      }
-
-      function clearSearch() {
-        state.searchQuery = "";
-        elements.searchInput.value = "";
-        elements.searchClear.classList.remove("is-visible");
-        applyFilters();
-      }
-
-      function setupMobileNavToggle() {
-        elements.mobileNavToggle.addEventListener("click", () => {
-          document.body.classList.toggle("sidebar-open");
-        });
-
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape") {
-            document.body.classList.remove("sidebar-open");
-          }
-        });
       }
 
       async function init() {
-        restoreTheme();
-
-        elements.themeToggle.addEventListener("click", toggleTheme);
-        elements.searchInput.addEventListener("input", handleSearchInput);
-        elements.searchClear.addEventListener("click", clearSearch);
-        setupMobileNavToggle();
-
-        const lessonsRaw = await loadLessons();
-        state.lessons = lessonsRaw.map((lesson) => {
-          const normalisedResources = (lesson.resources || lesson.materials || []).map((resource) => ({
-            ...resource
-          }));
-          const tags = Array.isArray(lesson.tags) ? lesson.tags : [];
-          const lessonPath = lesson.lessonPath || lesson.htmlFile || "";
-          return {
-            ...lesson,
-            resources: normalisedResources,
-            tags,
-            content: lesson.content || "",
-            lessonPath
-          };
-        });
-        state.lessons.sort((a, b) => getLessonWeek(a) - getLessonWeek(b));
-
-        state.lessons.forEach((lesson) => {
-          state.lessonById.set(lesson.id, lesson);
-        });
-
-        buildSidebar(state.lessons);
-        buildTagFilters(state.lessons);
-        updateSearchIndex();
-        applyFilters();
-
-        if (state.lessons.length > 0) {
-          selectLesson(state.lessons[0].id);
-        }
-
-        state.lessons.forEach((lesson) => {
-          prefetchLessonContent(lesson);
-        });
+        const lessons = await loadLessons();
+        renderLessons(lessons);
       }
 
       init();

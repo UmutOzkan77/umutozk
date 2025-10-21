@@ -136,5 +136,35 @@ window.LESSON_DIRECTORY = [
     ],
     "searchBoost": 1,
     "lastUpdated": null
+  },
+  {
+    "id": "ders-05",
+    "week": 5,
+    "folder": "05.hafta",
+    "title": "Hafta 5: Veri Yönetimi Sunumu",
+    "description": "",
+    "date": null,
+    "tags": [],
+    "lessonPath": "lessons/05.hafta/Ders 05.html",
+    "resources": [
+      {
+        "type": "html",
+        "title": "Ders 05 Workshop",
+        "filename": "Ders 05 - Workshop.html",
+        "path": "lessons/05.hafta/Ders 05 - Workshop.html",
+        "file": "Ders 05 - Workshop.html",
+        "external": false
+      },
+      {
+        "type": "image",
+        "title": "Workshop ETicaretERDiyagramı",
+        "filename": "Workshop-ETicaretERDiyagramı.png",
+        "path": "lessons/05.hafta/Workshop-ETicaretERDiyagramı.png",
+        "file": "Workshop-ETicaretERDiyagramı.png",
+        "external": false
+      }
+    ],
+    "searchBoost": 1,
+    "lastUpdated": null
   }
 ];

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop: E-Ticaret Veritabanı Tasarımı - Revize</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+            color: #020617; /* Slate 950 */
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #1d4ed8, #3b82f6); /* Blue 700 to Blue 500 */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+        }
+        
+        .content-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 80rem; 
+        }
+        
+        /* Flashcard styles */
+        .flash-card {
+            background-color: white;
+            border-radius: 1rem; 
+            padding: 1.5rem; 
+            box-shadow: 0 5px 10px -3px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            border: 1px solid #e2e8f0; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            height: 100%;
+        }
+        
+        .flash-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        
+        .text-highlight {
+            color: #1d4ed8; /* Blue-700 */
+            font-weight: 600; 
+        }
+        .workshop-text {
+            color: #ef4444; /* Red 500 */
+        }
+
+        /* Grid düzeni */
+        .grid-custom-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        @media (min-width: 1024px) {
+            .grid-custom-4 {
+                /* 6 kartı 3x2 olarak ayarla */
+                grid-template-columns: repeat(3, 1fr); 
+            }
+        }
+        /* Step 2 ve 3 için 3 sütunlu layout */
+        .grid-custom-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        /* Tablo ve Anahtar Stilleri */
+        .attribute-table th, .attribute-table td {
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+            font-size: 0.875rem; /* text-sm */
+        }
+        .pk-badge {
+            display: inline-block;
+            background-color: #fecaca; /* red-200 */
+            color: #b91c1c; /* red-700 */
+            padding: 0.1rem 0.4rem;
+            border-radius: 0.375rem;
+            font-weight: 700;
+            font-size: 0.7rem;
+            margin-right: 0.5rem;
+        }
+        .fk-badge {
+            display: inline-block;
+            background-color: #bfdbfe; /* blue-200 */
+            color: #1e40af; /* blue-800 */
+            padding: 0.1rem 0.4rem;
+            border-radius: 0.375rem;
+            font-weight: 700;
+            font-size: 0.7rem;
+            margin-right: 0.5rem;
+        }
+        
+        /* Yeni Nitelik Buton Stili */
+        .attribute-badge {
+            display: inline-block;
+            background-color: #e2e8f0; /* slate-200 */
+            color: #1e293b; /* slate-900 */
+            padding: 0.25rem 0.6rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            line-height: 1;
+            transition: background-color 0.2s;
+        }
+        .relationship-card {
+            background-color: #fef2f2; /* red-50 */
+            border-left: 4px solid #ef4444;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .relationship-card .header {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 700;
+            color: #b91c1c; /* red-700 */
+            border-bottom: 1px dashed #fcd34d; /* yellow-400 */
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Sunumdaki şekil animasyonları */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+            z-index: 0;
+            animation: float 40s infinite ease-in-out;
+        }
+        .shape-1 { 
+            width: 500px; 
+            height: 500px; 
+            background-color: #3b82f6; 
+            top: -10%; 
+            left: -15%; 
+            animation-duration: 45s; 
+        }
+        .shape-2 { 
+            width: 350px; 
+            height: 350px; 
+            background-color: #1d4ed8; 
+            bottom: -15%; 
+            right: -10%; 
+            animation-duration: 35s; 
+            animation-delay: 5s;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-30px) translateX(20px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+        .content-container {
+            position: relative;
+            z-index: 10;
+            opacity: 1;
+            transform: translateY(0);
+            width: 100%;
+            max-width: 80rem; 
+        }
+        
+        /* Yeni Vurgu Stilleri */
+        .definition-tag {
+            color: #b91c1c; /* red-700 */
+            font-weight: 700;
+        }
+        .purpose-tag {
+            color: #1e40af; /* blue-800 */
+            font-weight: 700;
+        }
+        .relationship-tag {
+            color: #059669; /* emerald-600 */
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ###################################################################### -->
+    <!--                                KAPAK SAYFASI                           -->
+    <!-- ###################################################################### -->
+    <section class="slide">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+
+        <div class="content-container text-center p-8 max-w-4xl mx-auto">
+            
+            <!-- Kurs Kodu -->
+            <div class="mb-4">
+                <span class="bg-blue-100 text-blue-800 text-sm font-bold tracking-widest uppercase px-4 py-1 rounded-full">
+                    VERİ MODELLEME
+                </span>
+            </div>
+
+            <!-- Workshop Ana Başlık -->
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight">
+                <span class="workshop-text">WORKSHOP:</span>
+                <br>
+                E-Ticaret E–R Diyagramı Tasarımı
+            </h1>
+            
+            <!-- Alt Başlık -->
+            <p class="mt-8 text-2xl md:text-3xl font-extrabold gradient-text">
+                Müşteri Odaklı Satış Veri Modelinin İncelenmesi
+            </p>
+            
+            <!-- Alt Bilgiler: Eğitmen Adı Güncellendi -->
+            <div class="mt-12 border-t border-slate-200 pt-6">
+                <p class="text-lg text-slate-700 font-bold">
+                    Mantıksal Veri Modelleme
+                </p>
+                <p class="mt-2 text-md text-slate-800 font-bold">
+                    Doç. Dr. Cemalettin HATİPOĞLU & Arş. Gör. Cemal YÜKSEL
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ###################################################################### -->
+    <!--                           ADIM 1: VARLIKLAR                            -->
+    <!-- ###################################################################### -->
+    <section class="slide bg-slate-50">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+
+        <div class="content-container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+                    <span class="workshop-text">WORKSHOP ADIM 1:</span> Temel Varlıkları Belirleme
+                </h2>
+                <p class="mt-4 max-w-4xl mx-auto text-xl text-slate-600 font-medium">
+                    Sistemdeki 6 ana iş nesnesinin Tanımı ve Veritabanındaki Amaçları.
+                </p>
+            </div>
+           
+            <!-- Varlıklar (3x2 Düzeni) -->
+            <div class="grid-custom-4">
+                
+                <!-- Varlık 1: Müşteriler (CUSTOMERS) -->
+                <div class="flash-card">
+                    <div class="bg-red-100 p-3 rounded-xl mb-4">
+                        <!-- User Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-700"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">1. MÜŞTERİLER (CUSTOMERS)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        <strong class="definition-tag">Tanım:</strong> Sisteme kayıtlı olan tüm kullanıcıları temsil eder.
+                        <br>
+                        <strong class="purpose-tag">Amaç:</strong> İletişim, hesap yönetimi ve <span class="text-slate-800 font-normal">sipariş takibi</span> için temel bilgileri tutmak ve müşteri bazlı ilişkileri başlatmak.
+                        <br>
+                        <strong class="relationship-tag">İlişkiler:</strong> 1–N 🔗 adresler, 1–N 🔗 siparisler
+                    </p>
+                </div>
+
+                <!-- Varlık 2: ADRESLER (ADDRESSES) -->
+                <div class="flash-card">
+                    <div class="bg-red-100 p-3 rounded-xl mb-4">
+                        <!-- Map Pin Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-700"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">2. ADRESLER (ADDRESSES)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        <strong class="definition-tag">Tanım:</strong> Müşterilerin belirlediği <span class="text-slate-800 font-normal">teslimat/fatura</span> konum bilgileridir.
+                        <br>
+                        <strong class="purpose-tag">Amaç:</strong> Adres verilerini <span class="text-slate-800 font-normal">normalize etmek</span> ve bir müşterinin birden fazla adresi olabilme durumunu yönetmek.
+                        <br>
+                        <strong class="relationship-tag">İlişkiler:</strong> N–1 🔗 musteriler, 1–N 🔗 siparisler
+                    </p>
+                </div>
+
+                <!-- Varlık 3: SİPARİŞLER (ORDERS) -->
+                <div class="flash-card">
+                    <div class="bg-red-100 p-3 rounded-xl mb-4">
+                        <!-- Shopping Cart Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-700"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.72a2 2 0 0 0 2-1.58L23 6H6"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">3. SİPARİŞLER (ORDERS)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        <strong class="definition-tag">Tanım:</strong> Müşterinin verdiği, <span class="text-slate-800 font-normal">ödeme onayı almış</span> alım işleminin özeti.
+                        <br>
+                        <strong class="purpose-tag">Amaç:</strong> Kimin, ne zaman, hangi fiyattan ve hangi adrese <span class="text-slate-800 font-normal">sipariş verdiğini</span> kayıt altına almak.
+                        <br>
+                        <strong class="relationship-tag">İlişkiler:</strong> N–1 🔗 musteriler, N–1 🔗 adresler, 1–N 🔗 siparisDetay
+                    </p>
+                </div>
+
+                <!-- Varlık 4: SİPARİŞDETAY (ORDER DETAILS) -->
+                <div class="flash-card">
+                    <div class="bg-red-100 p-3 rounded-xl mb-4">
+                        <!-- Invoice Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-700"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">4. SİPARİŞDETAY (ORDER DETAILS)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        <strong class="definition-tag">Tanım:</strong> Bir siparişin içerdiği ürünlerin <span class="text-slate-800 font-normal">miktar ve satış anı fiyat</span> detayları.
+                        <br>
+                        <strong class="purpose-tag">Amaç:</strong> SİPARİŞLER ile ÜRÜNLER arasındaki <span class="text-red-700 font-normal">N:N ilişkisini çözmek</span> ve sipariş anındaki ürün fiyatını sabitlemek (historical pricing).
+                        <br>
+                        <strong class="relationship-tag">İlişkiler:</strong> N–1 🔗 siparisler, N–1 🔗 urunler
+                    </p>
+                </div>
+                
+                <!-- Varlık 5: ÜRÜNLER (PRODUCTS) -->
+                <div class="flash-card"> 
+                    <div class="bg-red-100 p-3 rounded-xl mb-4">
+                        <!-- Package Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-700"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 9-5"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">5. ÜRÜNLER (PRODUCTS)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        <strong class="definition-tag">Tanım:</strong> E-ticaret platformunda listelenen tüm <span class="text-slate-800 font-normal">ticari mallar</span>.
+                        <br>
+                        <strong class="purpose-tag">Amaç:</strong> Ürün adı, fiyatı, açıklaması ve mevcut <span class="text-slate-800 font-normal">stok miktarını</span> tek bir merkezde tutarak envanter yönetimini sağlamak.
+                        <br>
+                        <strong class="relationship-tag">İlişkiler:</strong> N–N 🔗 siparisler (siparisDetay), N–1 🔗 kategoriler
+                    </p>
+                </div>
+
+                <!-- Varlık 6: KATEGORİLER (CATEGORIES) -->
+                <div class="flash-card"> 
+                    <div class="bg-red-100 p-3 rounded-xl mb-4">
+                        <!-- Tags/Folders Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-700"><path d="M22 10V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12.5"/><rect x="16" y="16" width="6" height="6" rx="1"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">6. KATEGORİLER (CATEGORIES)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        <strong class="definition-tag">Tanım:</strong> Ürünlerin <span class="text-slate-800 font-normal">mantıksal olarak gruplandığı</span> sınıflandırma yapısı.
+                        <br>
+                        <strong class="purpose-tag">Amaç:</strong> Site içi navigasyonu, ürün aramasını ve <span class="text-slate-800 font-normal">filtrelemeyi</span> kolaylaştırmak; hiyerarşik yapı kurmayı sağlamak.
+                        <br>
+                        <strong class="relationship-tag">İlişkiler:</strong> 1–N 🔗 urunler
+                    </p>
+                </div>
+                
+            </div>
+            
+            <div class="text-center mt-12 pt-6 border-t border-slate-200">
+                <p class="text-lg text-slate-700 font-bold">
+                    <span class="text-highlight">SIRADAKİ ADIM:</span> Bu varlıkların her biri için gerekli olan <span class="text-red-700">Nitelikleri (Sütunları) ve Anahtarları (PK/FK)</span> detaylandıracağız.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ###################################################################### -->
+    <!--                       ADIM 2: NİTELİKLER VE ANAHTARLAR                 -->
+    <!-- ###################################################################### -->
+    <section class="slide">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+
+        <div class="content-container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+                    <span class="workshop-text">ADIM 2:</span> Nitelikleri ve Anahtarları Tanımlama
+                </h2>
+                <p class="mt-4 max-w-4xl mx-auto text-xl text-slate-600 font-medium">
+                    Her varlığın depolayacağı özellikleri (Nitelikler) ve anahtarları (<span class="text-red-700">PK: Birincil</span>, <span class="text-blue-700">FK: Yabancı</span>) belirliyoruz.
+                </p>
+            </div>
+           
+            <!-- Nitelikler (3 Sütunlu Düzen) -->
+            <div class="grid-custom-3">
+                
+                <!-- Kart 1: MÜŞTERİLER -->
+                <div class="flash-card border-l-4 border-red-500">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2 text-red-700">1. MÜŞTERİLER</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                        Tablo: <span class="font-mono text-xs bg-slate-100 p-1 rounded">musteriler</span>
+                    </p>
+                    <ul class="text-sm list-none p-0 w-full flex flex-wrap pt-2">
+                        <li class="w-full mb-3"><span class="pk-badge">PK</span> musteriID</li>
+                        <li><span class="attribute-badge">musteriAd</span></li>
+                        <li><span class="attribute-badge">musteriSoyad</span></li>
+                        <li><span class="attribute-badge !bg-yellow-200 !text-yellow-800">eMail (Benzersiz)</span></li>
+                        <li><span class="attribute-badge">sifreHas</span></li>
+                        <li><span class="attribute-badge">telefon</span></li>
+                        <li><span class="attribute-badge">kayitTarih</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kart 2: ADRESLER -->
+                <div class="flash-card border-l-4 border-red-500">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2 text-red-700">2. ADRESLER</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                        Tablo: <span class="font-mono text-xs bg-slate-100 p-1 rounded">adresler</span>
+                    </p>
+                    <ul class="text-sm list-none p-0 w-full flex flex-wrap pt-2">
+                        <li class="w-full mb-3"><span class="pk-badge">PK</span> adresID</li>
+                        <li class="w-full mb-3"><span class="fk-badge">FK</span> musteriID → musteriler</li>
+                        <li><span class="attribute-badge">adresBasligi</span></li>
+                        <li><span class="attribute-badge">adresSatiri1</span></li>
+                        <li><span class="attribute-badge">sehir</span></li>
+                        <li><span class="attribute-badge">postaKodu</span></li>
+                    </ul>
+                </div>
+                
+                <!-- Kart 3: KATEGORİLER -->
+                <div class="flash-card border-l-4 border-red-500">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2 text-red-700">6. KATEGORİLER</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                        Tablo: <span class="font-mono text-xs bg-slate-100 p-1 rounded">kategoriler</span>
+                    </p>
+                    <ul class="text-sm list-none p-0 w-full flex flex-wrap pt-2">
+                        <li class="w-full mb-3"><span class="pk-badge">PK</span> kategoriID</li>
+                        <li><span class="attribute-badge">kategoriAdi</span></li>
+                        <li><span class="attribute-badge">aciklama</span></li>
+                        <li><span class="fk-badge">FK</span> ustKategoriID (Opsiyonel)</li>
+                    </ul>
+                </div>
+                
+                <!-- Kart 4: ÜRÜNLER -->
+                <div class="flash-card border-l-4 border-red-500">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2 text-red-700">5. ÜRÜNLER</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                        Tablo: <span class="font-mono text-xs bg-slate-100 p-1 rounded">urunler</span>
+                    </p>
+                    <ul class="text-sm list-none p-0 w-full flex flex-wrap pt-2">
+                        <li class="w-full mb-3"><span class="pk-badge">PK</span> urunID</li>
+                        <li class="w-full mb-3"><span class="fk-badge">FK</span> kategoriID → kategoriler</li>
+                        <li><span class="attribute-badge">urunAd</span></li>
+                        <li><span class="attribute-badge">aciklama</span></li>
+                        <li><span class="attribute-badge">fiyat</span></li>
+                        <li><span class="attribute-badge">stokMiktar</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kart 5: SİPARİŞLER -->
+                <div class="flash-card border-l-4 border-red-500">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2 text-red-700">3. SİPARİŞLER</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                        Tablo: <span class="font-mono text-xs bg-slate-100 p-1 rounded">siparisler</span>
+                    </p>
+                    <ul class="text-sm list-none p-0 w-full flex flex-wrap pt-2">
+                        <li class="w-full mb-3"><span class="pk-badge">PK</span> siparisID</li>
+                        <li class="w-full mb-3"><span class="fk-badge">FK</span> musteriID → musteriler</li>
+                        <li class="w-full mb-3"><span class="fk-badge">FK</span> adresID → adresler</li>
+                        <li><span class="attribute-badge">sipTarih</span></li>
+                        <li><span class="attribute-badge">toplamTutar</span></li>
+                        <li><span class="attribute-badge !bg-yellow-200 !text-yellow-800">sipDurum</span></li>
+                    </ul>
+                </div>
+                
+                <!-- Kart 6: SİPARİŞDETAY -->
+                <div class="flash-card border-l-4 border-red-500">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2 text-red-700">4. SİPARİŞDETAY</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                        Tablo: <span class="font-mono text-xs bg-slate-100 p-1 rounded">siparisDetay</span> (N–N Çözüm Tablosu)
+                    </p>
+                    <ul class="text-sm list-none p-0 w-full flex flex-wrap pt-2">
+                        <li class="w-full mb-3"><span class="pk-badge">PK</span> siparisDetayID</li>
+                        <li class="w-full mb-3"><span class="fk-badge">FK</span> siparisID → siparisler</li>
+                        <li class="w-full mb-3"><span class="fk-badge">FK</span> urunID → urunler</li>
+                        <li><span class="attribute-badge">miktar</span></li>
+                        <li><span class="attribute-badge">birimFiyat</span> (Satış Anı Fiyatı)</li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="text-center mt-12 pt-6 border-t border-slate-200">
+                <p class="text-lg text-slate-700 font-bold">
+                    <span class="text-highlight">SIRADAKİ ADIM:</span> Bu tablolar arasındaki ilişkileri ve kardinaliteleri (1-N, N-N) görsel ve mantıksal olarak inceleyelim.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ###################################################################### -->
+    <!--          ADIM 3: İLİŞKİLERİN VE BÜTÜNSEL ANLAMIN İNCELENMESİ           -->
+    <!-- ###################################################################### -->
+    <section class="slide bg-slate-50">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+
+        <div class="content-container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+                    <span class="workshop-text">ADIM 3:</span> İlişkiler ve Bütünsel Anlam
+                </h2>
+                <p class="mt-4 max-w-4xl mx-auto text-xl text-slate-600 font-medium">
+                    ERD'nin temelini oluşturan varlıklar arası mantıksal bağlantıların kardinalite bazlı incelemesi.
+                </p>
+            </div>
+           
+            <!-- İlişkiler (3x2 Düzeni) -->
+            <div class="grid-custom-3">
+                
+                <!-- Kart 1: Müşteriler (1-N) -->
+                <div class="flash-card relationship-card">
+                    <div>
+                        <div class="header">MÜŞTERİLER İlişkisi (<span class="text-emerald-600">1–N</span>)</div>
+                        <p class="text-slate-800 text-sm font-semibold mb-2">1 🔗 ADRESLER / 1 🔗 SİPARİŞLER</p>
+                        <ul class="text-slate-600 text-sm leading-relaxed mb-3 list-disc list-inside">
+                            <li>Bir müşteri, birden fazla adrese sahiptir.</li>
+                            <li>Bir müşteri, birden fazla sipariş verir.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Kart 2: KATEGORİLER (1-N) -->
+                <div class="flash-card relationship-card">
+                    <div>
+                        <div class="header">KATEGORİLER İlişkisi (<span class="text-emerald-600">1–N</span>)</div>
+                        <p class="text-slate-800 text-sm font-semibold mb-2">1 🔗 ÜRÜNLER</p>
+                        <ul class="text-slate-600 text-sm leading-relaxed mb-3 list-disc list-inside">
+                            <li>Bir kategori, birden fazla ürün içerir.</li>
+                            <li>(İsteğe bağlı) Üst kategori yapısıyla <span class="text-slate-800 font-normal">hiyerarşi</span> kurulabilir.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Kart 3: ÜRÜNLER (N-N Çözümü) -->
+                <div class="flash-card relationship-card">
+                    <div>
+                        <div class="header">ÜRÜNLER & SİPARİŞLER (<span class="text-red-700">N–N KRİTİK</span>)</div>
+                        <p class="text-slate-800 text-sm font-semibold mb-2">N–N 🔗 SİPARİŞDETAY Üzerinden Çözülür</p>
+                        <ul class="text-slate-600 text-sm leading-relaxed mb-3 list-disc list-inside">
+                            <li>Bir ürün, birden çok siparişte bulunabilir.</li>
+                            <li>Bu ilişki, `siparisDetay` <span class="text-slate-800 font-normal">ara tablosu</span> ile çözülür.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Kart 4: SİPARİŞLER (FK Detayları) -->
+                <div class="flash-card relationship-card">
+                    <div>
+                        <div class="header">SİPARİŞLER (N–1 Bağlantılar)</div>
+                        <p class="text-slate-800 text-sm font-semibold mb-2">N 🔗 MÜŞTERİLER / N 🔗 ADRESLER</p>
+                        <ul class="text-slate-600 text-sm leading-relaxed mb-3 list-disc list-inside">
+                            <li>Her sipariş bir müşteriye (<span class="text-slate-800 font-normal">musteriID</span>) aittir.</li>
+                            <li>Her sipariş bir adrese (<span class="text-slate-800 font-normal">adresID</span>) teslim edilir.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Kart 5: SİPARİŞDETAY (Kritik Rolü) -->
+                <div class="flash-card relationship-card">
+                    <div>
+                        <div class="header">SİPARİŞDETAY (Bağlantı Rolü)</div>
+                        <p class="text-slate-800 text-sm font-semibold mb-2">N 🔗 SİPARİŞLER / N 🔗 ÜRÜNLER</p>
+                        <ul class="text-slate-600 text-sm leading-relaxed mb-3 list-disc list-inside">
+                            <li>Bu ara tablo, siparişin hangi ürünü <span class="text-slate-800 font-normal">kaç adet (miktar)</span> ve hangi fiyattan (<span class="text-slate-800 font-normal">birimFiyat</span>) içerdiğini kaydeder.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Kart 6: BÜTÜNSEL ANLAM -->
+                <div class="flash-card relationship-card bg-blue-50 border-blue-400">
+                    <div>
+                        <div class="header text-blue-700 border-blue-400">🧮 MODELİN BÜTÜNSEL ANLAMI</div>
+                        <ul class="text-slate-800 text-base font-medium leading-relaxed mb-3 list-disc list-inside">
+                            <li>Müşteri <span class="text-blue-700 font-bold">kayıt olur</span>, adres tanımlar.</li>
+                            <li>Müşteri bir sipariş verir (<span class="text-blue-700 font-bold">belirli adrese teslim</span>).</li>
+                            <li>Sipariş, detay tablosu üzerinden <span class="text-blue-700 font-bold">birden fazla ürün içerir</span>.</li>
+                            <li>Ürünler, kategorilerine göre gruplanmıştır.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="text-center mt-12 pt-6 border-t border-slate-200">
+                <p class="text-2xl text-red-700 font-black">
+                    Tebrikler! E-Ticaret Veritabanı için mantıksal ERD modelini tamamladınız.
+                </p>
+                <p class="mt-4 text-lg text-slate-700 font-bold">
+                    Bu yapı, karmaşık e-ticaret verilerinin tutarlı ve sorgulanabilir bir şekilde saklanmasını sağlar.
+                </p>
+            </div>
+        </div>
+    </section>
+
+<script src="../../lessons-data.js"></script>
+<script src="../../resource-viewer.js"></script>
+<script src="../../lesson-resources.js"></script>
+<script>
+    initLessonResources("ders-05");
+</script>
+</body>
+</html>

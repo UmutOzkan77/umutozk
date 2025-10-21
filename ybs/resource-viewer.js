@@ -347,6 +347,12 @@
       iframe.title = resolvedLabel;
       iframe.loading = "lazy";
       contentElement.appendChild(iframe);
+    } else if (type === "html") {
+      const iframe = document.createElement("iframe");
+      iframe.src = url;
+      iframe.title = resolvedLabel;
+      iframe.loading = "lazy";
+      contentElement.appendChild(iframe);
     } else {
       const fallback = document.createElement("div");
       fallback.className = "resource-viewer-fallback";

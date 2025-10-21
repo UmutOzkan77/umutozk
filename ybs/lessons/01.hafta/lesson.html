@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YBS1103: Yönetim Bilişim Sistemlerine Giriş - Ders İzlencesi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000005;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        .flashcard {
+            background-color: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .flashcard.is-visible {
+             opacity: 1;
+             transform: translateY(0px);
+             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .flashcard:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3), 0 0 25px rgba(168, 85, 247, 0.3);
+        }
+        
+        /* Sunum haftaları için özel stil */
+        .presentation-card {
+            background-color: rgba(134, 25, 143, 0.25);
+            border-color: rgba(236, 72, 153, 0.4);
+        }
+
+        .presentation-card:hover {
+             box-shadow: 0 20px 30px rgba(0, 0, 0, 0.4), 0 0 25px rgba(236, 72, 153, 0.4);
+        }
+        
+        .card-icon-container {
+            background-color: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+        
+        .manifesto-card {
+            background: rgba(17, 24, 39, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <main>
+        <section class="hero-section">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-black tracking-tighter hero-title">YBS1103</h1>
+                <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-slate-200 mt-2">Yönetim Bilişim Sistemlerine Giriş</h2>
+                
+                <div class="manifesto-card">
+                     <p class="text-base md:text-lg font-light text-slate-300 leading-relaxed max-w-4xl mx-auto">
+                        Bu ders, sizleri dijital çağın ihtiyacı olan <strong class="font-bold text-sky-400">Yönetim Bilişim Sistemleri Uzmanı</strong> olarak yetiştirmek üzere tasarlanmıştır. Her hafta, teorik bilgileri dünyanın önde gelen şirketlerinin <strong class="font-bold text-sky-400">başarı ve başarısızlık hikayeleriyle</strong> birleştirerek, bilişim sistemlerinin bir işletmenin kaderini nasıl şekillendirdiğini keşfedeceğiz. Unutmayın, bu dersteki amacımız sadece <strong class="font-bold text-amber-300">"ne"</strong> olduğunu öğrenmek değil, <strong class="font-bold text-amber-300">"neden"</strong> olduğunu anlamak ve <strong class="font-bold text-amber-300">"nasıl daha iyi olabileceğini"</strong> sorgulamaktır.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 md:py-24 px-4 -mt-24">
+            <div class="container mx-auto">
+                <div class="grid grid-cols-1 gap-8 md:gap-10 max-w-3xl mx-auto">
+                    
+                    <div class="flashcard rounded-xl p-6 flex flex-col" style="transition-delay: 100ms;">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="font-bold text-lg text-purple-400">Hafta 1</span>
+                            <div class="card-icon-container p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="font-extrabold text-2xl mb-3 text-rose-400">Oryantasyon: Geleceğe Hoş Geldiniz!</h3>
+                        <p class="text-slate-400 leading-relaxed">YBS disiplininin ne olduğu ve ne olmadığını, <strong class="font-bold text-sky-400">teknik ve davranışsal yaklaşımların kesişimini</strong>, sektörün mezunlardan beklentilerini ve dijital çağda bir YBS profesyonelinin sahip olması gereken <strong class="font-bold text-sky-400">temel yetkinlikleri</strong> ele alacağız. Kariyer yolları ve dijital kimliğin önemi üzerinde duracağız.</p>
+                    </div>
+                    
+                    <div class="flashcard rounded-xl p-6 flex flex-col" style="transition-delay: 200ms;">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="font-bold text-lg text-purple-400">Hafta 2</span>
+                            <div class="card-icon-container p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="font-extrabold text-2xl mb-3 text-rose-400">YBS'nin Temelleri: Veriden Değer Yaratmak</h3>
+                        <p class="text-slate-400 leading-relaxed"><strong class="font-bold text-sky-400">DIKW piramidi</strong> aracılığıyla verinin enformasyona, bilgiye ve bilgeliğe dönüşümünü inceleyeceğiz. Bir bilişim sistemini oluşturan <strong class="font-bold text-sky-400">beş temel bileşeni</strong> (donanım, yazılım, veri, insan, süreç) tanımlayacak ve bu kavramları <strong class="font-bold text-sky-400">Netflix</strong> gibi modern iş modelleri üzerinden somutlaştıracağız.</p>
+                    </div>
+
+                    <div class="flashcard rounded-xl p-6 flex flex-col" style="transition-delay: 300ms;">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="font-bold text-lg text-purple-400">Hafta 3</span>
+                            <div class="card-icon-container p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="font-extrabold text-2xl mb-3 text-rose-400">Bilişim Sistemleri Türleri ve Karar Verme</h3>
+                        <p class="text-slate-400 leading-relaxed">Bir organizasyonun farklı yönetim seviyelerine (operasyonel, taktiksel, stratejik) göre kullanılan bilişim sistemleri türlerini <strong class="font-bold text-sky-400">(TPS, MIS, DSS, ESS)</strong> keşfedeceğiz. Kararların yapılarına (yapılandırılmış, yapılandırılmamış) göre nasıl sınıflandırıldığını ve her sistem türünün hangi karar mekanizmasını desteklediğini <strong class="font-bold text-sky-400">Zara</strong> gibi sektörel örneklerle analiz edeceğiz.</p>
+                    </div>
+
+                    <div class="flashcard rounded-xl p-6 flex flex-col" style="transition-delay: 100ms;">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="font-bold text-lg text-purple-400">Hafta 4</span>
+                            <div class="card-icon-container p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm0 2c-2.21 0-4 1.79-4 4v1h8v-1c0-2.21-1.79-4-4-4zm6 4h-2v-1c0-.551-.224-1.051-.586-1.414A3.988 3.988 0 0012 13c-1.105 0-2.098.448-2.828 1.172A1.99 1.99 0 008 15v1H6v-1c0-1.103.447-2.099 1.172-2.828C8.447 11.448 10.147 11 12 11s3.553.448 4.828 1.172C17.553 12.901 18 13.897 18 15v1z"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="font-extrabold text-2xl mb-3 text-rose-400">Rekabet Avantajı için Bilişim Sistemleri</h3>
+                        <p class="text-slate-400 leading-relaxed">Bilişim sistemlerinin nasıl stratejik bir rekabet aracına dönüştüğünü inceleyeceğiz. <strong class="font-bold text-sky-400">Porter'ın 5 Gücü</strong> ve <strong class="font-bold text-sky-400">Değer Zinciri</strong> modellerini kullanarak pazar dinamiklerini analiz edecek, <strong class="font-bold text-sky-400">Yıkıcı İnovasyon</strong> ve <strong class="font-bold text-sky-400">Ağ Etkisi</strong> gibi kavramları <strong class="font-bold text-sky-400">Getir ve Trendyol</strong> gibi platform ekonomisi örnekleriyle tartışacağız.</p>
+                    </div>
+
+                    <div class="flashcard rounded-xl p-6 flex flex-col" style="transition-delay: 200ms;">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="font-bold text-lg text-purple-400">Hafta 5</span>
+                            <div class="card-icon-container p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="font-extrabold text-2xl mb-3 text-rose-400">Veri Yönetimi: Dijital Varlıkların Mimarisi</h3>
+                        <p class="text-slate-400 leading-relaxed">Modern işletmelerin veri altyapısının temellerini atacağız. Veritabanı türlerini (İlişkisel, NoSQL), Veritabanı Yönetim Sistemlerini (VTYS) ve <strong class="font-bold text-sky-400">ACID prensiplerini</strong> öğreneceğiz. <strong class="font-bold text-sky-400">Varlık-İlişki (ER) Diyagramları</strong> ile verinin mantıksal yapısını nasıl modellediğimizi pratik bir e-ticaret senaryosu üzerinden göreceğiz.</p>
+                    </div>
+
+                    <div class="flashcard presentation-card rounded-xl p-6 flex flex-col" style="transition-delay: 300ms;">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="font-bold text-lg text-pink-400">Hafta 6-7</span>
+                            <div class="card-icon-container p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-pink-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="font-extrabold text-2xl mb-3 text-rose-400">I. PROJE SUNUMLARI: Şirketin Dijital Röntgeni</h3>
+                        <p class="text-slate-400 leading-relaxed">Gruplar, 2. ve 5. haftalar arasında işlenen konuları temel alarak seçecekleri büyük bir şirketin kapsamlı bir <strong class="font-bold text-pink-400">dijital röntgenini</strong> çekeceklerdir. Bu profesyonel sunumda, şirketin bilişim sistemleri mimarisi, stratejik rekabet analizi ve veri yönetimi yaklaşımları <strong class="font-bold text-pink-400">detaylı bir şekilde</strong> incelenecektir.</p>
+                    </div>
+                    
+                    <div class="flashcard rounded-xl p-6 flex flex-col" style="transition-delay: 100ms;">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="font-bold text-lg text-purple-400">Hafta 8</span>
+                            <div class="card-icon-container p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M17 21h4v-2a4 4 0 00-4-4h-4m4 4v-2a4 4 0 00-4-4H5m12 0v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2m8-12a4 4 0 100-8 4 4 0 000 8z"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="font-extrabold text-2xl mb-3 text-rose-400">Stratejik Kararların Temeli: Veri Ambarı ve Büyük Veri</h3>
+                        <p class="text-slate-400 leading-relaxed">Operasyonel (OLTP) ve analitik (OLAP) sistemler arasındaki farkı anlayarak <strong class="font-bold text-sky-400">Veri Ambarı (DWH)</strong> kavramını derinlemesine inceleyeceğiz. <strong class="font-bold text-sky-400">Büyük Veri'nin 5V'si</strong> (Hacim, Hız, Çeşitlilik, Doğruluk, Değer) ve <strong class="font-bold text-sky-400">OLAP küpleri</strong> gibi analitik araçların <strong class="font-bold text-sky-400">UPS</strong> gibi dev şirketlerde nasıl operasyonel verimliliğe dönüştüğünü göreceğiz.</p>
+                    </div>
+                    
+                    <div class="flashcard rounded-xl p-6 flex flex-col" style="transition-delay: 200ms;">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="font-bold text-lg text-purple-400">Hafta 9</span>
+                            <div class="card-icon-container p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 10l-2.5 2.5M10 10l2.5-2.5M10 10l-2.5-2.5M10 10l2.5 2.5"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="font-extrabold text-2xl mb-3 text-rose-400">Verideki İçgörüleri Keşfetme Sanatı: İş Zekası ve Veri Madenciliği</h3>
+                        <p class="text-slate-400 leading-relaxed"><strong class="font-bold text-sky-400">İş Zekası (BI)</strong> ve <strong class="font-bold text-sky-400">İş Analitiği (BA)</strong> arasındaki farkları öğrenecek, veri madenciliği teknikleriyle ham veriden nasıl değerli içgörüler çıkarıldığını keşfedeceğiz. Analitik türlerini (tanımlayıcı, tahminsel) ve <strong class="font-bold text-sky-400">RFM, Sepet Analizi</strong> gibi pratik uygulamaları <strong class="font-bold text-sky-400">"Bebek Bezi ve Bira"</strong> gibi klasik vakalarla somutlaştıracağız.</p>
+                    </div>
+
+                    <div class="flashcard rounded-xl p-6 flex flex-col" style="transition-delay: 300ms;">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="font-bold text-lg text-purple-400">Hafta 10</span>
+                            <div class="card-icon-container p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6a2 2 0 100-4 2 2 0 000 4zm0 14a2 2 0 100-4 2 2 0 000 4zm6-8a2 2 0 100-4 2 2 0 000 4zm-12 0a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="font-extrabold text-2xl mb-3 text-rose-400">Dijital Pazarlar ve Yapay Zeka Destekli Ticaret</h3>
+                        <p class="text-slate-400 leading-relaxed">E-ticaret ve M-ticaretin dinamiklerini, <strong class="font-bold text-sky-400">makine öğrenmesi paradigmalarını</strong> (denetimli, denetimsiz) ve Derin Öğrenme'nin temel mantığını inceleyeceğiz. <strong class="font-bold text-sky-400">Üretici Yapay Zeka'nın (GenAI)</strong> sanal ürün deneme gibi uygulamalarla müşteri deneyimini nasıl kökten değiştirdiğini ve modern ticareti nasıl şekillendirdiğini tartışacağız.</p>
+                    </div>
+
+                    <div class="flashcard rounded-xl p-6 flex flex-col" style="transition-delay: 100ms;">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="font-bold text-lg text-purple-400">Hafta 11</span>
+                            <div class="card-icon-container p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h6m-6 4h6m-6 4h6"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="font-extrabold text-2xl mb-3 text-rose-400">Kurumsal Sistemler: İşletmenin Omurgası</h3>
+                        <p class="text-slate-400 leading-relaxed">İşletmenin merkezi sinir sistemini oluşturan <strong class="font-bold text-sky-400">ERP, CRM ve SCM</strong> sistemlerini ele alacağız. Bu sistemlerin entegrasyonunun önemini, <strong class="font-bold text-sky-400">"Tek Bir Doğru Veri Kaynağı" (SSOT)</strong> ilkesini ve tedarik zincirindeki <strong class="font-bold text-sky-400">"Kamçı Etkisi"</strong> riskini <strong class="font-bold text-sky-400">Vestel ve Arçelik</strong> gibi yerli sanayi devlerinin vaka analizleriyle inceleyeceğiz.</p>
+                    </div>
+
+                    <div class="flashcard rounded-xl p-6 flex flex-col" style="transition-delay: 200ms;">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="font-bold text-lg text-purple-400">Hafta 12</span>
+                            <div class="card-icon-container p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="font-extrabold text-2xl mb-3 text-rose-400">Siber Güvenlik Yönetimi ve Dijital Etik</h3>
+                        <p class="text-slate-400 leading-relaxed"><strong class="font-bold text-sky-400">Ransomware ve Phishing</strong> gibi siber tehditleri, insan faktörünü hedef alan <strong class="font-bold text-sky-400">Sosyal Mühendislik</strong> saldırılarını ve <strong class="font-bold text-sky-400">"Sıfır Güven"</strong> gibi modern savunma mimarilerini inceleyeceğiz. Algoritmik önyargı ve <strong class="font-bold text-sky-400">KVKK/GDPR</strong> gibi yasal düzenlemelerle dijital etiğin gri alanlarını tartışacağız.</p>
+                    </div>
+
+                    <div class="flashcard presentation-card rounded-xl p-6 flex flex-col" style="transition-delay: 300ms;">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="font-bold text-lg text-pink-400">Hafta 13-14</span>
+                            <div class="card-icon-container p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-pink-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M4 17v4m-2-2h4M17 3v4m2-2h-4m4 14v4m-2-2h4M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                            </div>
+                        </div>
+                        <h3 class="font-extrabold text-2xl mb-3 text-rose-400">II. PROJE SUNUMLARI: Şirket İçin Dijital Dönüşüm ve Gelecek Vizyonu</h3>
+                        <p class="text-slate-400 leading-relaxed">Bu aşamada, seçtiğiniz şirketin kurumsal sistemlerinin entegrasyonu, veri madenciliği ve iş zekası uygulamaları, siber güvenlik stratejileri ve dijital etik sorumlulukları incelenecektir. Dersin 8-12. haftalarında işlenen konuları temel alarak şirketin geleceğe yönelik dijital dönüşüm stratejileri ve somut çözüm önerileri sunulacaktır.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Arka plan için parçacık animasyonu
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        // Parçacık sınıfı
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        // Parçacıkları oluştur
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 0.5;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * .4) - .2;
+                let directionY = (Math.random() * .4) - .2;
+                let color = 'rgba(168, 85, 247, 0.6)'; // Mor tonu
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        // Animasyon döngüsü
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0,0,innerWidth, innerHeight);
+
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect();
+        }
+
+        // Parçacıkları birleştir
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+                    + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width/7) * (canvas.height/7)) {
+                        opacityValue = 1 - (distance/20000);
+                        ctx.strokeStyle = `rgba(140, 100, 255, ${opacityValue})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Pencere yeniden boyutlandırma
+        window.addEventListener('resize', () => {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+            init();
+        });
+
+        init();
+        animate();
+        
+        // Kartların görünürlük animasyonu
+        document.addEventListener('DOMContentLoaded', () => {
+            const flashcards = document.querySelectorAll('.flashcard');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            flashcards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+
+    </script>
+    <script src="../../lessons-data.js"></script>
+    <script src="../../resource-viewer.js"></script>
+    <script src="../../lesson-resources.js"></script>
+    <script>
+        initLessonResources("ders-01");
+    </script>
+</body>
+</html>

@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YBS1103 - Bilişim Sistemleri ve Karar Verme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0c0a09; /* Stone 950 */
+            color: #f2f2f2;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+        .slide {
+            min-height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #2dd4bf); /* Sky to Teal */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-border {
+            border-width: 2px;
+            border-style: solid;
+            border-image-slice: 1;
+            border-image-source: linear-gradient(to right, #38bdf8, #2dd4bf);
+        }
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(30, 64, 175, 0.1); /* Faint blue */
+            animation: float 25s infinite ease-in-out;
+            z-index: 0;
+        }
+        .shape-1 { width: 450px; height: 450px; top: -150px; left: -150px; animation-duration: 30s; }
+        .shape-2 { width: 350px; height: 350px; bottom: -150px; right: -150px; animation-duration: 25s; animation-delay: 5s; }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+            50% { transform: translateY(-40px) translateX(30px) rotate(180deg); }
+            100% { transform: translateY(0px) translateX(0px) rotate(360deg); }
+        }
+
+        .content-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1.5s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .info-card {
+            background-color: rgba(23, 23, 23, 0.5); /* Semi-transparent Neutral 900 */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            transition: transform 0.4s ease, border-color 0.4s ease;
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(45, 212, 191, 0.5); /* Accent color Teal */
+        }
+        .text-highlight {
+            color: #d8b4fe; /* Pastel Purple */
+        }
+    </style>
+</head>
+<body class="bg-stone-950">
+
+    <!-- Kapak Sayfası -->
+    <section id="cover" class="slide">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <main class="relative z-10 w-full max-w-4xl mx-auto">
+            <div class="bg-gray-800/50 backdrop-blur-sm rounded-3xl gradient-border p-8 md:p-12 lg:p-16 text-center shadow-2xl shadow-cyan-500/10 content-fade-in">
+                
+                <!-- Ders Kodu ve Dönem Bilgisi -->
+                <div class="mb-6">
+                    <span class="bg-sky-500/10 text-sky-300 font-bold py-2 px-4 rounded-full text-sm md:text-base">
+                        YBS1103
+                    </span>
+                    <p class="text-gray-400 text-sm md:text-base mt-4 font-semibold tracking-wider">
+                        2025-2026 Eğitim-Öretim Dönemi
+                    </p>
+                </div>
+    
+                <!-- Ana Başlık -->
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-gray-100 leading-tight">
+                    Yönetim Bilişim Sistemlerine Giriş
+                </h1>
+    
+                <!-- Alt Başlık (Konu) -->
+                <h2 class="mt-4 text-2xl md:text-3xl font-bold gradient-text tracking-wide">
+                    Hafta 3: Bilişim Sistemleri Türleri ve Karar Verme
+                </h2>
+    
+                <!-- Ayırıcı -->
+                <div class="w-24 h-1 bg-teal-500 mx-auto my-8 rounded-full"></div>
+    
+                <!-- Eğitmen Bilgileri -->
+                <div>
+                    <p class="text-base md:text-lg text-gray-300 font-bold">
+                        Doç. Dr. Cemalettin HATİPOĞLU & Arş. Gör. Cemal YÜKSEL
+                    </p>
+                </div>
+    
+            </div>
+        </main>
+    </section>
+
+    <!-- Bu Hafta Neler Öğreneceğiz? -->
+    <section id="agenda" class="slide">
+        <div class="shape shape-1" style="animation-delay: -5s;"></div>
+        <div class="shape shape-2" style="animation-delay: -10s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                    Bu Hafta Neler Öğreneceğiz?
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Veriden bilgeliğe uzanan bu yolculukta, bilişim sistemlerinin ve karar biliminin temel taşlarını keşfedeceğiz.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <!-- Bölüm 1 -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20V16"/></svg>
+                    </div>
+                    <h2 class="text-lg font-bold text-gray-100 mb-2">1. Sistemlerin Temelleri</h2>
+                    <p class="text-gray-300 text-sm">Organizasyonları birer <b class="text-highlight">sistem</b> olarak anlamanın önemini, temel bileşenlerini ve verinin nasıl stratejik bir <b class="text-highlight">karara</b> dönüştüğünü inceleyeceğiz.</p>
+                </div>
+                <!-- Bölüm 2 -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M2.5 17 12 22l9.5-5"/><path d="M12 2 2.5 7l9.5 5 9.5-5L12 2Z"/><path d="M12 12V22"/></svg>
+                    </div>
+                    <h2 class="text-lg font-bold text-gray-100 mb-2">2. Bilişim Sistemleri Piramidi</h2>
+                    <p class="text-gray-300 text-sm">Operasyonel (TPS) seviyeden stratejik (EIS) zirveye uzanan bilişim sistemleri hiyerarşisini ve her seviyenin <b class="text-highlight">karar ihtiyaçlarını</b> analiz edeceğiz.</p>
+                </div>
+                <!-- Bölüm 3 -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                    </div>
+                    <h2 class="text-lg font-bold text-gray-100 mb-2">3. Karar Verme Sanatı ve Bilimi</h2>
+                    <p class="text-gray-300 text-sm"><b class="text-highlight">Yapılandırılmış</b> ve <b class="text-highlight">yapılandırılmamış</b> kararlar arasındaki farkları ve bu kararların organizasyonun farklı seviyelerinde nasıl alındığını öğreneceğiz.</p>
+                </div>
+                <!-- Bölüm 4 -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-workflow"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg>
+                    </div>
+                    <h2 class="text-lg font-bold text-gray-100 mb-2">4. Sistematik Karar Süreci</h2>
+                    <p class="text-gray-300 text-sm">Etkili ve rasyonel kararlar almak için kullanılan <b class="text-highlight">beş aşamalı evrensel modeli</b> ve bu modelin sektördeki pratik uygulamalarını göreceğiz.</p>
+                </div>
+                <!-- Bölüm 5 -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-code"><path d="m9 9-2 2 2 2"/><path d="m13 13 2-2-2-2"/><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    </div>
+                    <h2 class="text-lg font-bold text-gray-100 mb-2">5. Vaka Analizi: Netflix</h2>
+                    <p class="text-gray-300 text-sm">Tüm öğrendiklerimizi, Netflix'in <b class="text-highlight">parola paylaşımını engelleme</b> gibi endüstriyi yeniden şekillendiren cesur bir <b class="text-highlight">stratejik kararını</b> analiz ederek pekiştireceğiz.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 1: Sistem Kavramı -->
+    <section id="sistem-kavrami" class="slide">
+        <div class="shape shape-1" style="animation-delay: -15s;"></div>
+        <div class="shape shape-2" style="animation-delay: -20s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Bölüm 1:</span> Sistem Kavramı
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Bir Organizasyon Nasıl Çalışır? Gelin, temel parçaları bir kahve makinesi örneğiyle tanıyalım!
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Kart 1: Sistem Nedir? -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Sistem Nedir?</h2>
+                    <p class="text-gray-300">Belirli bir amacı gerçekleştirmek için <b class="text-highlight">uyum içinde çalışan parçalar</b> bütünüdür. Tıpkı bir kahve makinesi gibi, tüm parçaları bir amaç için bir araya gelir: size kahve yapmak!</p>
+                </div>
+                <!-- Kart 2: Girdi (Input) -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M21 12H3"/><path d="m10 19-7-7 7-7"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Girdi (Input)</h2>
+                    <p class="text-gray-300">Sistemi çalıştırmak için gereken her şeydir. Kahve makinesi için bu, <b class="text-highlight">kahve çekirdekleri, su ve elektriktir</b>. Bir şirkette ise bu, <b class="text-highlight">veri, hammadde veya müşteri talebi</b> olabilir.</p>
+                </div>
+                <!-- Kart 3: Süreç (Process) -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M20 7h-3a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2H4"/><path d="M17 17h3a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-3"/><path d="M10 7V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M7 17v3a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-3"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Süreç (Process)</h2>
+                    <p class="text-gray-300">Girdilerin sihirli bir şekilde dönüştürüldüğü ve <b class="text-highlight">değer katıldığı</b> aşamadır. Makinenin kahveyi öğütmesi, suyu ısıtması ve demlemesi gibi. Şirketlerde bu <b class="text-highlight">üretim veya hizmet</b> olabilir.</p>
+                </div>
+                <!-- Kart 4: Çıktı (Output) -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M3 12h18"/><path d="m14 5 7 7-7 7"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Çıktı (Output)</h2>
+                    <p class="text-gray-300">Sistemin sonunda ürettiği <b class="text-highlight">nihai sonuçtur</b>. Yani, o mis gibi sıcak kahveniz! Şirketler için bu, satılan bir <b class="text-highlight">ürün, sunulan bir hizmet veya bir rapor</b> olabilir.</p>
+                </div>
+                <!-- Kart 5: Geri Besleme (Feedback) -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M21 12a9 9 0 0 0-9-9c-7.27 0-9 7.27-9 9s1.73 9 9 9 9-1.73 9-9Z"/><path d="M12 3v7l4-4"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Geri Besleme (Feedback)</h2>
+                    <p class="text-gray-300">Çıktıyı değerlendirip, bir sonraki sefere <b class="text-highlight">daha iyisini yapmak için</b> kullanılan bilgidir. "Kahve biraz sert olmuş" demek gibi. Şirketler için bu, <b class="text-highlight">müşteri memnuniyet anketleridir.</b></p>
+                </div>
+                <!-- Kart 6: Sistem Düşüncesi -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M9 17.025v-1.05a5.5 5.5 0 0 1 0-10.95h5.5c2.75 0 5 2.25 5 5s-2.25 5-5 5H9.5"/><path d="M15 6.975v1.05a5.5 5.5 0 0 1 0 10.95H9.5c-2.75 0-5-2.25-5-5s2.25-5 5-5h5.5"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Sistem Düşüncesi</h2>
+                    <p class="text-gray-300">Tüm parçaların <b class="text-highlight">birbirine bağlı olduğunu</b> anlamaktır. Susuz en iyi kahve bile işe yaramaz. Bir yerdeki aksaklık, tüm sonucu etkiler. Şirketlerde <b class="text-highlight">departmanlar birlikte çalışmalıdır.</b></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sektör Örneği: Getir -->
+    <section id="getir-ornegi" class="slide">
+        <div class="shape shape-1" style="animation-delay: -25s;"></div>
+        <div class="shape shape-2" style="animation-delay: -30s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Sektör Örneği:</span> Getir Siparişi
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Az önce öğrendiğimiz sistem adımlarını, şimdi de bir Getir siparişinin arkasındaki karmaşık ama hızlı sürece uygulayalım.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Kart 1: Girdi -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M21.7 16.4c.3-1.2.3-2.5.3-3.8 0-4.4-2-8.5-5.3-11.2C14.1.6 10.3 0 6.6 0 4.1 0 1.8.8.1 2.2l.1.1c.3.2.5.5.7.8.2.3.4.6.5.9.2.3.4.7.5 1 .1.3.2.6.3.9.1.3.2.6.3.9s.1.5.2.8.1.5.2.8.1.5.1.8.1.5.1.8.1.5.1.8.1.5.1.8c0 .3 0 .6-.1.9s-.1.6-.1.9-.1.6-.2.9-.1.6-.2.9-.2.6-.3.9-.2.6-.3.9c-.1.3-.2.6-.4.9-.1.3-.3.6-.4.9-.2.3-.4.6-.6.9-.2.3-.5.6-.7.8l-.1.1c.9 2.1 2.5 3.8 4.6 5 .2-1.1.4-2.2.8-3.3.3-1.1.7-2.1 1.2-3.2.5-1.1 1-2.1 1.7-3.1.7-1 1.4-2 2.2-2.9.8-1 1.7-1.9 2.6-2.8.9-.9 1.9-1.8 2.9-2.6.2.9.3 1.8.3 2.7 0 .9-.1 1.8-.3 2.7-.2.9-.4 1.8-.7 2.6-.3.9-.6 1.7-1 2.6-.4.9-.8 1.7-1.3 2.5-.5.8-1 1.6-1.6 2.4-.6.8-1.2 1.6-1.8 2.3-.2.3-.5.6-.7.8-.3.3-.6.6-.9.8-.3.3-.6.5-.9.8-.3.2-.6.4-.9.6-.3.2-.6.4-.9.6-1.1.5-2.3.9-3.5 1.1h.1c1.1.2 2.2.3 3.3.3 1.9 0 3.7-.4 5.4-1.1.6-.3 1.2-.6 1.8-.9.2-.1.5-.3.7-.4.2-.2.5-.3.7-.5.2-.2.5-.4.7-.6.2-.2.4-.4.6-.6.2-.2.4-.4.6-.7.2-.2.4-.5.6-.7.2-.2.4-.5.6-.7.4-.6.8-1.2 1.2-1.8.2-.3.4-.6.5-.9.2-.3.3-.6.5-.9.1-.3.3-.6.4-.9.1-.3.2-.6.3-.9.1-.3.2-.6.3-.9.1-.3.1-.6.2-.9.1-.3.1-.6.1-.9v-1.1Z"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Girdi: "Sipariş Ver" Butonu</h2>
+                    <p class="text-gray-300">Her şey sizin telefonunuzda başlar. Getir'i açar, istediğiniz ürünleri sepete ekler ve <b class="text-highlight">"öde" tuşuna basarsınız</b>. Bu an, sisteme giren ilk veridir: <b class="text-highlight">Müşteri Talebi.</b></p>
+                </div>
+                <!-- Kart 2: Süreç -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 12v-2"/><path d="M15 10V8"/><path d="M9 10V8"/><path d="M18 10V8"/><path d="M6 10V8"/><path d="M12 18v-2"/><path d="m15 16-1-1"/><path d="m9 16 1-1"/><path d="M18 13-1-1"/><path d="m6 13 1-1"/><path d="M12 22a10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8v2Z"/><path d="M12 4a10 10 0 0 1 10 10h2a10 10 0 0 0-10-10V4Z"/><path d="M4 12a10 10 0 0 0 10 10v2a10 10 0 0 1-10-10H4Z"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Süreç: Dijital Karınca Yuvası</h2>
+                    <p class="text-gray-300">Siz siparişi verdikten sonra arka planda bir dijital operasyon başlar. Sistem <b class="text-highlight">ödemeyi alır, en yakın depoyu bulur, ürünleri stoktan düşer ve en uygun kuryeyi</b> size yönlendirir. Tümü saniyeler içinde!</p>
+                </div>
+                <!-- Kart 3: Çıktı -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M15.5 9.5 22 3m-6.5 6.5-1.42-1.42"/><path d="M3 22s4.5-4.5 7-7l-1.42-1.42"/><path d="M13.5 10.5 21 3"/><path d="m2 21 6-6"/><path d="m2 2 20 20"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Çıktı: Kurye Kapınızda!</h2>
+                    <p class="text-gray-300">Sistemin nihai ürünü kapınıza gelir. Kurye size <b class="text-highlight">fiziksel ürünleri</b> teslim eder. Aynı anda telefonunuza da siparişin <b class="text-highlight">dijital fişi</b> düşer. İşte bu, sistemin somut sonucudur.</p>
+                </div>
+                <!-- Kart 4: Geri Besleme -->
+                <div class="info-card">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M12 12h.01"/><path d="M16 12h.01"/><path d="M8 12h.01"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Geri Besleme: "Puanla ve Yorum Yap"</h2>
+                    <p class="text-gray-300">Getir, süreci iyileştirmek için size döner. <b class="text-highlight">Kuryeyi haritada izlemek, siparişi puanlamak ve bahşiş vermek</b> birer geri beslemedir. Bu veriler, bir sonraki siparişinizin daha da iyi olması için kullanılır.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 2: Bilişim Sistemleri Piramidi -->
+    <section id="bilisim-piramidi" class="slide">
+        <div class="shape shape-1" style="animation-delay: -35s;"></div>
+        <div class="shape shape-2" style="animation-delay: -40s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Bölüm 2:</span> Bilişim Sistemleri Piramidi
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Bir şirketteki farklı hiyerarşik seviyelerin, farklı türde bilgi ve karar sistemlerine nasıl ihtiyaç duyduğunu keşfedelim.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Kart 1: Piramit Yapısı -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M2.5 17 12 22l9.5-5"/><path d="M12 2 2.5 7l9.5 5 9.5-5L12 2Z"/><path d="M12 12V22"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Piramit Yapısı: 3 Katlı Bina</h2>
+                    <p class="text-gray-300">Bir şirketi 3 katlı bir bina gibi düşünün. Her katın farklı bir görevi ve bilgiye ihtiyacı vardır. <br>
+                        <b class="text-highlight">Taban:</b> Günlük işler (Operasyonel). <br>
+                        <b class="text-highlight">Orta Kat:</b> Yönetim (Taktiksel). <br>
+                        <b class="text-highlight">Çatı:</b> Büyük kararlar (Stratejik). <br>
+                        Her kat için farklı bir bilişim sistemi kullanılır.</p>
+                </div>
+                <!-- Kart 2: Bilgi Rafinerisi -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M22 3H2l8 12.46V19l4 2v-5.54L22 3Z"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Bilgi Rafinerisi</h2>
+                    <p class="text-gray-300">Piramit, bilgiyi bir petrol rafinerisi gibi işler. En alttan toplanan milyonlarca <b class="text-highlight">ham veri (petrol)</b>, yukarı katlara çıktıkça özetlenir, analiz edilir ve en tepedeki CEO için değerli bir <b class="text-highlight">stratejik karara (jet yakıtı)</b> dönüşür.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Bölüm 2.1: Operasyonel Seviye Sistemleri (TPS) -->
+    <section id="tps" class="slide">
+        <div class="shape shape-1" style="animation-delay: -45s;"></div>
+        <div class="shape shape-2" style="animation-delay: -50s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Operasyonel Seviye:</span> İşin Mutfağı
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Piramidin en alt katı olan bu seviye, şirketin kalbinin attığı yerdir. Burada her şey hız, doğruluk ve verimlilik üzerine kuruludur.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Kart 1: Hareket İşleme Sistemleri (TPS) Nedir? -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2h-2zm-2 0h20"/><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h8"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Hareket İşleme Sistemleri (TPS)</h2>
+                    <p class="text-gray-300">Şirketin nabzını tutan sistemlerdir. Her bir <b class="text-highlight">satış, ödeme, sipariş</b> gibi günlük ve tekrarlayan binlerce işlemi anında kaydederler. Temel amaçları <b class="text-highlight">hata yapmamak ve çok hızlı olmaktır.</b> Onlar olmasaydı, modern ticaret olmazdı.</p>
+                </div>
+                <!-- Kart 2: TPS Sektör Örnekleri -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z"/><path d="M12 12v-4"/><path d="M12 16h.01"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Sektörden TPS Örnekleri</h2>
+                    <p class="text-gray-300">
+                        <b class="text-highlight">Migros Kasası:</b> Ürünü okuttuğunuz an, TPS fiyatı bulur, stoktan düşer ve fişinizi basar.<br>
+                        <b class="text-highlight">Banka ATM'si:</b> Kartınızı taktığınızda, TPS kimliğinizi doğrular, bakiyenizi kontrol eder ve size para verir.<br>
+                        <b class="text-highlight">THY Bilet Sistemi:</b> Bilet alırken, TPS koltuk durumunu kontrol eder, ödemeyi alır ve size e-biletinizi yollar.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 2.1: Ofis Otomasyon Sistemleri (OAS) -->
+    <section id="oas" class="slide">
+        <div class="shape shape-1" style="animation-delay: -55s;"></div>
+        <div class="shape shape-2" style="animation-delay: -60s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Ofis Otomasyon Sistemleri:</span> Verimlilik Araçları
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Ofis çalışanlarının günlük görevlerini daha hızlı ve etkili yapmalarını sağlayan dijital yardımcıları tanıyalım.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Kart 1: OAS Nedir? -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M18 16.5V20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-3.5"/><path d="M18 16.5a2.5 2.5 0 0 0 0-5H6a2.5 2.5 0 0 0 0 5Z"/><path d="M12 2v9.5"/><path d="m8.5 6.5 7 7"/><path d="m15.5 6.5-7 7"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Ofis Otomasyonu (OAS) Nedir?</h2>
+                    <p class="text-gray-300">Ofis çalışanlarının <b class="text-highlight">dijital alet çantasıdır.</b> Rapor yazmak, sunum hazırlamak, e-posta göndermek veya online toplantı yapmak gibi günlük işleri kolaylaştıran tüm yazılımları kapsar. Temel amaç: <b class="text-highlight">iletişimi güçlendirmek ve verimliliği artırmak.</b></p>
+                </div>
+                <!-- Kart 2: OAS Sektör Örnekleri -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z"/><path d="M12 12v-4"/><path d="M12 16h.01"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Sektörden OAS Örnekleri</h2>
+                    <p class="text-gray-300">
+                        <b class="text-highlight">Microsoft 365:</b> Word, Excel, PowerPoint ve Teams gibi araçları bir araya getirerek bir şirketin tüm ofis ihtiyaçlarını karşılar.<br>
+                        <b class="text-highlight">Google Workspace:</b> Docs, Sheets, Gmail ve Meet ile ekiplerin internet üzerinden ortak çalışmasını sağlar.<br>
+                        <b class="text-highlight">Koç Holding "Office Free":</b> Çalışanların Türkiye'deki herhangi bir Koç ofisinden online masa rezervasyonu yapabildiği, hibrit çalışmayı yöneten gelişmiş bir OAS örneğidir.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 2.2: Taktiksel Seviye Sistemleri (MIS) -->
+    <section id="mis" class="slide">
+        <div class="shape shape-1" style="animation-delay: -65s;"></div>
+        <div class="shape shape-2" style="animation-delay: -70s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Taktiksel Seviye:</span> Kontrol ve Planlama
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Piramidin orta katına hoş geldiniz. Burası, departman müdürlerinin geçmiş verileri analiz ederek geleceği planladığı yerdir.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Kart 1: MIS Nedir? -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20V16"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Yönetim Bilişim Sistemleri (MIS)</h2>
+                    <p class="text-gray-300">Orta kademe yöneticilerin (Pazarlama Müdürü, Satış Müdürü vb.) <b class="text-highlight">karar pusulasıdır.</b> Piramidin alt katından (TPS) gelen milyonlarca ham veriyi alır, onları anlamlı <b class="text-highlight">özet raporlara</b> dönüştürür. Temel sorusu şudur: <b class="text-highlight">"Geçen ay ne oldu? Plana göre neredeyiz?"</b></p>
+                </div>
+                <!-- Kart 2: MIS Ne Yapar? -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Tipik MIS Raporları</h2>
+                    <p class="text-gray-300">MIS, yöneticilerin önüne periyodik olarak standart raporlar koyar: <br>
+                        <b class="text-highlight">- Haftalık Satış Raporu:</b> Hangi ürün ne kadar sattı? <br>
+                        <b class="text-highlight">- Aylık Bütçe Raporu:</b> Ne kadar harcadık, ne kadar kazanacaktık? <br>
+                        <b class="text-highlight">- Envanter Raporu:</b> Depoda hangi maldan ne kadar kaldı? <br>
+                        Bu raporlar, işlerin yolunda gidip gitmediğini gösteren birer <b class="text-highlight">karne gibidir.</b>
+                    </p>
+                </div>
+                <!-- Kart 3: Vaka: Zara'nın Veri Toplaması (TPS) -->
+                <div class="info-card h-full">
+                     <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M2 9.5c0-3.3 2.7-6 6-6h8c3.3 0 6 2.7 6 6v1c0 .8-.7 1.5-1.5 1.5H3.5c-.8 0-1.5-.7-1.5-1.5v-1Z"/><path d="M4 14h16"/><path d="M4 18h16"/><path d="M12 12v10"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Vaka: Zara'nın Veri Gücü (TPS)</h2>
+                    <p class="text-gray-300">Zara'nın başarısının sırrı veride başlar. Dünyadaki her bir mağazasındaki <b class="text-highlight">kasalar (TPS)</b>, satılan her bir pantolonun, her bir tişörtün <b class="text-highlight">rengini, bedenini ve modelini</b> anında merkeze raporlar. Bu, her gün toplanan milyonlarca ham veridir.</p>
+                </div>
+                <!-- Kart 4: Vaka: Zara'nın Taktiksel Kararı (MIS) -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Vaka: Zara'nın MIS Kararı</h2>
+                    <p class="text-gray-300">Zara'nın İspanya'daki merkezinde bulunan <b class="text-highlight">MIS</b>, kasalardan gelen bu veri selini alır ve özetler: "İstanbul'daki mağazalarda siyah, M beden ceketler tükenmek üzere." Bu raporu gören yönetici, anında <b class="text-highlight">"o ceketlerden daha fazla üretin ve o mağazalara yollayın"</b> taktiksel kararını verir.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 2.2: Karar Destek Sistemleri (DDS) -->
+    <section id="kds" class="slide">
+        <div class="shape shape-1" style="animation-delay: -75s;"></div>
+        <div class="shape shape-2" style="animation-delay: -80s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Karar Destek Sistemleri:</span> Gelecek Simülatörü
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    MIS geçmişe bakarken, Karar Destek Sistemleri (DDS) geleceğe odaklanır. Yöneticilerin "Eğer... yaparsak ne olur?" sorusuna yanıt arar.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Kart 1: KDS Nedir? -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Karar Destek Sistemleri (DDS)</h2>
+                    <p class="text-gray-300">Yöneticinin <b class="text-highlight">interaktif yardımcısıdır.</b> MIS gibi sadece "ne oldu?" diye rapor vermez, aynı zamanda farklı senaryoları test etmeye yarar. DDS, belirsiz ve net bir doğru cevabı olmayan <b class="text-highlight">yarı-yapılandırılmış</b> problemler için idealdir.</p>
+                </div>
+                <!-- Kart 2: KDS'nin Amacı -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 2a10 10 0 1 0 10 10c0-4.42-2.87-8.17-7-9.52"/><path d="M15.5 6.26A9.27 9.27 0 0 1 21.1 12H17a4.1 4.1 0 0 0-4-4V3.33"/><path d="m2 13 4 4 4-4"/><path d="M6 2v6"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Amaç: Daha Kaliteli Karar</h2>
+                    <p class="text-gray-300">DDS'nin amacı yöneticinin yerine karar vermek <b class="text-highlight">değildir.</b> Amaç, yöneticiye farklı yolların potansiyel sonuçlarını göstererek <b class="text-highlight">daha isabetli ve bilinçli bir karar</b> vermesine yardımcı olmaktır. Adeta bir <b class="text-highlight">karar simülatörü</b> gibi çalışır.</p>
+                </div>
+                <!-- Kart 3: KDS Nasıl Çalışır? -->
+                <div class="info-card h-full">
+                     <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 2v20"/><path d="m17 7-5 5-5-5"/><path d="m17 17-5-5-5 5"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">DDS'nin 3 Temel Parçası</h2>
+                    <p class="text-gray-300">
+                        <b class="text-highlight">1. Veritabanı:</b> Karar için gerekli tüm iç ve dış verilerin toplandığı kütüphane. <br>
+                        <b class="text-highlight">2. Model Tabanı:</b> Verileri analiz eden istatistiksel ve finansal formüllerin olduğu beyin. <br>
+                        <b class="text-highlight">3. Arayüz:</b> Yöneticinin "Eğer...?" sorularını sorduğu ve sonuçları gördüğü kokpit.
+                    </p>
+                </div>
+                <!-- Kart 4: Sektör Örneği: Banka Kredisi -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Vaka: Banka Kredisi Değerlendirme</h2>
+                    <p class="text-gray-300">Bir banka analisti kredi başvurusunu inceler. Müşterinin gelirine bakar (MIS kısmı). Sonra DDS ile sorar: <b class="text-highlight">"Eğer kredi vadesini 24 aydan 36 aya çıkarırsak, müşterinin ödeme gücü ve bankanın riski nasıl değişir?"</b> DDS, bu senaryonun sonucunu anında hesaplar ve analistin daha iyi bir karar vermesini sağlar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MIS vs KDS Karşılaştırma -->
+    <section id="mis-vs-kds" class="slide">
+        <div class="shape shape-1" style="animation-delay: -85s;"></div>
+        <div class="shape shape-2" style="animation-delay: -90s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">MIS vs. DDS:</span> İki Farklı Bakış Açısı
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Raporlama ve Simülasyon arasındaki temel farkları 4 maddede inceleyelim.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Kart 1: Soru Tipi -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 16.5V12c0-1.66 1.34-3 3-3s3 1.34 3 3"/><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v.01"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">1. Sordukları Soru</h2>
+                     <p class="text-gray-300">
+                        <b class="text-highlight">MIS:</b> Geçmişe bakar ve sorar: <b class="text-white">"Ne oldu?"</b> <br>
+                        (Örn: Geçen ayki satışlar neydi?)<br><br>
+                        <b class="text-highlight">DDS:</b> Geleceğe odaklanır ve sorar: <b class="text-white">"Ne olmalı? / Eğer...?"</b><br>
+                        (Örn: Reklam bütçesini %10 artırırsak satışlar ne olur?)
+                    </p>
+                </div>
+                <!-- Kart 2: Odak Noktası -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20Z"/><path d="M2 12h20"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">2. Odak Noktaları</h2>
+                    <p class="text-gray-300">
+                        <b class="text-highlight">MIS:</b> Genellikle <b class="text-white">şirket içi veriye</b> ve içsel verimliliğe odaklanır. <br><br>
+                        <b class="text-highlight">DDS:</b> Hem şirket içi hem de <b class="text-white">dış verileri (pazar trendleri, rakip fiyatları vb.)</b> kullanarak daha geniş bir perspektifle olasılıkları analiz eder.
+                    </p>
+                </div>
+                <!-- Kart 3: Kullanıcı Etkileşimi -->
+                <div class="info-card h-full">
+                     <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M17 10c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/><path d="M21 10c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/><path d="M3 10c0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3-3 1.34-3 3z"/><path d="m21 10-2 4-3-2"/><path d="m3 10 2 4 3-2"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">3. Kullanıcı Etkileşimi</h2>
+                    <p class="text-gray-300">
+                        <b class="text-highlight">MIS:</b> Kullanıcı <b class="text-white">pasiftir.</b> Sistem tarafından üretilen standart raporları okur. <br><br>
+                        <b class="text-highlight">DDS:</b> Kullanıcı <b class="text-white">aktiftir.</b> Kendi modellerini oluşturur, değişkenleri değiştirir ve sistemi bir simülasyon aracı olarak kullanarak "pilot koltuğunda" oturur.
+                    </p>
+                </div>
+                <!-- Kart 4: Desteklediği Karar -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Z"/><path d="M10 4v4"/><path d="M14 4v4"/><path d="M4 10h16"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">4. Destekledikleri Karar</h2>
+                     <p class="text-gray-300">
+                        <b class="text-highlight">MIS:</b> Kuralları net olan, tekrarlayan, <b class="text-white">yapılandırılmış kararları</b> destekler. (Örn: Stok seviyesi düşünce otomatik sipariş ver.) <br><br>
+                        <b class="text-highlight">DDS:</b> Net bir doğrusu olmayan, yöneticinin tecrübesini gerektiren <b class="text-white">yarı-yapılandırılmış kararları</b> destekler. (Örn: Yeni bir ürün için en iyi fiyat ne olmalı?)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 2.3: Stratejik Seviye Sistemleri (EIS) -->
+    <section id="eis" class="slide">
+        <div class="shape shape-1" style="animation-delay: -95s;"></div>
+        <div class="shape shape-2" style="animation-delay: -100s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Stratejik Seviye:</span> CEO'nun Kokpiti
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Piramidin zirvesindeyiz. Burası, şirketin geleceğini şekillendiren büyük ve uzun vadeli kararların alındığı yerdir.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Kart 1: EIS Nedir? -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Üst Yönetim Bilişim Sistemleri (EIS)</h2>
+                    <p class="text-gray-300">Piramidin zirvesi, yani <b class="text-highlight">CEO'nun kokpitidir.</b> Bu sistemler, "Yeni bir ülkeye yatırım yapmalı mıyız?" gibi büyük, uzun vadeli ve net cevabı olmayan <b class="text-highlight">stratejik kararlar</b> için tasarlanmıştır. Tüm kritik bilgileri tek bir ekranda, kolay anlaşılır <b class="text-highlight">grafikler (dashboard)</b> halinde sunar.</p>
+                </div>
+                <!-- Kart 2: EIS'in Gücü -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20Z"/><path d="M2 12h20"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">EIS'in Gücü: 360 Derece Bakış</h2>
+                    <p class="text-gray-300">EIS'in asıl gücü, şirket içi verileri (satış özetleri gibi) <b class="text-highlight">dış dünya verileriyle</b> (ekonomik göstergeler, rakip haberleri, borsa) birleştirmesidir. <b class="text-highlight">Örnek:</b> Bir CEO, kendi şirketinin kârlılığını gösteren grafiğin yanında, rakip şirketin hisse senedi değerini ve yeni çıkan bir teknoloji haberini aynı anda görerek geleceği şekillendirir.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MOLA SLAYTI -->
+    <section id="mola" class="slide">
+        <div class="shape shape-1" style="animation-delay: -105s;"></div>
+        <div class="shape shape-2" style="animation-delay: -110s;"></div>
+        <div class="relative z-10 text-center p-8 md:p-12 bg-gray-800/50 backdrop-blur-sm rounded-3xl gradient-border content-fade-in shadow-2xl shadow-cyan-500/10">
+            <div class="flex flex-col items-center justify-center h-full">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-teal-400 mb-8">
+                    <path d="M10 2v2c0 .6-.4 1-1 1H4c-.6 0-1-.4-1-1V2a1 1 0 0 1 1-1h5c.6 0 1 .4 1 1Z"/>
+                    <path d="M12 2c-.6 0-1 .4-1 1v4c0 .6.4 1 1 1h8c.6 0 1-.4 1-1V3c0-.6-.4-1-1-1H12Z"/>
+                    <path d="M6 10H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-2"/>
+                    <path d="M18 10V2"/>
+                </svg>
+                <h2 class="text-4xl lg:text-5xl font-black text-gray-100 text-center leading-tight">
+                    10 Dakikalık Kısa Bir Mola
+                </h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 3: Karar Türleri -->
+    <section id="karar-turleri" class="slide">
+        <div class="shape shape-1" style="animation-delay: -115s;"></div>
+        <div class="shape shape-2" style="animation-delay: -120s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Bölüm 3:</span> Karar Verme Sanatı ve Bilimi
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Bir şirketin kaderini, piramidin farklı katlarında alınan üç temel karar türü belirler.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Kart 1: Giriş -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 5a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/><path d="M12 18a3 3 0 1 0 0-6 3 3 0 1 0 0 6Z"/><path d="M12 21a3 3 0 1 0 0-6 3 3 0 1 0 0 6Z"/><path d="M12 2a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/><path d="M12 12a6 6 0 0 0 6-6 3 3 0 1 1-3-3 6 6 0 0 0-6 6 3 3 0 1 1 3 3 6 6 0 0 0-6 6 3 3 0 1 1 3 3 6 6 0 0 0 6-6 3 3 0 1 1-3-3"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Yönetimin Özü: Karar Vermek</h2>
+                    <p class="text-gray-300">Bir şirketin başarısı, her seviyede alınan kararların kalitesine bağlıdır. Yönetimin en temel işi doğru kararları vermektir. Bu yüzden kararları, alındıkları seviyeye göre <b class="text-highlight">3 ana gruba</b> ayırarak inceleriz.</p>
+                </div>
+                <!-- Kart 2: Operasyonel Kararlar -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2h-2zm-2 0h20"/><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h8"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Operasyonel Kararlar (Günlük İşler)</h2>
+                    <p class="text-gray-300">Piramidin tabanında, kasiyer veya depo sorumlusu gibi çalışanların aldığı <b class="text-highlight">günlük, rutin ve kurallara bağlı</b> kararlardır. <br>
+                    <b class="text-highlight">Örnek:</b> Bir LC Waikiki kasiyerinin, fişi ve etiketi olan bir ürünü "30 gün iade politikası"na göre geri alması. Burada yoruma gerek yoktur, kural nettir.</p>
+                </div>
+                <!-- Kart 3: Taktiksel Kararlar -->
+                <div class="info-card h-full">
+                     <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20V16"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Taktiksel Kararlar (Aylık/Yıllık Planlar)</h2>
+                    <p class="text-gray-300">Orta kademe yöneticilerin (Pazarlama Müdürü vb.) aldığı <b class="text-highlight">orta vadeli</b> kararlardır. Stratejik hedeflere ulaşmak için <b class="text-highlight">kaynakların nasıl kullanılacağını</b> planlarlar. <br>
+                    <b class="text-highlight">Örnek:</b> Arçelik Pazarlama Müdürü'nün, yeni buzdolabı için yıllık reklam bütçesini TV ve sosyal medya arasında paylaştırması.</p>
+                </div>
+                <!-- Kart 4: Stratejik Kararlar -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Stratejik Kararlar (Geleceği Şekillendiren Adımlar)</h2>
+                    <p class="text-gray-300">Sadece CEO gibi üst yönetimin aldığı, şirketin <b class="text-highlight">tüm geleceğini etkileyen, uzun vadeli ve riskli</b> kararlardır. Geri dönüşü zordur. <br>
+                    <b class="text-highlight">Örnek:</b> Trendyol'un, ikinci el pazarında büyümek için <b class="text-highlight">Dolap uygulamasını satın alması</b> veya Getir'in <b class="text-highlight">Avrupa pazarına girme</b> kararı.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 3.1: Karar Türleri Yapısına Göre -->
+    <section id="karar-yapi" class="slide">
+        <div class="shape shape-1" style="animation-delay: -125s;"></div>
+        <div class="shape shape-2" style="animation-delay: -130s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Karar Türleri:</span> Yapısına Göre
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Kararları, bir yemek tarifine ne kadar benzediklerine göre de sınıflandırabiliriz: Tarifi birebir uygulamak mı, yoksa tamamen doğaçlama yapmak mı?
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Kart 1: Yapılandırılmış Kararlar -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Yapılandırılmış (Programlanabilir)</h2>
+                    <p class="text-gray-300">Reçetesi belli, <b class="text-highlight">kuralları net</b> olan kararlardır. "Eğer X olursa, Y yap" şeklindedirler ve yoruma kapalıdırlar. Neredeyse <b class="text-highlight">otomatik olarak</b> verilebilirler.<br>
+                    <b class="text-highlight">Örnek:</b> BİM'de bir ürünün stoğu 10'un altına düştüğünde, sistemin kasiyerin onayı olmadan otomatik olarak yeni sipariş vermesi.</p>
+                </div>
+                <!-- Kart 2: Yarı-Yapılandırılmış Kararlar -->
+                <div class="info-card h-full">
+                     <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Yarı-Yapılandırılmış</h2>
+                    <p class="text-gray-300">Problemin bir kısmının <b class="text-highlight">veri ve raporlarla</b> çözüldüğü, ancak son kararın yöneticinin <b class="text-highlight">tecrübe ve sezgisine</b> dayandığı kararlardır. <br>
+                    <b class="text-highlight">Örnek:</b> Sahibinden.com'daki bir ürün müdürünün, yeni bir özellik için reklam bütçesini belirlemesi. Geçmiş veriler (data) yol gösterir, ancak hangi kreatif mesajın tutacağı yöneticinin tecrübesine (yargı) bağlıdır.</p>
+                </div>
+                <!-- Kart 3: Yapılandırılmamış Kararlar -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 5a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/><path d="M12 18a3 3 0 1 0 0-6 3 3 0 1 0 0 6Z"/><path d="M12 21a3 3 0 1 0 0-6 3 3 0 1 0 0 6Z"/><path d="M12 2a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/><path d="M12 12a6 6 0 0 0 6-6 3 3 0 1 1-3-3 6 6 0 0 0-6 6 3 3 0 1 1 3 3 6 6 0 0 0-6 6 3 3 0 1 1 3 3 6 6 0 0 0 6-6 3 3 0 1 1-3-3"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Yapılandırılmamış (Programlanamayan)</h2>
+                    <p class="text-gray-300">Daha önce hiç karşılaşılmamış, <b class="text-highlight">belirsizliğin çok yüksek</b> olduğu ve çözüm için hiçbir kuralın veya rehberin olmadığı kararlardır. Tamamen yöneticinin <b class="text-highlight">vizyonu, yaratıcılığı ve cesaretine</b> dayanır.<br>
+                    <b class="text-highlight">Örnek:</b> Hepsiburada'nın, "Hepsiburada Market"i kurarak süpermarket teslimatı işine girme kararı.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Karar Senaryoları -->
+    <section id="karar-senaryolari" class="slide">
+        <div class="shape shape-1" style="animation-delay: -135s;"></div>
+        <div class="shape shape-2" style="animation-delay: -140s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Uygulama Zamanı:</span> Karar Senaryoları
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Aşağıdaki kararlar için beyin fırtınası yapın: <b class="text-highlight">Yönetim Seviyesi, Karar Yapısı ve Destekleyici Bilişim Sistemi</b> ne olmalıdır?
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Senaryo 1 -->
+                <div class="info-card h-full text-left">
+                    <h2 class="text-xl font-bold text-gray-100 mb-2 self-start">1. İade Politikası Krizi</h2>
+                    <p class="text-gray-300">Bir Vatan Bilgisayar mağazasında, müşteri 25 gün önce aldığı ve kutusunu açtığı bir kulaklığı iade etmek istiyor. Şirket politikası "30 gün içinde, açılmamış kutulu ürünler" için tam iade sunuyor. Kasiyer ne yapmalı?</p>
+                </div>
+                <!-- Senaryo 2 -->
+                <div class="info-card h-full text-left">
+                    <h2 class="text-xl font-bold text-gray-100 mb-2 self-start">2. Vegan Bisküvi Lansmanı</h2>
+                    <p class="text-gray-300">Ülker, Z kuşağını hedefleyen yeni vegan bisküvisi 'Go-V' için 500.000 TL'lik bir lansman bütçesi ayırdı. Pazarlama Müdürü, bu bütçeyi maksimum etkileşim için Instagram'daki büyük yemek blogger'ları ile mi, yoksa birden fazla küçük TikTok fenomeni ile yapılacak bir 'challenge' akımında mı kullanmalı?</p>
+                </div>
+                <!-- Senaryo 3 -->
+                <div class="info-card h-full text-left">
+                     <h2 class="text-xl font-bold text-gray-100 mb-2 self-start">3. Hızlı Teslimat Deposu</h2>
+                    <p class="text-gray-300">Hepsiburada, artan 'Hızlı Market' siparişlerini karşılamak ve teslimat sürelerini kısaltmak için İstanbul Anadolu Yakası'na yeni bir ana depo kuracak. Lojistik Direktörü, arsa maliyeti, ana yollara yakınlık ve potansiyel trafik sıkışıklığı verilerini göz önünde bulundurarak, depoyu Tuzla'da mı yoksa Samandıra'da mı kurmalı?</p>
+                </div>
+                <!-- Senaryo 4 -->
+                <div class="info-card h-full text-left">
+                    <h2 class="text-xl font-bold text-gray-100 mb-2 self-start">4. Yapay Zeka Devrimi</h2>
+                    <p class="text-gray-300">Pegasus Hava Yolları CEO'su, müşteri hizmetleri maliyetlerini düşürmek ve 7/24 destek sağlamak amacıyla, mevcut çağrı merkezi yerine, uçuş iptallerini, bilet değişikliklerini ve özel talepleri yönetebilecek, milyonlarca dolarlık bir 'Üretken Yapay Zeka' projesine yatırım yapma kararını değerlendiriyor. Bu yatırım, şirketin 5 yıllık geleceği için doğru bir hamle mi?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Senaryo Cevapları -->
+    <section id="senaryo-cevaplari" class="slide">
+        <div class="shape shape-1" style="animation-delay: -145s;"></div>
+        <div class="shape shape-2" style="animation-delay: -150s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Senaryoların</span> Çözümleri
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Verdiğiniz cevapları kontrol edelim ve arkasındaki mantığı inceleyelim.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Cevap 1 -->
+                <div class="info-card h-full text-left">
+                    <h2 class="text-xl font-bold text-gray-100 mb-2 self-start">Cevap 1: İade Politikası</h2>
+                    <p class="text-gray-300">
+                        <b class="text-highlight">Seviye:</b> Operasyonel<br>
+                        <b class="text-highlight">Yapı:</b> Yapılandırılmış<br>
+                        <b class="text-highlight">Sistem:</b> TPS (Hareket İşleme Sistemi)<br>
+                        <b class="text-white mt-2 block">Açıklama:</b> Bu karar, kasiyerin takip etmesi gereken net ve önceden belirlenmiş şirket kurallarına dayanır. Yorum veya analiz gerektirmez. Kasiyer, POS sistemi (TPS) üzerinden iade prosedürünü başlatır ve sistem, kurallara göre iadeyi onaylar veya reddeder.
+                    </p>
+                </div>
+                <!-- Cevap 2 -->
+                <div class="info-card h-full text-left">
+                    <h2 class="text-xl font-bold text-gray-100 mb-2 self-start">Cevap 2: Vegan Bisküvi</h2>
+                    <p class="text-gray-300">
+                        <b class="text-highlight">Seviye:</b> Taktiksel<br>
+                        <b class="text-highlight">Yapı:</b> Yarı-Yapılandırılmış<br>
+                        <b class="text-highlight">Sistem:</b> MIS ve DDS<br>
+                        <b class="text-white mt-2 block">Açıklama:</b> Pazarlama müdürü, geçmiş kampanya verilerini (MIS) analiz eder. Ancak hangi influencer'ın daha "samimi" bulunacağı gibi faktörler yöneticinin tecrübesine dayanır. "Eğer bütçeyi TikTok'a kaydırırsak potansiyel erişim ne olur?" gibi sorular için DDS kullanabilir.
+                    </p>
+                </div>
+                <!-- Cevap 3 -->
+                <div class="info-card h-full text-left">
+                     <h2 class="text-xl font-bold text-gray-100 mb-2 self-start">Cevap 3: Hızlı Teslimat</h2>
+                    <p class="text-gray-300">
+                        <b class="text-highlight">Seviye:</b> Taktiksel<br>
+                        <b class="text-highlight">Yapı:</b> Yarı-Yapılandırılmış<br>
+                        <b class="text-highlight">Sistem:</b> DDS (Özellikle GIS destekli)<br>
+                        <b class="text-white mt-2 block">Açıklama:</b> Kararın bir kısmı arsa maliyeti gibi net verilere dayanır. Ancak "potansiyel trafik sıkışıklığı" gibi faktörleri modellemek ve en optimum konumu bulmak için Coğrafi Bilgi Sistemleri (GIS) ile desteklenmiş bir DDS, farklı senaryoları (örn: yakıt maliyetleri) simüle ederek en iyi kararı vermeye yardımcı olur.
+                    </p>
+                </div>
+                <!-- Cevap 4 -->
+                <div class="info-card h-full text-left">
+                    <h2 class="text-xl font-bold text-gray-100 mb-2 self-start">Cevap 4: Yapay Zeka Devrimi</h2>
+                    <p class="text-gray-300">
+                        <b class="text-highlight">Seviye:</b> Stratejik<br>
+                        <b class="text-highlight">Yapı:</b> Yapılandırılmamış<br>
+                        <b class="text-highlight">Sistem:</b> EIS<br>
+                        <b class="text-white mt-2 block">Açıklama:</b> Bu, şirketin 5 yıllık geleceğini etkileyecek, belirsizliklerle dolu, daha önce denenmemiş bir karardır. CEO, karar verirken pazar trendleri, rakip hamleleri, teknoloji raporları ve uzun vadeli finansal projeksiyonlar gibi özet bilgileri sunan bir EIS (Üst Yönetim Paneli) kullanır. Karar, veriden çok vizyona dayanır.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 4: Sistematik Karar Verme Süreci -->
+    <section id="karar-sureci" class="slide">
+        <div class="shape shape-1" style="animation-delay: -155s;"></div>
+        <div class="shape shape-2" style="animation-delay: -160s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Bölüm 4:</span> Sistematik Karar Verme Süreci
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    İyi kararlar şans eseri değildir. Gelin, daha rasyonel ve başarılı kararlar vermek için 5 adımlık yol haritasını öğrenelim.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Kart 1: Giriş -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Karar: Bir Yolculuktur</h2>
+                    <p class="text-gray-300">Karar vermek, bir hedefe ulaşmak için çıkılan bir yolculuk gibidir. Rastgele yollara sapmak yerine, <b class="text-highlight">bir harita kullanmak</b> sizi hedefinize daha hızlı ve güvenli bir şekilde ulaştırır. Bu 5 adımlık model, sizin <b class="text-highlight">karar verme haritanız olacak.</b></p>
+                </div>
+                <!-- Kart 2: Aşama 1 -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">1. Amaç, Hedef veya Problem(ler)in Tanınması (Varış Noktası)</h2>
+                    <p class="text-gray-300">İlk adım, <b class="text-highlight">"Nereye gitmek istiyoruz?"</b> sorusunu sormaktır. Problemi ve ulaşılmak istenen hedefi net bir şekilde tanımlayın. <br><b class="text-highlight">Örnek:</b> Bir e-ticaret sitesinin amacı, "genç müşteri kitlesini %20 artırmak" olabilir.</p>
+                </div>
+                <!-- Kart 3: Aşama 2 -->
+                <div class="info-card h-full">
+                     <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M14.5 6.5 18 3l-1.5-1.5-3.5 3.5"/><path d="M12.5 8.5 15.5 12l-1.5 1.5-3-3"/><path d="M10.5 10.5 14 14l-1.5 1.5-3.5-3.5"/><path d="M8.5 12.5 12 15.5l-1.5 1.5-3.5-3.5"/><path d="M20 18c.8.8.8 2 0 2.8-.8.8-2 .8-2.8 0l-6-6-4.5-4.5-2-2-1-1-1.5-1.5c-.8-.8-.8-2 0-2.8.8-.8 2-.8 2.8 0l1.5 1.5 1 1 2 2 4.5 4.5 6 6z"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">2. Alternatiflerin Belirlenmesi (Farklı Rotalar)</h2>
+                    <p class="text-gray-300">Hedefe giden <b class="text-highlight">tüm olası yolları</b> listeleyin. Yaratıcı olun, beyin fırtınası yapın. Unutmayın, bazen <b class="text-highlight">"hiçbir şey yapmamak"</b> da bir alternatiftir.<br> <b class="text-highlight">Örnek:</b> TikTok reklamları, influencer işbirliği, üniversite festivallerine sponsor olmak.</p>
+                </div>
+                <!-- Kart 4: Aşama 3 -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="m9 12 2 2 4-4"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">3. Alternatiflerin Değerlendirilmesi (Yolun Özellikleri)</h2>
+                    <p class="text-gray-300">Rotaları neye göre karşılaştıracaksınız? <b class="text-highlight">Maliyet, hız, risk, kârlılık, marka imajına etki</b> gibi objektif ölçütler belirleyin. Her kriter aynı derecede önemli olmayabilir, bu yüzden onlara <b class="text-highlight">ağırlık</b> verebilirsiniz.</p>
+                </div>
+                <!-- Kart 5: Aşama 4 -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">4. Alternatifler Arasından En İyisinin Seçilmesi (Karar Anı)</h2>
+                    <p class="text-gray-300">Her alternatifi, belirlediğiniz kriterlere göre <b class="text-highlight">puanlayın.</b> Artılarını ve eksilerini tartın. Veriler ve analizler size yol gösterir, ancak son seçim sizin <b class="text-highlight">yargı ve tecrübenizle</b> birleşir. Hedefe en uygun rotayı seçin.</p>
+                </div>
+                <!-- Kart 6: Aşama 5 -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M21.5 12c0-5.25-4.25-9.5-9.5-9.5S2.5 6.75 2.5 12s4.25 9.5 9.5 9.5"/><path d="M12 2v2.5"/><path d="M12 22v-2.5"/><path d="M22 12h-2.5"/><path d="M2 12h2.5"/><path d="M18 18l-1.5-1.5"/><path d="M6 6l1.5 1.5"/><path d="M18 6l-1.5 1.5"/><path d="M6 18l1.5-1.5"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">5. Kararın Uygulanması ve Sonuçların İzlenmesi (Yola Çık ve Değerlendir)</h2>
+                    <p class="text-gray-300">Karar vermek son değil, başlangıçtır. Seçtiğiniz yolu <b class="text-highlight">uygulayın.</b> Sonra periyodik olarak <b class="text-highlight">sonuçları izleyin</b> ve hedefinize ulaşıp ulaşmadığınızı kontrol edin. Bu geri bildirim, bir sonraki yolculuğunuzda size tecrübe kazandırır.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 4.2: Sektör Uygulaması -->
+    <section id="sektor-uygulamasi" class="slide">
+        <div class="shape shape-1" style="animation-delay: -165s;"></div>
+        <div class="shape shape-2" style="animation-delay: -170s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Sektör Uygulaması:</span> Mavi'nin Yeşil Kararı
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Şimdi 5 adımlık karar modelini, Mavi Jeans'in "Sürdürülebilir Bir Koleksiyon" çıkarma kararını incelerken kullanalım.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Kart 1: Giriş -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 20 10.3 20 16a4 4 0 0 1-8 0Z"/><path d="M11 14a7 7 0 0 0-7 7c0 1.1.9 2 2 2h1a2 2 0 0 0 2-2Z"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Senaryo: Yeşil Gelecek</h2>
+                    <p class="text-gray-300">Mavi yönetimi, artan çevre bilinci ve Z kuşağının talepleri doğrultusunda, markanın imajını güçlendirmek için <b class="text-highlight">yeni bir sürdürülebilir koleksiyon</b> çıkarma kararını masaya yatırıyor.</p>
+                </div>
+                <!-- Kart 2: Aşama 1 -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">1. Amaç: Net Hedefler</h2>
+                    <p class="text-gray-300">
+                        - Genç pazarda payı <b class="text-highlight">%5 artırmak.</b><br>
+                        - Markayı <b class="text-highlight">"çevre dostu"</b> olarak konumlandırmak.<br>
+                        - Avrupa Yeşil Mutabakatı'na uyum sağlamak.<br>
+                        - Yeni koleksiyondan <b class="text-highlight">%40 kâr marjı</b> elde etmek.
+                    </p>
+                </div>
+                <!-- Kart 3: Aşama 2 -->
+                <div class="info-card h-full">
+                     <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M14.5 6.5 18 3l-1.5-1.5-3.5 3.5"/><path d="M12.5 8.5 15.5 12l-1.5 1.5-3-3"/><path d="M10.5 10.5 14 14l-1.5 1.5-3.5-3.5"/><path d="M8.5 12.5 12 15.5l-1.5 1.5-3.5-3.5"/><path d="M20 18c.8.8.8 2 0 2.8-.8.8-2 .8-2.8 0l-6-6-4.5-4.5-2-2-1-1-1.5-1.5c-.8-.8-.8-2 0-2.8.8-.8 2-.8 2.8 0l1.5 1.5 1 1 2 2 4.5 4.5 6 6z"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">2. Alternatifler: 4 Olası Yol</h2>
+                    <p class="text-gray-300">
+                        A1: <b class="text-highlight">Geri Dönüştürülmüş</b> Kumaş<br>
+                        A2: <b class="text-highlight">Organik Pamuk</b><br>
+                        A3: Yenilikçi <b class="text-highlight">Vegan Deri</b> Detayları<br>
+                        A4: <b class="text-highlight">Hiçbir Şey Yapmamak</b>
+                    </p>
+                </div>
+                <!-- Kart 4: Aşama 3 -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="m9 12 2 2 4-4"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">3. Kriterler: Puanlama Cetveli</h2>
+                    <p class="text-gray-300">Alternatifler şu kriterlere göre (ağırlıkları parantez içinde) puanlanır: <b class="text-highlight">Kâr Marjı (5), Marka İmajı (5), Hedef Kitleye Etki (4), Üretim Maliyeti (4), Teknik Zorluk (3)</b>.</p>
+                </div>
+                <!-- Kart 5: Aşama 4 -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">4. Seçim: En Dengeli Yol</h2>
+                    <p class="text-gray-300">Vegan deri çok pahalı ve riskli, geri dönüştürülmüş ise imaj etkisi zayıf bulundu. <b class="text-highlight">Organik Pamuk (A2)</b>, maliyet, pazar kabulü ve marka imajı arasında <b class="text-highlight">en iyi dengeyi</b> sunduğu için seçildi.</p>
+                </div>
+                <!-- Kart 6: Aşama 5 -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M21.5 12c0-5.25-4.25-9.5-9.5-9.5S2.5 6.75 2.5 12s4.25 9.5 9.5 9.5"/><path d="M12 2v2.5"/><path d="M12 22v-2.5"/><path d="M22 12h-2.5"/><path d="M2 12h2.5"/><path d="M18 18l-1.5-1.5"/><path d="M6 6l1.5 1.5"/><path d="M18 6l-1.5 1.5"/><path d="M6 18l1.5-1.5"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">5. Uygulama ve İzleme</h2>
+                    <p class="text-gray-300">Yeni koleksiyon "Doğaya Saygılı Denim" sloganıyla pazarlandı. 6 ay sonra <b class="text-highlight">satış verileri (MIS)</b> ve <b class="text-highlight">sosyal medya yorumları</b> incelenerek hedeflere ulaşılıp ulaşılmadığı kontrol edildi. Bu geri bildirim, bir sonraki sezonun stratejisini belirledi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 5: Vaka Analizi: Netflix -->
+    <section id="netflix-vaka" class="slide">
+        <div class="shape shape-1" style="animation-delay: -175s;"></div>
+        <div class="shape shape-2" style="animation-delay: -180s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Bölüm 5: Vaka Analizi:</span> Netflix'in Cesur Kararı
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Tüm öğrendiklerimizi, Netflix'in parola paylaşımını engelleyerek endüstriyi nasıl yeniden şekillendirdiğini incelerken birleştirelim.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Kart 1: Problem -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Problem: Milyarlarca Dolarlık Sızıntı</h2>
+                    <p class="text-gray-300">Netflix'in partisi kalabalıktı ama kasası boşalıyordu. <b class="text-highlight">100 milyondan fazla hane</b>, hizmeti ücretsiz bir şekilde kullanıyordu. Rakipler artarken (Disney+ vb.) yeni abone bulmak zorlaşmış, şirketin <b class="text-highlight">yeni içeriklere yatırım yapma gücü</b> azalıyordu.</p>
+                </div>
+                <!-- Kart 2: Stratejik Amaç -->
+                <div class="info-card h-full">
+                     <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Stratejik Amaç: 'Ücretsiz Olarak Platformu Kullanan Kişileri' Müşteriye Dönüştür</h2>
+                    <p class="text-gray-300">Netflix'in amacı basit ama cesurdu: Şifre paylaşanları <b class="text-highlight">ödeme yapan abonelere dönüştürmek.</b> Strateji artık sadece "abone sayısını artırmak" değil, <b class="text-highlight">"abone başına geliri (ARPU) artırmak"</b> ve şirketin uzun vadeli finansal sağlığını garanti altına almaktı.</p>
+                </div>
+                <!-- Kart 3: Dersin Özeti -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 5a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/><path d="M12 18a3 3 0 1 0 0-6 3 3 0 1 0 0 6Z"/><path d="M12 21a3 3 0 1 0 0-6 3 3 0 1 0 0 6Z"/><path d="M12 2a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/><path d="M12 12a6 6 0 0 0 6-6 3 3 0 1 1-3-3 6 6 0 0 0-6 6 3 3 0 1 1 3 3 6 6 0 0 0-6 6 3 3 0 1 1 3 3 6 6 0 0 0 6-6 3 3 0 1 1-3-3"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Dersin Özeti: Netflix Kararı</h2>
+                    <p class="text-gray-300">Bu vaka, derste öğrendiğimiz her şeyi bir araya getiriyor:<br>
+- <b class="text-highlight">Stratejik Karar:</b> Şirketin geleceğini etkileyen, riskli bir adım.<br>
+- <b class="text-highlight">Yapılandırılmamış Problem:</b> Reçetesi olmayan bir sorun.<br>
+- <b class="text-highlight">Veri Analizi & Risk Yönetimi:</b> Yılların verisiyle atılmış bilinçli bir adım.
+</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 5.2: Netflix Alternatifler -->
+    <section id="netflix-alternatives" class="slide">
+        <div class="shape shape-1" style="animation-delay: -185s;"></div>
+        <div class="shape shape-2" style="animation-delay: -190s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Netflix'in Yol Ayrımı:</span> Alternatifler ve Kriterler
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Netflix bu büyük problem karşısında hangi yolları değerlendirdi ve bu yolları hangi teraziyle tarttı?
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Kart 1: Geleneksel Yollar -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 22V8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/><path d="M5 12a7 7 0 0 1 14 0"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Seçenek 1: Bilinen Yollar</h2>
+                    <p class="text-gray-300">
+                        <b class="text-highlight">A1: Hiçbir Şey Yapma:</b> Müşteri memnuniyetini koru, ama gelir kaybına devam et.<br><br>
+                        <b class="text-highlight">A2: Fiyatları Artır:</b> Hızlı gelir artışı sağla, ama mevcut aboneleri kaybetme (churn) riskini al.
+                    </p>
+                </div>
+                <!-- Kart 2: Yenilikçi Yollar -->
+                <div class="info-card h-full">
+                     <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Seçenek 2: Yeni Modeller</h2>
+                    <p class="text-gray-300">
+                         <b class="text-highlight">A3: Reklamlı Paket Sun:</b> Fiyata duyarlı kullanıcıları kaybetmemek için daha ucuz, reklamlı bir seçenek oluştur.<br><br>
+                         <b class="text-highlight">A4: Parola Paylaşımını Ücretlendir:</b> Teknolojik önlemlerle paylaşımı tespit et ve "ekstra üye" ekleme seçeneği sun.
+                    </p>
+                </div>
+                <!-- Kart 3: Karar Kriterleri -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 3a2.4 2.4 0 0 1 3 1 3.5 3.5 0 0 1 4 3 2.4 2.4 0 0 1 1 3 3.5 3.5 0 0 1-3 4 2.4 2.4 0 0 1-3 1 3.5 3.5 0 0 1-4-3 2.4 2.4 0 0 1-1-3 3.5 3.5 0 0 1 3-4Z"/><path d="M2 17h4"/><path d="M18 17h4"/><path d="M12 17h.01"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Karar Terazisi</h2>
+                    <p class="text-gray-300">Netflix yönetimi bu yolları şu 5 ana kritere göre tarttı:<br>
+                        - Potansiyel <b class="text-highlight">Gelir Artışı</b><br>
+                        - Abone <b class="text-highlight">Kayıp Riski</b><br>
+                        - Marka İmajına Etki (<b class="text-highlight">Sosyal Medya Tepkisi</b>)<br>
+                        - <b class="text-highlight">Teknik</b> Uygulanabilirlik<br>
+                        - <b class="text-highlight">Yasal</b> Zemin
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 5.3: Netflix Uygulama -->
+    <section id="netflix-uygulama" class="slide">
+        <div class="shape shape-1" style="animation-delay: -195s;"></div>
+        <div class="shape shape-2" style="animation-delay: -200s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Netflix'in Stratejisi:</span> Akıllı ve Aşamalı Uygulama
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Netflix, bu riskli kararı "pat" diye uygulamadı. Akıllıca, aşamalı ve kullanıcı dostu bir strateji izledi.
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Kart 1: Test Et ve Öğren -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M14.4 8.4V2.5L9.6 2.5V8.4l-7.2 12.8h19.2L14.4 8.4Z"/><path d="M8.5 2h7"/><path d="M7 22h10"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Önce Test Et, Sonra Uygula</h2>
+                    <p class="text-gray-300">Netflix, en büyük pazarı olan ABD'de hemen "büyük patlama" yapmadı. Stratejiyi önce <b class="text-highlight">Peru, Şili gibi daha küçük pazarlarda test etti.</b> Bu "test sürüşü", müşteri tepkisini ölçmelerini, hataları düzeltmelerini ve en iyi iletişim dilini bulmalarını sağladı.</p>
+                </div>
+                <!-- Kart 2: Geçişi Kolaylaştır -->
+                <div class="info-card h-full">
+                     <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Geçişi Kolaylaştırma</h2>
+                    <p class="text-gray-300">Netflix, kullanıcıların öfkesini azaltmak için akıllı araçlar geliştirdi:<br>
+- <b class="text-highlight">Profil Transferi:</b> İzleme geçmişinizi kaybetmeden kendi hesabınıza geçme kolaylığı.<br>
+- <b class="text-highlight">Ekstra Üye Ekle:</b> Daha düşük bir ücretle, yasal olarak bir arkadaşınızı hesabınıza ekleme seçeneği.
+                    </p>
+                </div>
+                <!-- Kart 3: Akıllı Teknoloji -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2"/><path d="M12 22v-2"/><path d="m17 20.66-1-1.73"/><path d="M11 10.27 7 3.34"/><path d="m20.66 17-1.73-1"/><path d="M3.34 7 7 11"/><path d="m17 3.34-1 1.73"/><path d="M11 13.73 7 20.66"/><path d="m20.66 7-1.73 1"/><path d="M3.34 17 7 13"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Dijital Dedektiflik</h2>
+                    <p class="text-gray-300">Netflix, gizliliği ihlal eden GPS verilerini kullanmadı. Bunun yerine <b class="text-highlight">IP adresi, cihaz kimlikleri ve hesap hareketleri</b> gibi verileri analiz ederek bir hesabın "ana üssünü" belirledi. Farklı konumlardan sürekli yapılan girişleri <b class="text-highlight">anomali</b> olarak tespit etti.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölüm 5.4: Netflix Sonuçlar ve Dersler -->
+    <section id="netflix-sonuclar" class="slide">
+        <div class="shape shape-1" style="animation-delay: -205s;"></div>
+        <div class="shape shape-2" style="animation-delay: -210s;"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto content-fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                   <span class="gradient-text">Sonuç:</span> Risk İşe Yaradı Mı?
+                </h1>
+                <p class="max-w-4xl mx-auto text-lg text-gray-400">
+                    Peki, tüm bu tepkilere ve risklere rağmen Netflix'in cesur hamlesi başarılı oldu mu? Rakamlar ve sektördeki yankılar ne diyor?
+                </p>
+            </div>
+           
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Kart 1: Başarı Rakamlarla Geldi -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Sonuç: Rakamlarla Gelen Başarı</h2>
+                    <p class="text-gray-300">Karar, finansal bir zafere dönüştü. İlk başta gelen sosyal medya tepkisine rağmen, yasağın ardından <b class="text-highlight">milyonlarca yeni abone</b> kazanıldı ve şirketin gelirleri <b class="text-highlight">milyarlarca dolar</b> arttı. İptal edenlerin sayısı, yeni gelenlerin yanında çok az kaldı.</p>
+                </div>
+                <!-- Kart 2: Stratejik Dersler -->
+                <div class="info-card h-full">
+                     <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M12 5a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/><path d="M12 18a3 3 0 1 0 0-6 3 3 0 1 0 0 6Z"/><path d="M12 21a3 3 0 1 0 0-6 3 3 0 1 0 0 6Z"/><path d="M12 2a3 3 0 1 0 0 6 3 3 0 1 0 0-6Z"/><path d="M12 12a6 6 0 0 0 6-6 3 3 0 1 1-3-3 6 6 0 0 0-6 6 3 3 0 1 1 3 3 6 6 0 0 0-6 6 3 3 0 1 1 3 3 6 6 0 0 0 6-6 3 3 0 1 1-3-3"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Başarının Sırrı: 3 Stratejik Ders</h2>
+                    <p class="text-gray-300">
+                        <b class="text-highlight">1. Veriye Güven:</b> Karar sezgisel değildi, yılların verisine dayanıyordu.<br>
+                        <b class="text-highlight">2. Küçük Başla, Hızlı Öğren:</b> Riskli adımı önce küçük pazarlarda test ederek riski yönettiler.<br>
+                        <b class="text-highlight">3. Değerini Bil:</b> Netflix, hizmetinin "bedava" olamayacak kadar değerli olduğunu kanıtladı.
+                    </p>
+                </div>
+                <!-- Kart 3: Endüstriyi Değiştiren Hamle -->
+                <div class="info-card h-full">
+                    <div class="bg-gray-700/50 rounded-lg p-3 inline-block mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20Z"/><path d="M2 12h20"/></svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-100 mb-2">Miras: Endüstriyi Değiştiren Hamle</h2>
+                    <p class="text-gray-300">Netflix'in bu kararı sadece kendini kurtarmakla kalmadı, tüm <b class="text-highlight">yayıncılık sektörünün iş modelini değiştirdi.</b> Bu başarının ardından <b class="text-highlight">Disney+ ve Max gibi rakipleri</b> de benzer adımlar atmaya başladı. Tek bir stratejik karar, pazarın kurallarını yeniden yazdı.</p>
+                </div>
+            </div>
+        </div>
+</section>
+<script src="../../lessons-data.js"></script>
+<script src="../../resource-viewer.js"></script>
+<script src="../../lesson-resources.js"></script>
+<script>
+    initLessonResources("ders-03");
+</script>
+</body>
+</html>
+

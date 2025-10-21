@@ -1,0 +1,9 @@
+{
+  "id": "ders-01",
+  "title": "YBS1103 · Ders 01: Yönetim Bilişim Sistemlerine Giriş",
+  "description": "Ders izlencesi, değerlendirme ilkeleri ve dönem boyunca işlenecek temaların genel çerçevesi.",
+  "date": "2025-10-06",
+  "tags": ["izlence", "tanışma", "ybs"],
+  "lessonFile": "lesson.html",
+  "resources": []
+}
