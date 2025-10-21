@@ -2,12 +2,24 @@ import { promises as fs } from "fs";
 import path from "path";
 
 const ROOT_DIR = process.cwd();
-const PUBLIC_DIR = path.join(ROOT_DIR, "public");
-const LESSONS_DIR = path.join(PUBLIC_DIR, "lessons");
-const OUTPUT_JS_PATH = path.join(PUBLIC_DIR, "lessons-data.js");
-const OUTPUT_JSON_PATH = path.join(PUBLIC_DIR, "lessons.index.json");
+const DEFAULT_PUBLIC_DIR = path.join(ROOT_DIR, "public");
+
+let LESSONS_DIR = path.join(DEFAULT_PUBLIC_DIR, "lessons");
+let OUTPUT_JS_PATH = path.join(DEFAULT_PUBLIC_DIR, "lessons-data.js");
+let OUTPUT_JSON_PATH = path.join(DEFAULT_PUBLIC_DIR, "lessons.index.json");
 const LESSON_FOLDER_PATTERN = /^(\d+)\.hafta$/i;
 const RESERVED_FILE_NAMES = new Set(["lesson.meta.json", ".ds_store"]);
+
+try {
+  const stat = await fs.stat(LESSONS_DIR);
+  if (!stat.isDirectory()) {
+    throw new Error("not directory");
+  }
+} catch {
+  LESSONS_DIR = path.join(ROOT_DIR, "lessons");
+  OUTPUT_JS_PATH = path.join(ROOT_DIR, "lessons-data.js");
+  OUTPUT_JSON_PATH = path.join(ROOT_DIR, "lessons.index.json");
+}
 
 function ensurePosix(relativePath) {
   return relativePath.split(path.sep).join("/");
@@ -313,11 +325,12 @@ async function writeOutputs(lessons) {
     lessons
   };
 
-  await fs.mkdir(PUBLIC_DIR, { recursive: true });
+  await fs.mkdir(path.dirname(OUTPUT_JSON_PATH), { recursive: true });
   await fs.writeFile(OUTPUT_JSON_PATH, JSON.stringify(lessonsIndex, null, 2), "utf8");
 
   const banner = "// Bu dosya scripts/generate-lessons.mjs tarafından otomatik üretilmiştir.\n";
   const payload = `window.LESSON_DIRECTORY = ${JSON.stringify(lessons, null, 2)};\n`;
+  await fs.mkdir(path.dirname(OUTPUT_JS_PATH), { recursive: true });
   await fs.writeFile(OUTPUT_JS_PATH, banner + payload, "utf8");
 }
 
