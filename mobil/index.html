@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Mobil tarayıcı sekme rengi -->
+    <!-- Sekme / tarayıcı rengi -->
     <meta name="theme-color" content="#000000">
 
-    <title>OZK</title>
+    <!-- iOS PWA ayarları -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="React Öğren">
+
+    <title>YBST Mobil Uygulama Geliştirme</title>
+
     <link rel="icon" href="favicon.svg" type="image/x-icon">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+
     <style>
         html, body {
             margin: 0;
@@ -16,13 +24,16 @@
             overflow: hidden;
             width: 100%;
             height: 100%;
+            background: #000;
         }
+
         iframe {
             border: none;
             width: 100vw;
             height: 100vh;
             display: block;
         }
+
         .button {
             position: fixed;
             right: 18px;
@@ -37,14 +48,157 @@
             border-radius: 10px;
             font-family: Arial, sans-serif;
             font-size: 14px;
+            z-index: 20;
         }
+
         .button:hover {
             background-color: #555;
+        }
+
+        /* iOS "Ana ekrana ekle" banner’ı */
+        .install-banner {
+            position: fixed;
+            left: 12px;
+            right: 12px;
+            bottom: 80px; /* WhatsApp butonundan yukarıda */
+            padding: 12px 14px;
+            border-radius: 16px;
+            background: radial-gradient(circle at top left, rgba(63, 131, 248, 0.35), transparent),
+                        radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.35), transparent),
+                        rgba(15, 23, 42, 0.94);
+            color: #e5e7eb;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 13px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 30;
+        }
+
+        .install-banner__icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #22c55e, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .install-banner__content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .install-banner__title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #f9fafb;
+        }
+
+        .install-banner__text {
+            line-height: 1.35;
+        }
+
+        .install-banner__steps {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .install-banner__steps b {
+            color: #e5e7eb;
+        }
+
+        .install-banner__cta {
+            border: none;
+            outline: none;
+            border-radius: 999px;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
+            background: #f97316;
+            color: #111827;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .install-banner__cta:active {
+            transform: scale(0.97);
+        }
+
+        .install-banner__close {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            font-size: 16px;
+            line-height: 1;
+            cursor: pointer;
+            color: #9ca3af;
+            padding: 4px;
         }
     </style>
 </head>
 <body>
     <iframe src="https://mobilgelistirme.framer.ai"></iframe>
+
+    <!-- iOS Add to Home Screen banner -->
+    <div id="ios-install-banner" class="install-banner">
+        <div class="install-banner__icon">⚛️</div>
+
+        <div class="install-banner__content">
+            <div class="install-banner__title">React Öğren’i uygulama olarak kullan</div>
+            <div class="install-banner__text">
+                React öğrenme websitemizi cihazınıza <b>uygulama gibi</b> kurabilirsiniz.
+            </div>
+            <div class="install-banner__steps">
+                Tarayıcınızda <b>“Paylaş” (⬆️)</b> tuşuna basıp
+                <b>“Ana Ekrana Ekle”</b> diyerek uygulamayı kurabilirsiniz.
+            </div>
+        </div>
+
+        <button id="ios-install-banner-ok" class="install-banner__cta">
+            Tamam
+        </button>
+
+        <div id="ios-install-banner-close" class="install-banner__close">×</div>
+    </div>
+
     <a href="https://wa.me/905434152988" class="button">Sorularınızı Sorun ></a>
+
+    <script>
+        function isInStandaloneMode() {
+            return window.matchMedia('(display-mode: standalone)').matches
+                || window.navigator.standalone === true;
+        }
+
+        window.addEventListener('load', function () {
+            const banner = document.getElementById('ios-install-banner');
+            const btnOk = document.getElementById('ios-install-banner-ok');
+            const btnClose = document.getElementById('ios-install-banner-close');
+
+            const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+            // Sadece iOS + standalone değilse göster
+            if (isIOS && !isInStandaloneMode()) {
+                banner.style.display = 'flex';
+            }
+
+            function hideBanner() {
+                banner.style.display = 'none';
+            }
+
+            btnOk.addEventListener('click', hideBanner);
+            btnClose.addEventListener('click', hideBanner);
+        });
+    </script>
 </body>
 </html>
