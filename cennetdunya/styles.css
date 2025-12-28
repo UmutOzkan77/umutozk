@@ -1,43 +1,51 @@
 body {
-  background-color: #121212;
-  color: #e0e0e0;
-  font-family: Arial, sans-serif;
+  background-color: #15202b;
+  color: #e1e8ed;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   margin: 0;
-  padding: 20px;
 }
 
-h1 {
-  text-align: center;
-}
-
-#search-container {
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #192734;
+  padding: 10px 20px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
 }
 
-#search-container input, #search-container select {
-  margin: 5px 10px;
-  padding: 10px;
-  font-size: 16px;
+header h1 {
+  margin: 0;
+  font-size: 20px;
 }
 
-#tweets-container {
-  max-width: 800px;
-  margin: 0 auto;
+header input {
+  background-color: #253341;
+  border: none;
+  border-radius: 9999px;
+  padding: 8px 15px;
+  color: #fff;
+}
+
+main {
+  max-width: 600px;
+  margin: 70px auto 0;
+  padding: 0 15px;
 }
 
 .tweet {
-  background-color: #1e1e1e;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 5px;
+  border-bottom: 1px solid #38444d;
+  padding: 15px 0;
 }
 
 .tweet a {
   color: #1da1f2;
   text-decoration: none;
+  font-size: 14px;
 }
 
 .tweet p {
@@ -45,6 +53,6 @@ h1 {
 }
 
 .tweet .date {
-  color: #aaaaaa;
-  font-size: 14px;
+  color: #8899a6;
+  font-size: 12px;
 }
