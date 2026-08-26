@@ -2,1203 +2,2120 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>AGEN Fiyat Teklifi Formu</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <!-- Favicon -->
+    <title>AGEN Fiyat Teklifi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0563C1">
     <link rel="icon" href="icon.png" type="image/png">
-    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="icon.png">
-    <!-- Include html2pdf.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-    <!-- Include Font Awesome for icons -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <!-- Modern font for better design -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #0563C1;
-            --secondary-color: #00AEEF;
-            --background-color: #f8fafc;
-            --text-color: #1e293b;
-            --border-color: #e2e8f0;
-            --button-color: #00AEEF;
-            --delete-button-color: #ef4444;
-            --apply-all-button-color: #f59e0b;
-            --hover-color: #0ea5e9;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --blue: #0563C1;
+            --blue-dark: #034b92;
+            --cyan: #00AEEF;
+            --ink: #17233d;
+            --muted: #64748b;
+            --line: #dbe4ef;
+            --surface: #ffffff;
+            --background: #f4f7fb;
+            --soft-blue: #edf6ff;
+            --soft-cyan: #ecfbff;
+            --amber: #f59e0b;
+            --amber-dark: #b76b00;
+            --soft-amber: #fff8e8;
+            --red: #dc3f4d;
+            --soft-red: #fff1f2;
+            --green: #14966a;
+            --shadow: 0 14px 34px rgba(26, 62, 103, 0.08);
+            --small-shadow: 0 5px 15px rgba(26, 62, 103, 0.07);
+            --radius: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            background: var(--background);
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Inter', Arial, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
             margin: 0;
-            padding: 24px;
-            line-height: 1.6;
+            color: var(--ink);
+            background: var(--background);
+            font-family: "Inter", Arial, sans-serif;
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 1024px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            padding: 32px;
+        button,
+        input,
+        select {
+            font: inherit;
         }
 
-        h1 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 32px;
-            font-size: 1.875rem;
-            font-weight: 700;
+        button {
+            border: 0;
+            cursor: pointer;
         }
 
-        .form-group {
-            margin-bottom: 24px;
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 0.875rem;
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible {
+            outline: 3px solid rgba(0, 174, 239, 0.32);
+            outline-offset: 2px;
         }
 
-        input[type="text"],
-        input[type="date"],
-        input[type="number"],
+        input,
         select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            box-sizing: border-box;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            min-height: 48px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: #fff;
+            color: var(--ink);
+            padding: 12px 14px;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
         }
 
-        input[type="text"]:focus,
-        input[type="date"]:focus,
-        input[type="number"]:focus,
+        input::placeholder {
+            color: #94a3b8;
+        }
+
+        input:focus,
         select:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(5, 99, 193, 0.1);
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 4px rgba(0, 174, 239, 0.11);
             outline: none;
         }
 
-        .quick-fill-buttons {
+        .app-shell {
+            width: min(1120px, 100%);
+            margin: 0 auto;
+            padding: clamp(18px, 4vw, 44px) clamp(14px, 3vw, 32px) 44px;
+        }
+
+        .app-header {
             display: flex;
-            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
             margin-bottom: 24px;
         }
 
-        .quick-fill-button {
-            flex: 1;
-            padding: 12px;
-            background-color: var(--button-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            font-weight: 500;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            min-width: 0;
         }
 
-        .quick-fill-button:hover {
-            background-color: var(--hover-color);
-            transform: translateY(-1px);
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            flex: 0 0 auto;
         }
 
-        /* Mobil için ürün bölümü */
-        .product-section {
-            background-color: #f9fafb;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 24px;
-            position: relative;
+        .brand-copy {
+            min-width: 0;
+        }
+
+        .eyebrow,
+        .section-kicker {
+            display: block;
+            margin: 0 0 4px;
+            color: var(--blue);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0;
+        }
+
+        h1 {
+            margin-bottom: 0;
+            color: var(--ink);
+            font-size: clamp(1.35rem, 3vw, 1.85rem);
+            line-height: 1.15;
+            letter-spacing: -0.035em;
+        }
+
+        h2 {
+            margin-bottom: 5px;
+            font-size: clamp(1.15rem, 2.4vw, 1.42rem);
+            letter-spacing: -0.025em;
+        }
+
+        h3 {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+
+        .summary-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+            min-width: 112px;
+            padding: 10px 13px;
+            border: 1px solid #cfe4f7;
+            border-radius: 14px;
+            background: var(--soft-blue);
+            color: var(--blue);
+        }
+
+        .summary-card span {
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .summary-card strong {
+            font-size: 1.05rem;
+            line-height: 1.1;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+            padding: 9px 10px;
+            border-radius: 12px;
+            background: #e9eef5;
+            color: #7890aa;
+            font-size: 0.76rem;
+            font-weight: 700;
+        }
+
+        .step-number {
+            display: grid;
+            place-items: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fff;
+            color: #7890aa;
+            font-size: 0.72rem;
+            flex: 0 0 auto;
+        }
+
+        .step-active {
+            background: var(--soft-blue);
+            color: var(--blue);
+        }
+
+        .step-active .step-number {
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .step-label {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .section,
+        .actions-panel {
+            margin-bottom: 18px;
+            padding: clamp(17px, 3vw, 26px);
+            border: 1px solid #e4ebf3;
+            border-radius: var(--radius);
+            background: var(--surface);
             box-shadow: var(--shadow);
         }
 
-        .product-header {
+        .section-heading {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .section-heading p,
+        .section-note,
+        .helper-text {
+            margin-bottom: 0;
+            color: var(--muted);
+            font-size: 0.83rem;
+        }
+
+        .section-heading p {
+            max-width: 650px;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 14px;
+        }
+
+        .form-grid + .form-grid {
+            margin-top: 14px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .field label,
+        .field-label {
+            color: #30445e;
+            font-size: 0.79rem;
+            font-weight: 800;
+        }
+
+        .field-hint {
+            margin: -2px 0 0;
+            color: var(--muted);
+            font-size: 0.72rem;
+        }
+
+        .sender-picker {
+            margin-top: 17px;
+            padding-top: 17px;
+            border-top: 1px solid #edf1f5;
+        }
+
+        .sender-picker .field-label {
+            display: block;
+            margin-bottom: 9px;
+        }
+
+        .sender-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .sender-chip,
+        .quick-column {
+            min-height: 40px;
+            padding: 9px 12px;
+            border: 1px solid #cbdceb;
+            border-radius: 999px;
+            background: #fff;
+            color: var(--blue);
+            font-size: 0.78rem;
+            font-weight: 700;
+            transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+        }
+
+        .sender-chip:hover,
+        .quick-column:hover {
+            border-color: var(--cyan);
+            background: var(--soft-cyan);
+            transform: translateY(-1px);
+        }
+
+        .sender-chip.is-selected {
+            border-color: var(--blue);
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .primary-button,
+        .secondary-button,
+        .ghost-button,
+        .danger-button,
+        .pdf-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 45px;
+            border-radius: 12px;
+            padding: 10px 15px;
+            font-weight: 800;
+            line-height: 1.1;
+            transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .primary-button {
+            background: var(--blue);
+            color: #fff;
+            box-shadow: 0 8px 16px rgba(5, 99, 193, 0.18);
+        }
+
+        .primary-button:hover {
+            background: var(--blue-dark);
+            transform: translateY(-1px);
+        }
+
+        .secondary-button {
+            border: 1px solid #bcd5eb;
+            background: var(--soft-blue);
+            color: var(--blue);
+        }
+
+        .secondary-button:hover {
+            background: #deefff;
+            transform: translateY(-1px);
+        }
+
+        .ghost-button {
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--muted);
+        }
+
+        .ghost-button:hover {
+            border-color: #9bb2c8;
+            color: var(--ink);
+        }
+
+        .danger-button {
+            border: 1px solid #ffc8ce;
+            background: var(--soft-red);
+            color: var(--red);
+        }
+
+        .danger-button:hover {
+            background: #ffe3e6;
+        }
+
+        .icon-button {
+            display: inline-grid;
+            place-items: center;
+            width: 40px;
+            min-width: 40px;
+            height: 40px;
+            min-height: 40px;
+            padding: 0;
+            border-radius: 11px;
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .product-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .product-card {
+            padding: 16px;
+            border: 1px solid #dfe8f1;
+            border-radius: 16px;
+            background: #fbfdff;
+        }
+
+        .product-card-header {
             display: flex;
             align-items: center;
-            margin-bottom: 16px;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 17px;
+        }
+
+        .product-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-width: 0;
         }
 
         .product-number {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 9999px;
-            margin-right: 12px;
-            font-size: 0.875rem;
-            font-weight: 600;
+            display: grid;
+            place-items: center;
+            width: 31px;
+            height: 31px;
+            border-radius: 10px;
+            background: var(--blue);
+            color: #fff;
+            font-size: 0.79rem;
+            font-weight: 800;
+            flex: 0 0 auto;
         }
 
-        .reorder-buttons {
-            margin-left: auto;
+        .product-title small {
+            display: block;
+            margin-bottom: 2px;
+            color: var(--blue);
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .product-card-actions,
+        .table-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .move-button {
+            border: 1px solid #cbdceb;
+            background: #fff;
+            color: var(--blue);
+        }
+
+        .move-button:hover {
+            background: var(--soft-blue);
+        }
+
+        .delete-product {
+            color: var(--red);
+        }
+
+        .input-with-action {
             display: flex;
             gap: 8px;
         }
 
-        .reorder-buttons button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: background-color 0.3s;
+        .input-with-action input {
+            min-width: 0;
         }
 
-        .reorder-buttons button:hover {
-            background-color: #004a99;
+        .diameter-button {
+            width: 50px;
+            min-width: 50px;
+            border: 1px solid #a9c9f5;
+            border-radius: 12px;
+            background: #eaf4ff;
+            color: var(--blue);
+            font-family: Georgia, serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+        }
+
+        .diameter-button:hover {
+            background: #d8ebff;
+        }
+
+        .quantity-input {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .quantity-input input {
+            border-radius: 12px 0 0 12px;
+            text-align: center;
+        }
+
+        .quantity-control {
+            display: flex;
+            flex-direction: column;
+            width: 43px;
+        }
+
+        .quantity-control button {
+            height: 24px;
+            border-left: 0;
+            background: #edf6ff;
+            color: var(--blue);
+            font-size: 0.95rem;
+            font-weight: 800;
+        }
+
+        .quantity-control button:first-child {
+            border-radius: 0 12px 0 0;
+            border-bottom: 1px solid #c9dff4;
+        }
+
+        .quantity-control button:last-child {
+            border-radius: 0 0 12px 0;
         }
 
         .currency-input {
             display: flex;
-            align-items: center;
+            align-items: stretch;
         }
 
         .currency-input input {
-            flex-grow: 1;
-            margin-right: 8px;
+            min-width: 0;
+            border-radius: 12px 0 0 12px;
         }
 
         .currency-input select {
-            width: auto;
+            width: 70px;
+            padding-right: 8px;
+            padding-left: 8px;
+            border-left: 0;
+            border-radius: 0 12px 12px 0;
+            background: #f7fbff;
+            color: var(--blue);
+            font-weight: 800;
         }
 
-        .action-button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 12px;
-            background-color: var(--button-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            font-weight: 500;
+        .product-field {
+            margin-bottom: 14px;
         }
 
-        .action-button:hover {
-            background-color: var(--hover-color);
-            transform: translateY(-1px);
+        .product-field:last-child {
+            margin-bottom: 0;
         }
 
-        .delete-button {
-            background-color: var(--delete-button-color);
-        }
-
-        .delete-button:hover {
-            background-color: #dc2626;
-        }
-
-        .pdf-buttons {
-            display: flex;
-            flex-direction: column;
+        .product-price-row {
+            display: grid;
             gap: 12px;
-            margin-top: 24px;
+        }
+
+        .product-total {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 4px;
+            padding: 13px 14px;
+            border-radius: 12px;
+            background: var(--soft-blue);
+            color: var(--blue);
+        }
+
+        .product-total span {
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .product-total strong {
+            font-size: 1.05rem;
+        }
+
+        .product-extra-fields {
+            margin-top: 16px;
+            padding-top: 15px;
+            border-top: 1px dashed #d7e3ee;
+        }
+
+        .product-extra-title {
+            margin-bottom: 10px;
+            color: #506780;
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .add-product-mobile {
+            width: 100%;
+            margin-top: 14px;
+        }
+
+        .desktop-table-wrap {
+            display: none;
+            overflow-x: auto;
+            border: 1px solid #dfe8f1;
+            border-radius: 14px;
+        }
+
+        #productTable {
+            width: 100%;
+            min-width: 900px;
+            border-collapse: collapse;
+        }
+
+        #productTable th,
+        #productTable td {
+            padding: 11px;
+            border-bottom: 1px solid #edf1f5;
+            text-align: left;
+            vertical-align: middle;
+            font-size: 0.78rem;
+        }
+
+        #productTable th {
+            background: var(--blue);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        #productTable tr:last-child td {
+            border-bottom: 0;
+        }
+
+        #productTable tbody tr:nth-child(even) {
+            background: #fbfdff;
+        }
+
+        #productTable input,
+        #productTable select {
+            min-height: 40px;
+            padding: 8px 10px;
+            font-size: 0.78rem;
+        }
+
+        #productTable .input-with-action {
+            min-width: 210px;
+        }
+
+        #productTable .diameter-button {
+            width: 40px;
+            min-width: 40px;
+            font-size: 1.1rem;
+        }
+
+        #productTable .currency-input {
+            min-width: 150px;
+        }
+
+        #productTable .currency-input select {
+            width: 57px;
+        }
+
+        .extra-column-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .quick-column {
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .custom-column-creator {
+            display: none;
+            grid-template-columns: 1fr auto;
+            align-items: end;
+            gap: 9px;
+            margin-bottom: 14px;
+            padding: 14px;
+            border: 1px dashed #b9cede;
+            border-radius: 14px;
+            background: #fafdff;
+        }
+
+        .custom-column-creator.is-visible {
+            display: grid;
+        }
+
+        .custom-column-creator .field {
+            min-width: 0;
+        }
+
+        .custom-column-creator .primary-button {
+            white-space: nowrap;
+        }
+
+        .extra-column-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .extra-column-card {
+            padding: 15px;
+            border: 1px solid #dfe8f1;
+            border-radius: 15px;
+            background: #fbfdff;
+        }
+
+        .extra-column-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .extra-column-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--ink);
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        .column-badge {
+            display: grid;
+            place-items: center;
+            width: 25px;
+            height: 25px;
+            border-radius: 8px;
+            background: var(--soft-cyan);
+            color: var(--cyan);
+            font-size: 0.8rem;
+            font-weight: 900;
+        }
+
+        .extra-column-card .field {
+            margin-bottom: 12px;
+        }
+
+        .bulk-apply-box {
+            display: grid;
+            gap: 10px;
+            padding: 13px;
+            border: 1px solid #f4d99c;
+            border-radius: 13px;
+            background: var(--soft-amber);
+        }
+
+        .bulk-apply-copy strong {
+            display: block;
+            margin-bottom: 2px;
+            color: var(--amber-dark);
+            font-size: 0.82rem;
+        }
+
+        .bulk-apply-copy span {
+            display: block;
+            color: #8c6a34;
+            font-size: 0.72rem;
+        }
+
+        .bulk-apply-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .bulk-apply-controls input {
+            min-width: 0;
+            border-color: #edcf8c;
+        }
+
+        .apply-column-button {
+            width: 100%;
+            min-height: 45px;
+            border-radius: 11px;
+            background: var(--amber);
+            color: #fff;
+            font-size: 0.78rem;
+            font-weight: 800;
+        }
+
+        .apply-column-button:hover {
+            background: #dc8b05;
+        }
+
+        .empty-extra-columns {
+            padding: 15px;
+            border: 1px dashed #cdd9e5;
+            border-radius: 13px;
+            color: var(--muted);
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .empty-extra-columns[hidden] {
+            display: none;
+        }
+
+        .actions-panel {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            background: linear-gradient(135deg, #f3f9ff 0%, #fff 78%);
+        }
+
+        .actions-panel h2 {
+            margin-bottom: 4px;
+        }
+
+        .actions-panel p {
+            max-width: 470px;
+            margin-bottom: 0;
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .pdf-actions {
+            display: grid;
+            gap: 8px;
+            width: min(100%, 340px);
         }
 
         .pdf-button {
-            padding: 12px;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .pdf-button:hover {
-            transform: translateY(-1px);
+            width: 100%;
+            color: #fff;
         }
 
         .pdf-print {
-            background-color: var(--primary-color);
-        }
-
-        .pdf-print:hover {
-            background-color: #004a99;
+            background: var(--blue);
         }
 
         .pdf-download {
-            background-color: var(--apply-all-button-color);
-        }
-
-        .pdf-download:hover {
-            background-color: #d97706;
+            background: var(--amber);
         }
 
         .pdf-share {
-            background-color: #22c55e;
+            background: var(--green);
         }
 
+        .pdf-print:hover,
+        .pdf-download:hover,
         .pdf-share:hover {
-            background-color: #16a34a;
-        }
-
-        /* Yeni Sütun Ekleme Stilleri */
-        .extra-columns {
-            margin-bottom: 24px;
-        }
-
-        .extra-columns .extra-column-buttons {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .extra-columns button {
-            background-color: var(--button-color);
-            color: white;
-            border: none;
-            padding: 12px;
-            cursor: pointer;
-            border-radius: 8px;
-            width: 100%;
-            transition: background-color 0.3s, transform 0.2s;
-            font-weight: 500;
-        }
-
-        .extra-columns button:hover {
-            background-color: var(--hover-color);
             transform: translateY(-1px);
+            filter: brightness(0.95);
         }
 
-        .extra-column {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
+        .toast {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            z-index: 20;
+            max-width: min(360px, calc(100vw - 32px));
+            padding: 13px 15px;
+            border: 1px solid #cfe0ee;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: var(--shadow);
+            color: var(--ink);
+            font-size: 0.8rem;
+            font-weight: 700;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(12px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
-        .extra-column input[type="text"] {
-            flex-grow: 1;
-            padding: 12px;
-            margin-right: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            box-sizing: border-box;
+        .toast.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .extra-column button {
-            margin-right: 8px;
+        .toast.is-error {
+            border-color: #ffc8ce;
+            background: var(--soft-red);
+            color: var(--red);
         }
 
-        .extra-column .fill-column-button {
-            background-color: var(--apply-all-button-color);
-            color: white;
-            border: none;
-            padding: 12px;
-            cursor: pointer;
-            border-radius: 8px;
-            margin-right: 8px;
-            transition: background-color 0.3s, transform 0.2s;
-            font-weight: 500;
+        .footer-note {
+            color: #8494a8;
+            font-size: 0.72rem;
+            text-align: center;
         }
 
-        .extra-column .fill-column-button:hover {
-            background-color: #d97706;
-            transform: translateY(-1px);
+        @media (min-width: 620px) {
+            .form-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .form-grid .full-width {
+                grid-column: 1 / -1;
+            }
+
+            .product-price-row {
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            }
+
+            .bulk-apply-box {
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+                align-items: center;
+            }
+
+            .bulk-apply-controls {
+                align-items: center;
+            }
         }
 
-        .extra-column .delete-extra-column {
-            background-color: var(--delete-button-color);
-            color: white;
-            border: none;
-            padding: 12px;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: background-color 0.3s, transform 0.2s;
-            font-weight: 500;
-        }
+        @media (min-width: 900px) {
+            .app-shell {
+                padding-top: 42px;
+            }
 
-        .extra-column .delete-extra-column:hover {
-            background-color: #dc2626;
-            transform: translateY(-1px);
-        }
-
-        /* Masaüstü için tablo stili */
-        @media (min-width: 601px) {
-            /* Ürün bölümü gizle */
-            .product-section {
+            .product-list {
                 display: none;
             }
 
-            /* Tablo stili */
-            #productTable {
-                width: 100%;
-                border-collapse: separate;
-                border-spacing: 0;
-                margin-bottom: 24px;
-                border-radius: 8px;
-                overflow: hidden;
-                box-shadow: var(--shadow);
+            .desktop-table-wrap {
+                display: block;
             }
 
-            #productTable th, #productTable td {
-                border: none;
-                padding: 12px;
-                text-align: left;
-                font-size: 0.875rem;
+            .add-product-mobile {
+                display: none;
             }
 
-            #productTable th {
-                background-color: var(--primary-color);
-                color: white;
-                font-weight: 600;
-            }
-
-            #productTable tbody tr:nth-child(even) {
-                background-color: #f9fafb;
-            }
-
-            #productTable tbody tr:hover {
-                background-color: #f1f5f9;
-            }
-
-            .action-button {
+            .pdf-actions {
+                display: flex;
                 width: auto;
-                margin-top: 0;
+                min-width: 360px;
             }
 
-            .actions-cell button {
-                margin-right: 8px;
-                padding: 6px 12px;
-                border-radius: 6px;
-            }
-
-            .actions-cell .delete-button {
-                margin-top: 0;
+            .pdf-button {
+                width: auto;
+                flex: 1;
             }
         }
 
-        /* Mobil için tablo gizle */
-        @media (max-width: 600px) {
-            #productTable {
+        @media (max-width: 560px) {
+            .app-header {
+                align-items: flex-start;
+            }
+
+            .brand-logo {
+                width: 36px;
+                height: 36px;
+            }
+
+            .summary-card {
+                min-width: 96px;
+                padding: 8px 10px;
+            }
+
+            .summary-card strong {
+                font-size: 0.9rem;
+            }
+
+            .step {
+                justify-content: center;
+                padding: 8px 5px;
+            }
+
+            .step-number {
+                width: 22px;
+                height: 22px;
+            }
+
+            .step-label {
                 display: none;
             }
+
+            .section-heading {
+                flex-direction: column;
+                gap: 11px;
+            }
+
+            .section-heading > .primary-button {
+                width: 100%;
+            }
+
+            .custom-column-creator {
+                grid-template-columns: 1fr;
+            }
+
+            .custom-column-creator .primary-button {
+                width: 100%;
+            }
+
+            .bulk-apply-controls {
+                flex-direction: column;
+            }
+
+            .actions-panel {
+                position: sticky;
+                bottom: 10px;
+                z-index: 8;
+                display: block;
+                padding: 15px;
+                background: rgba(255, 255, 255, 0.96);
+                backdrop-filter: blur(14px);
+            }
+
+            .actions-panel p {
+                margin-bottom: 12px;
+            }
+
+            .pdf-actions {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .pdf-button {
+                min-height: 44px;
+                padding: 9px 8px;
+                font-size: 0.72rem;
+            }
+
+            .pdf-share {
+                grid-column: 1 / -1;
+            }
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>AGEN Fiyat Teklifi Formu</h1>
-
-        <div class="form-group">
-            <label for="alici">Alıcı:</label>
-            <input type="text" id="alici" placeholder="Alıcı adını girin" required>
-        </div>
-
-        <div class="form-group">
-            <label for="ilgili">İlgili:</label>
-            <input type="text" id="ilgili" placeholder="İlgili kişinin adını girin" required>
-        </div>
-
-        <div class="form-group">
-            <label for="gonderen">Gönderen:</label>
-            <input type="text" id="gonderen" placeholder="Gönderen kişinin adını girin" required>
-        </div>
-
-        <div class="quick-fill-buttons">
-            <button class="quick-fill-button" onclick="fillSender('Mustafa GÜR')">Mustafa GÜR</button>
-            <button class="quick-fill-button" onclick="fillSender('Uğurcan TAMAŞ')">Uğurcan TAMAŞ</button>
-            <button class="quick-fill-button" onclick="fillSender('UMUT ÖZKAN')">UMUT ÖZKAN</button>
-            <button class="quick-fill-button" onclick="fillSender('Ahmet')">Ahmet</button>
-        </div>
-
-        <div class="form-group">
-            <label for="tarih">Tarih:</label>
-            <input type="date" id="tarih" required>
-        </div>
-
-        <div class="form-group">
-            <label for="teklifNo">Teklif No:</label>
-            <input type="text" id="teklifNo" placeholder="Teklif numarasını girin" required>
-        </div>
-
-        <div class="form-group">
-            <label for="genelToplamCurrency">Genel Toplam Para Birimi:</label>
-            <select id="genelToplamCurrency">
-                <option value="EUR">€</option>
-                <option value="TRY">₺</option>
-                <option value="USD">$</option>
-            </select>
-        </div>
-
-        <!-- Yeni Sütun Ekleme Bölümü -->
-        <div class="extra-columns">
-            <div class="extra-column-buttons">
-                <button onclick="addExtraColumn('Marka')">Marka Sütunu Ekle</button>
-                <button onclick="addExtraColumn('Termin')">Termin Sütunu Ekle</button>
-                <button onclick="promptExtraColumn()">Yeni Sütun Ekle</button>
+    <div class="app-shell">
+        <header class="app-header">
+            <div class="brand">
+                <img class="brand-logo" src="logo.svg" alt="AGEN">
+                <div class="brand-copy">
+                    <p class="eyebrow">AGEN fiyat teklifi</p>
+                    <h1>Teklif oluştur</h1>
+                </div>
             </div>
-            <div id="extraColumnsContainer">
-                <!-- Ekstra sütunlar buraya eklenecek -->
+            <div class="summary-card" aria-live="polite">
+                <span id="summaryProductCount">1 ürün</span>
+                <strong id="summaryTotal">€ 0,00</strong>
             </div>
-        </div>
+        </header>
 
-        <!-- Masaüstü için ürün tablosu -->
-        <table id="productTable">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Ürün İsmi</th>
-                    <th>Adet</th>
-                    <th>Birim Fiyatı</th>
-                    <th>Toplam Fiyat</th>
-                    <!-- Ekstra sütun başlıkları buraya eklenecek -->
-                    <th class="actions-column">İşlemler</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Ürün satırları buraya eklenecek -->
-            </tbody>
-        </table>
+        <nav class="steps" aria-label="Teklif adımları">
+            <div class="step step-active">
+                <span class="step-number">1</span>
+                <span class="step-label">Teklif bilgileri</span>
+            </div>
+            <div class="step step-active">
+                <span class="step-number">2</span>
+                <span class="step-label">Ürünler</span>
+            </div>
+            <div class="step step-active">
+                <span class="step-number">3</span>
+                <span class="step-label">Ek sütunlar</span>
+            </div>
+        </nav>
 
-        <!-- Mobil için ürün bölümleri -->
-        <div id="productContainer">
-            <!-- Ürün bölümleri buraya eklenecek -->
-        </div>
+        <main>
+            <section class="section" id="quoteInfo">
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">1. adım</span>
+                        <h2>Teklif bilgileri</h2>
+                        <p>PDF üzerinde görünecek alıcı ve teklif bilgilerini doldur.</p>
+                    </div>
+                </div>
 
-        <button class="action-button" onclick="addProduct()">Yeni Ürün Ekle</button>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="alici">Alıcı</label>
+                        <input type="text" id="alici" placeholder="Firma veya müşteri adı" autocomplete="organization" required>
+                    </div>
+                    <div class="field">
+                        <label for="ilgili">İlgili kişi</label>
+                        <input type="text" id="ilgili" placeholder="Görüşülen kişi" autocomplete="name" required>
+                    </div>
+                    <div class="field full-width">
+                        <label for="gonderen">Gönderen</label>
+                        <input type="text" id="gonderen" placeholder="Teklifi hazırlayan kişi" autocomplete="name" required>
+                    </div>
+                </div>
 
-        <div class="pdf-buttons">
-            <button class="pdf-button pdf-print" onclick="generatePDF()">PDF Çıktısı Al</button>
-            <button class="pdf-button pdf-download" onclick="downloadPDF()">PDF Olarak İndir</button>
-            <button class="pdf-button pdf-share" onclick="sharePDF()">PDF Olarak Paylaş</button>
-        </div>
+                <div class="sender-picker">
+                    <span class="field-label">Hızlı gönderen seç</span>
+                    <div class="sender-options" aria-label="Gönderen seçenekleri">
+                        <button type="button" class="sender-chip" data-sender="Mustafa GÜR">Mustafa GÜR</button>
+                        <button type="button" class="sender-chip" data-sender="Uğurcan TAMAŞ">Uğurcan TAMAŞ</button>
+                        <button type="button" class="sender-chip" data-sender="UMUT ÖZKAN">UMUT ÖZKAN</button>
+                        <button type="button" class="sender-chip" data-sender="Ahmet CANITEZ">Ahmet CANITEZ</button>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="tarih">Tarih</label>
+                        <input type="date" id="tarih" required>
+                    </div>
+                    <div class="field">
+                        <label for="teklifNo">Teklif no</label>
+                        <input type="text" id="teklifNo" placeholder="Örn. 2026-001" required>
+                    </div>
+                    <div class="field full-width">
+                        <label for="genelToplamCurrency">Genel toplam para birimi</label>
+                        <select id="genelToplamCurrency">
+                            <option value="EUR">€ Euro</option>
+                            <option value="TRY">₺ Türk lirası</option>
+                            <option value="USD">$ Amerikan doları</option>
+                        </select>
+                        <p class="field-hint">Ürünlerde farklı para birimi seçsen de PDF toplamı burada seçtiğin para biriminde hesaplanır.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="productsSection">
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">2. adım</span>
+                        <h2>Ürünler</h2>
+                        <p>Her ürün kendi kartında. Ürün adı, adet ve birim fiyatını gir; toplam otomatik hesaplanır.</p>
+                    </div>
+                    <button type="button" class="primary-button" data-action="add-product">
+                        <span aria-hidden="true">＋</span>
+                        Yeni ürün
+                    </button>
+                </div>
+
+                <div id="productContainer" class="product-list"></div>
+
+                <div class="desktop-table-wrap">
+                    <table id="productTable">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <button type="button" class="secondary-button add-product-mobile" data-action="add-product">
+                    <span aria-hidden="true">＋</span>
+                    Bir ürün daha ekle
+                </button>
+                <p class="section-note">İpucu: Çaplı ürünlerde ürün adı alanının yanındaki <strong>Ø</strong> düğmesine dokunabilirsin.</p>
+            </section>
+
+            <section class="section" id="extraColumnsSection">
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">3. adım</span>
+                        <h2>Ek sütunlar <span class="helper-text">(isteğe bağlı)</span></h2>
+                        <p>Marka, termin veya stok durumu gibi ürünlere özel ek bilgiler ekle.</p>
+                    </div>
+                    <button type="button" class="secondary-button" data-action="toggle-custom-column">
+                        <span aria-hidden="true">＋</span>
+                        Özel sütun
+                    </button>
+                </div>
+
+                <div class="extra-column-tools">
+                    <button type="button" class="quick-column" data-action="add-column" data-column-name="Marka">＋ Marka</button>
+                    <button type="button" class="quick-column" data-action="add-column" data-column-name="Termin">＋ Termin</button>
+                    <button type="button" class="quick-column" data-action="add-column" data-column-name="Stok Durumu">＋ Stok durumu</button>
+                </div>
+
+                <div class="custom-column-creator" id="customColumnCreator">
+                    <div class="field">
+                        <label for="customColumnName">Yeni sütun adı</label>
+                        <input type="text" id="customColumnName" placeholder="Örn. Menşei, teslim şekli">
+                    </div>
+                    <button type="button" class="primary-button" data-action="add-custom-column">Sütun ekle</button>
+                </div>
+
+                <div id="extraColumnsContainer" class="extra-column-list"></div>
+                <div class="empty-extra-columns" id="emptyExtraColumns" hidden>
+                    Henüz ek sütun yok. Yukarıdan hazır bir sütun seçebilir veya özel sütun ekleyebilirsin.
+                </div>
+            </section>
+
+            <section class="actions-panel">
+                <div>
+                    <h2>Teklifi tamamla</h2>
+                    <p>Bilgileri kontrol ettikten sonra çıktıyı yazdırabilir, indirebilir veya doğrudan paylaşabilirsin.</p>
+                </div>
+                <div class="pdf-actions">
+                    <button type="button" class="pdf-button pdf-print" data-action="generate-pdf">
+                        <span aria-hidden="true">▣</span>
+                        Yazdır
+                    </button>
+                    <button type="button" class="pdf-button pdf-download" data-action="download-pdf">
+                        <span aria-hidden="true">↓</span>
+                        PDF indir
+                    </button>
+                    <button type="button" class="pdf-button pdf-share" data-action="share-pdf">
+                        <span aria-hidden="true">↗</span>
+                        PDF paylaş
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <p class="footer-note">AGEN fiyat teklifi hazırlama aracı</p>
     </div>
 
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
     <script>
-        // Tarihi otomatik ayarla
-        document.getElementById('tarih').valueAsDate = new Date();
+        var API_KEY = "e7bbdab4e92cef5b5dfd1682";
+        var exchangeRates = {};
+        var exchangeRateBase = "";
+        var products = [];
+        var extraColumns = [];
+        var nextProductId = 1;
+        var nextColumnId = 1;
+        var toastTimer = null;
+        var pdfBusy = false;
 
-        // Sayfa yüklendiğinde ilk ürünü ve "Stok Durumu" sütununu ekle
-        window.onload = function() {
-            addProduct();
-            addExtraColumn('Stok Durumu');
-        };
+        function createProduct() {
+            var extras = {};
+            extraColumns.forEach(function(column) {
+                extras[column.id] = column.defaultValue || "";
+            });
 
-        // Gönderen alanını doldurmak için fonksiyon
-        function fillSender(name) {
-            document.getElementById('gonderen').value = name;
+            return {
+                id: String(nextProductId++),
+                name: "",
+                quantity: "1",
+                price: "",
+                currency: "EUR",
+                extras: extras
+            };
         }
 
-        // Döviz Kuru API Anahtarı
-        const API_KEY = 'e7bbdab4e92cef5b5dfd1682';
+        function createColumn(name) {
+            return {
+                id: "column-" + String(nextColumnId++),
+                name: name,
+                defaultValue: "",
+                bulkValue: ""
+            };
+        }
 
-        // Döviz kurları
-        let exchangeRates = {};
+        function escapeHTML(value) {
+            return String(value == null ? "" : value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
 
-        // Ekstra sütunları saklamak için dizi
-        let extraColumns = [];
+        function parseNumber(value) {
+            var normalized = String(value == null ? "" : value)
+                .replace(/\s/g, "")
+                .replace(",", ".")
+                .replace(/[^\d.-]/g, "");
+            var number = parseFloat(normalized);
+            return Number.isFinite(number) ? number : 0;
+        }
 
-        // Döviz kurlarını API'den çek
-        async function fetchExchangeRates(baseCurrency) {
-            try {
-                const response = await fetch(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${baseCurrency}`);
-                const data = await response.json();
-                if (data.result === 'success') {
-                    exchangeRates = data.conversion_rates;
+        function currencySign(currency) {
+            return currency === "TRY" ? "₺" : currency === "USD" ? "$" : "€";
+        }
+
+        function formatMoney(amount, currency) {
+            var safeAmount = Number.isFinite(amount) ? amount : 0;
+            return currencySign(currency) + " " + new Intl.NumberFormat("tr-TR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(safeAmount);
+        }
+
+        function findProduct(id) {
+            return products.find(function(product) {
+                return product.id === String(id);
+            });
+        }
+
+        function findColumn(id) {
+            return extraColumns.find(function(column) {
+                return column.id === String(id);
+            });
+        }
+
+        function productTotal(product) {
+            return parseNumber(product.quantity) * parseNumber(product.price);
+        }
+
+        function render() {
+            renderProducts();
+            renderExtraColumns();
+            updateSummary();
+        }
+
+        function renderProducts() {
+            var productContainer = document.getElementById("productContainer");
+            var productTable = document.getElementById("productTable");
+            var mobileHTML = products.map(function(product, index) {
+                return renderMobileProduct(product, index);
+            }).join("");
+
+            productContainer.innerHTML = mobileHTML;
+
+            var headerHTML = "<tr>" +
+                "<th scope=\"col\">#</th>" +
+                "<th scope=\"col\">Ürün adı</th>" +
+                "<th scope=\"col\">Adet</th>" +
+                "<th scope=\"col\">Birim fiyatı</th>" +
+                "<th scope=\"col\">Toplam</th>" +
+                extraColumns.map(function(column) {
+                    return "<th scope=\"col\" data-column-id=\"" + escapeHTML(column.id) + "\">" + escapeHTML(column.name) + "</th>";
+                }).join("") +
+                "<th scope=\"col\">İşlemler</th>" +
+                "</tr>";
+
+            var rowsHTML = products.map(function(product, index) {
+                return renderDesktopProduct(product, index);
+            }).join("");
+
+            productTable.querySelector("thead").innerHTML = headerHTML;
+            productTable.querySelector("tbody").innerHTML = rowsHTML;
+        }
+
+        function renderMobileProduct(product, index) {
+            var total = productTotal(product);
+            var extraHTML = "";
+
+            if (extraColumns.length) {
+                extraHTML = "<div class=\"product-extra-fields\">" +
+                    "<div class=\"product-extra-title\">Ek sütun bilgileri</div>" +
+                    "<div class=\"form-grid\">" +
+                    extraColumns.map(function(column) {
+                        var value = product.extras[column.id] || "";
+                        return "<div class=\"field\">" +
+                            "<label for=\"mobile-" + escapeHTML(product.id) + "-" + escapeHTML(column.id) + "\">" + escapeHTML(column.name) + "</label>" +
+                            "<input type=\"text\" id=\"mobile-" + escapeHTML(product.id) + "-" + escapeHTML(column.id) + "\" value=\"" + escapeHTML(value) + "\" placeholder=\"" + escapeHTML(column.name) + " girin\" data-product-id=\"" + escapeHTML(product.id) + "\" data-field=\"extra\" data-column-id=\"" + escapeHTML(column.id) + "\">" +
+                            "</div>";
+                    }).join("") +
+                    "</div></div>";
+            }
+
+            return "<article class=\"product-card\" data-product-id=\"" + escapeHTML(product.id) + "\">" +
+                "<div class=\"product-card-header\">" +
+                    "<div class=\"product-title\">" +
+                        "<span class=\"product-number\">" + (index + 1) + "</span>" +
+                        "<div><small>Ürün " + (index + 1) + "</small><h3>Fiyat ve miktar</h3></div>" +
+                    "</div>" +
+                    "<div class=\"product-card-actions\">" +
+                        "<button type=\"button\" class=\"icon-button move-button\" data-action=\"move-up\" data-product-id=\"" + escapeHTML(product.id) + "\" aria-label=\"Ürünü yukarı taşı\" title=\"Yukarı taşı\" " + (index === 0 ? "disabled" : "") + ">↑</button>" +
+                        "<button type=\"button\" class=\"icon-button move-button\" data-action=\"move-down\" data-product-id=\"" + escapeHTML(product.id) + "\" aria-label=\"Ürünü aşağı taşı\" title=\"Aşağı taşı\" " + (index === products.length - 1 ? "disabled" : "") + ">↓</button>" +
+                        "<button type=\"button\" class=\"icon-button danger-button delete-product\" data-action=\"delete-product\" data-product-id=\"" + escapeHTML(product.id) + "\" aria-label=\"Ürünü sil\" title=\"Ürünü sil\" " + (products.length === 1 ? "disabled" : "") + ">×</button>" +
+                    "</div>" +
+                "</div>" +
+                "<div class=\"field product-field\">" +
+                    "<label for=\"mobile-name-" + escapeHTML(product.id) + "\">Ürün adı</label>" +
+                    "<div class=\"input-with-action\">" +
+                        "<input type=\"text\" id=\"mobile-name-" + escapeHTML(product.id) + "\" value=\"" + escapeHTML(product.name) + "\" placeholder=\"Örn. Ø10 HSS matkap\" data-product-id=\"" + escapeHTML(product.id) + "\" data-field=\"name\" required>" +
+                        "<button type=\"button\" class=\"diameter-button\" data-action=\"insert-diameter\" aria-label=\"Çap işareti ekle\" title=\"Ø ekle\">Ø</button>" +
+                    "</div>" +
+                    "<p class=\"field-hint\">Çap işareti gerekiyorsa yanındaki Ø düğmesine dokun.</p>" +
+                "</div>" +
+                "<div class=\"product-price-row\">" +
+                    "<div class=\"field product-field\">" +
+                        "<label for=\"mobile-quantity-" + escapeHTML(product.id) + "\">Adet</label>" +
+                        "<div class=\"quantity-input\">" +
+                            "<input type=\"number\" id=\"mobile-quantity-" + escapeHTML(product.id) + "\" value=\"" + escapeHTML(product.quantity) + "\" inputmode=\"numeric\" pattern=\"[0-9]*\" min=\"0\" step=\"1\" data-product-id=\"" + escapeHTML(product.id) + "\" data-field=\"quantity\" required>" +
+                            "<div class=\"quantity-control\" aria-label=\"Adet artır azalt\">" +
+                                "<button type=\"button\" data-action=\"change-quantity\" data-product-id=\"" + escapeHTML(product.id) + "\" data-delta=\"1\" aria-label=\"Adedi artır\">＋</button>" +
+                                "<button type=\"button\" data-action=\"change-quantity\" data-product-id=\"" + escapeHTML(product.id) + "\" data-delta=\"-1\" aria-label=\"Adedi azalt\">−</button>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>" +
+                    "<div class=\"field product-field\">" +
+                        "<label for=\"mobile-price-" + escapeHTML(product.id) + "\">Birim fiyatı</label>" +
+                        "<div class=\"currency-input\">" +
+                            "<input type=\"text\" id=\"mobile-price-" + escapeHTML(product.id) + "\" value=\"" + escapeHTML(product.price) + "\" inputmode=\"decimal\" pattern=\"[0-9.,]*\" autocomplete=\"off\" placeholder=\"0,00\" data-product-id=\"" + escapeHTML(product.id) + "\" data-field=\"price\" required>" +
+                            "<select aria-label=\"Birim fiyatı para birimi\" data-product-id=\"" + escapeHTML(product.id) + "\" data-field=\"currency\">" +
+                                "<option value=\"EUR\" " + (product.currency === "EUR" ? "selected" : "") + ">€</option>" +
+                                "<option value=\"TRY\" " + (product.currency === "TRY" ? "selected" : "") + ">₺</option>" +
+                                "<option value=\"USD\" " + (product.currency === "USD" ? "selected" : "") + ">$</option>" +
+                            "</select>" +
+                        "</div>" +
+                        "<p class=\"field-hint\">Rakam klavyesi açılır.</p>" +
+                    "</div>" +
+                "</div>" +
+                "<div class=\"product-total\"><span>Ürün toplamı</span><strong data-total>" + formatMoney(total, product.currency) + "</strong></div>" +
+                extraHTML +
+                "</article>";
+        }
+
+        function renderDesktopProduct(product, index) {
+            var extraCells = extraColumns.map(function(column) {
+                var value = product.extras[column.id] || "";
+                return "<td data-column-id=\"" + escapeHTML(column.id) + "\">" +
+                    "<input type=\"text\" value=\"" + escapeHTML(value) + "\" placeholder=\"" + escapeHTML(column.name) + "\" data-product-id=\"" + escapeHTML(product.id) + "\" data-field=\"extra\" data-column-id=\"" + escapeHTML(column.id) + "\">" +
+                    "</td>";
+            }).join("");
+
+            return "<tr data-product-id=\"" + escapeHTML(product.id) + "\">" +
+                "<td>" + (index + 1) + "</td>" +
+                "<td>" +
+                    "<div class=\"input-with-action\">" +
+                        "<input type=\"text\" value=\"" + escapeHTML(product.name) + "\" placeholder=\"Ürün adı\" aria-label=\"Ürün adı\" data-product-id=\"" + escapeHTML(product.id) + "\" data-field=\"name\" required>" +
+                        "<button type=\"button\" class=\"diameter-button\" data-action=\"insert-diameter\" aria-label=\"Çap işareti ekle\" title=\"Ø ekle\">Ø</button>" +
+                    "</div>" +
+                "</td>" +
+                "<td><input type=\"number\" value=\"" + escapeHTML(product.quantity) + "\" inputmode=\"numeric\" min=\"0\" step=\"1\" aria-label=\"Adet\" data-product-id=\"" + escapeHTML(product.id) + "\" data-field=\"quantity\" required></td>" +
+                "<td><div class=\"currency-input\">" +
+                    "<input type=\"text\" value=\"" + escapeHTML(product.price) + "\" inputmode=\"decimal\" pattern=\"[0-9.,]*\" placeholder=\"0,00\" aria-label=\"Birim fiyatı\" data-product-id=\"" + escapeHTML(product.id) + "\" data-field=\"price\" required>" +
+                    "<select aria-label=\"Birim fiyatı para birimi\" data-product-id=\"" + escapeHTML(product.id) + "\" data-field=\"currency\">" +
+                        "<option value=\"EUR\" " + (product.currency === "EUR" ? "selected" : "") + ">€</option>" +
+                        "<option value=\"TRY\" " + (product.currency === "TRY" ? "selected" : "") + ">₺</option>" +
+                        "<option value=\"USD\" " + (product.currency === "USD" ? "selected" : "") + ">$</option>" +
+                    "</select>" +
+                "</div></td>" +
+                "<td><strong data-total>" + formatMoney(productTotal(product), product.currency) + "</strong></td>" +
+                extraCells +
+                "<td><div class=\"table-actions\">" +
+                    "<button type=\"button\" class=\"icon-button move-button\" data-action=\"move-up\" data-product-id=\"" + escapeHTML(product.id) + "\" aria-label=\"Ürünü yukarı taşı\" title=\"Yukarı taşı\" " + (index === 0 ? "disabled" : "") + ">↑</button>" +
+                    "<button type=\"button\" class=\"icon-button move-button\" data-action=\"move-down\" data-product-id=\"" + escapeHTML(product.id) + "\" aria-label=\"Ürünü aşağı taşı\" title=\"Aşağı taşı\" " + (index === products.length - 1 ? "disabled" : "") + ">↓</button>" +
+                    "<button type=\"button\" class=\"icon-button danger-button\" data-action=\"delete-product\" data-product-id=\"" + escapeHTML(product.id) + "\" aria-label=\"Ürünü sil\" title=\"Ürünü sil\" " + (products.length === 1 ? "disabled" : "") + ">×</button>" +
+                "</div></td>" +
+                "</tr>";
+        }
+
+        function renderExtraColumns() {
+            var container = document.getElementById("extraColumnsContainer");
+            var emptyState = document.getElementById("emptyExtraColumns");
+
+            container.innerHTML = extraColumns.map(function(column, index) {
+                return "<article class=\"extra-column-card\" data-column-id=\"" + escapeHTML(column.id) + "\">" +
+                    "<div class=\"extra-column-header\">" +
+                        "<div class=\"extra-column-title\"><span class=\"column-badge\">" + (index + 1) + "</span>Ek sütun " + (index + 1) + "</div>" +
+                        "<button type=\"button\" class=\"icon-button danger-button\" data-action=\"delete-column\" data-column-id=\"" + escapeHTML(column.id) + "\" aria-label=\"" + escapeHTML(column.name) + " sütununu sil\" title=\"Sütunu sil\">×</button>" +
+                    "</div>" +
+                    "<div class=\"field\">" +
+                        "<label for=\"column-name-" + escapeHTML(column.id) + "\">Sütun adı</label>" +
+                        "<input type=\"text\" id=\"column-name-" + escapeHTML(column.id) + "\" value=\"" + escapeHTML(column.name) + "\" placeholder=\"Örn. Marka\" data-column-id=\"" + escapeHTML(column.id) + "\" data-column-field=\"name\">" +
+                    "</div>" +
+                    "<div class=\"bulk-apply-box\">" +
+                        "<div class=\"bulk-apply-copy\">" +
+                            "<strong>Aynı bilgi tüm ürünlerde mi?</strong>" +
+                            "<span>Değeri aşağıya yaz; sadece bu sütundaki tüm ürünlere uygula.</span>" +
+                        "</div>" +
+                        "<div class=\"bulk-apply-controls\">" +
+                            "<input type=\"text\" value=\"" + escapeHTML(column.bulkValue) + "\" placeholder=\"Örn. Stokta veya 3 gün\" data-column-id=\"" + escapeHTML(column.id) + "\" data-column-field=\"bulk\" aria-label=\"" + escapeHTML(column.name) + " için ortak değer\">" +
+                            "<button type=\"button\" class=\"apply-column-button\" data-action=\"apply-column\" data-column-id=\"" + escapeHTML(column.id) + "\">Bu değeri tüm ürünlere uygula</button>" +
+                        "</div>" +
+                    "</div>" +
+                "</article>";
+            }).join("");
+
+            emptyState.hidden = extraColumns.length > 0;
+        }
+
+        function updateSummary() {
+            var countElement = document.getElementById("summaryProductCount");
+            var totalElement = document.getElementById("summaryTotal");
+            var currencySelect = document.getElementById("genelToplamCurrency");
+            var baseCurrency = currencySelect ? currencySelect.value : "EUR";
+
+            countElement.textContent = products.length + (products.length === 1 ? " ürün" : " ürün");
+            var total = 0;
+            var canCalculate = true;
+
+            products.forEach(function(product) {
+                var itemTotal = productTotal(product);
+                if (product.currency === baseCurrency) {
+                    total += itemTotal;
+                } else if (exchangeRateBase === baseCurrency && Number(exchangeRates[product.currency])) {
+                    total += itemTotal / Number(exchangeRates[product.currency]);
                 } else {
-                    alert('Döviz kurları alınamadı. Lütfen API anahtarınızı kontrol edin.');
+                    canCalculate = false;
                 }
-            } catch (error) {
-                alert('Döviz kurları alınırken bir hata oluştu.');
-            }
+            });
+
+            totalElement.textContent = canCalculate ? formatMoney(total, baseCurrency) : currencySign(baseCurrency) + " —";
         }
 
-        function promptExtraColumn() {
-            const columnName = prompt("Lütfen eklemek istediğiniz sütun adını girin:");
-            if (columnName) {
-                addExtraColumn(columnName);
-            }
-        }
-
-        function addExtraColumn(columnName) {
-            if (extraColumns.includes(columnName)) {
-                alert(`${columnName} sütunu zaten eklenmiş.`);
+        function updateProductTotal(productId) {
+            var product = findProduct(productId);
+            if (!product) {
                 return;
             }
 
-            // Ekstra sütunları güncelle
-            extraColumns.push(columnName);
-
-            // Ekstra sütunlar bölümüne ekle
-            const extraColumnsContainer = document.getElementById('extraColumnsContainer');
-
-            const extraColumnDiv = document.createElement('div');
-            extraColumnDiv.className = 'extra-column';
-            extraColumnDiv.dataset.columnName = columnName;
-
-            extraColumnDiv.innerHTML = `
-                <input type="text" value="${columnName}" readonly>
-                <button class="fill-column-button" onclick="fillColumnValues('${columnName}')">Tümüne Uygula</button>
-                <button class="delete-extra-column" onclick="deleteExtraColumn(this)">Sütunu Sil</button>
-            `;
-
-            extraColumnsContainer.appendChild(extraColumnDiv);
-
-            // Mevcut ürünlere yeni alanı ekle (Mobil)
-            const productSections = document.querySelectorAll('.product-section');
-            productSections.forEach(section => {
-                const formGroup = document.createElement('div');
-                formGroup.className = 'form-group';
-                formGroup.dataset.columnName = columnName;
-                formGroup.innerHTML = `
-                    <label>${columnName}:</label>
-                    <input type="text" placeholder="${columnName} girin">
-                `;
-                section.insertBefore(formGroup, section.querySelector('.action-button'));
-            });
-
-            // Masaüstü için tabloya yeni sütun ekle
-            const productTable = document.getElementById('productTable');
-            const headerRow = productTable.querySelector('thead tr');
-            const newHeader = document.createElement('th');
-            newHeader.textContent = columnName;
-            newHeader.dataset.columnName = columnName;
-            headerRow.insertBefore(newHeader, headerRow.querySelector('.actions-column'));
-
-            // Mevcut satırlara yeni hücre ekle
-            const rows = productTable.querySelectorAll('tbody tr');
-            rows.forEach(row => {
-                const newCell = row.insertCell(-1);
-                newCell.dataset.columnName = columnName;
-                newCell.innerHTML = `<input type="text" placeholder="${columnName} girin">`;
-                // İşlemler hücresini sona taşı
-                const actionsCell = row.querySelector('.actions-cell');
-                if (actionsCell) {
-                    row.appendChild(actionsCell);
-                }
+            var selector = "[data-product-id=\"" + String(product.id).replace(/"/g, "") + "\"] [data-total]";
+            document.querySelectorAll(selector).forEach(function(totalElement) {
+                totalElement.textContent = formatMoney(productTotal(product), product.currency);
             });
         }
 
-        function deleteExtraColumn(button) {
-            const extraColumnDiv = button.parentElement;
-            const columnName = extraColumnDiv.dataset.columnName;
-
-            // Ekstra sütunu diziden çıkar
-            extraColumns = extraColumns.filter(col => col !== columnName);
-
-            // Ekstra sütunu arayüzden kaldır
-            extraColumnDiv.remove();
-
-            // Ürünlerden ilgili alanları kaldır (Mobil)
-            const productSections = document.querySelectorAll('.product-section');
-            productSections.forEach(section => {
-                const formGroup = section.querySelector(`.form-group[data-column-name="${columnName}"]`);
-                if (formGroup) {
-                    formGroup.remove();
-                }
+        function updateSenderSelection(value) {
+            document.querySelectorAll("[data-sender]").forEach(function(button) {
+                button.classList.toggle("is-selected", button.getAttribute("data-sender") === value);
             });
-
-            // Masaüstü için tablodan sütunu kaldır
-            const productTable = document.getElementById('productTable');
-            const headerCells = productTable.querySelectorAll('thead th');
-            let columnIndex = -1;
-            headerCells.forEach((th, index) => {
-                if (th.dataset.columnName === columnName) {
-                    columnIndex = index;
-                }
-            });
-
-            if (columnIndex !== -1) {
-                // Başlıktan kaldır
-                headerCells[columnIndex].remove();
-
-                // Satırlardan kaldır
-                const rows = productTable.querySelectorAll('tbody tr');
-                rows.forEach(row => {
-                    row.deleteCell(columnIndex);
-                });
-            }
         }
 
-        // Tüm sütuna aynı değeri uygulayan fonksiyon
-        function fillColumnValues(columnName) {
-            const value = prompt(`Tüm ${columnName} sütunu için değer girin:`);
-            if (value !== null) {
-                const isMobile = window.matchMedia("(max-width: 600px)").matches;
-                if (isMobile) {
-                    const productSections = document.querySelectorAll('.product-section');
-                    productSections.forEach(section => {
-                        const input = section.querySelector(`.form-group[data-column-name="${columnName}"] input`);
-                        if (input) {
-                            input.value = value;
-                        }
-                    });
-                } else {
-                    const headerCells = document.querySelectorAll('#productTable thead th');
-                    let columnIndex = -1;
-                    headerCells.forEach((th, index) => {
-                        if (th.dataset.columnName === columnName) {
-                            columnIndex = index;
-                        }
-                    });
-                    if (columnIndex !== -1) {
-                        const rows = document.querySelectorAll('#productTable tbody tr');
-                        rows.forEach(row => {
-                            const cell = row.cells[columnIndex];
-                            const input = cell.querySelector('input');
-                            if (input) {
-                                input.value = value;
-                            }
-                        });
-                    }
-                }
-            }
+        function showToast(message, isError) {
+            var toast = document.getElementById("toast");
+            toast.textContent = message;
+            toast.classList.toggle("is-error", Boolean(isError));
+            toast.classList.add("is-visible");
+            window.clearTimeout(toastTimer);
+            toastTimer = window.setTimeout(function() {
+                toast.classList.remove("is-visible");
+            }, 3000);
         }
 
         function addProduct() {
-            // Mobil için ürün ekleme
-            const isMobile = window.matchMedia("(max-width: 600px)").matches;
-            if (isMobile) {
-                const productContainer = document.getElementById('productContainer');
-                const productCount = productContainer.children.length + 1;
-
-                const productSection = document.createElement('div');
-                productSection.className = 'product-section';
-                productSection.dataset.index = productCount;
-
-                let extraFieldsHTML = '';
-                extraColumns.forEach(columnName => {
-                    extraFieldsHTML += `
-                        <div class="form-group" data-column-name="${columnName}">
-                            <label>${columnName}:</label>
-                            <input type="text" placeholder="${columnName} girin">
-                        </div>
-                    `;
-                });
-
-                productSection.innerHTML = `
-                    <div class="product-header">
-                        <span class="product-number">#${productCount}</span>
-                        <div class="reorder-buttons">
-                            <button onclick="moveUp(this)">▲</button>
-                            <button onclick="moveDown(this)">▼</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Ürün İsmi:</label>
-                        <input type="text" placeholder="Ürün ismini girin" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Adet:</label>
-                        <input type="number" placeholder="Adet girin" required oninput="calculateTotal(this)">
-                    </div>
-                    <div class="form-group">
-                        <label>Birim Fiyatı:</label>
-                        <div class="currency-input">
-                            <input type="text" placeholder="Birim fiyatını girin" required oninput="calculateTotal(this)">
-                            <select onchange="calculateTotal(this)">
-                                <option value="EUR">€</option>
-                                <option value="TRY">₺</option>
-                                <option value="USD">$</option>
-                            </select>
-                        </div>
-                    </div>
-                    ${extraFieldsHTML}
-                    <div class="form-group">
-                        <label>Toplam Fiyat:</label>
-                        <input type="text" placeholder="Toplam Fiyat" readonly>
-                    </div>
-                    <button class="action-button delete-button" onclick="deleteProduct(this)">Ürünü Sil</button>
-                `;
-
-                productContainer.appendChild(productSection);
-                updateProductNumbers();
-            } else {
-                // Masaüstü için ürün ekleme
-                const productTableBody = document.getElementById('productTable').querySelector('tbody');
-                const rowCount = productTableBody.rows.length;
-                const row = productTableBody.insertRow();
-
-                row.dataset.index = rowCount + 1;
-
-                let cellIndex = 0;
-
-                // #
-                const cellNumber = row.insertCell(cellIndex++);
-                cellNumber.textContent = rowCount + 1;
-
-                // Ürün İsmi
-                const cellName = row.insertCell(cellIndex++);
-                cellName.innerHTML = `<input type="text" placeholder="Ürün ismini girin" required>`;
-
-                // Adet
-                const cellQuantity = row.insertCell(cellIndex++);
-                cellQuantity.innerHTML = `<input type="number" placeholder="Adet girin" required oninput="calculateTotal(this)">`;
-
-                // Birim Fiyatı
-                const cellPrice = row.insertCell(cellIndex++);
-                cellPrice.innerHTML = `
-                    <div class="currency-input">
-                        <input type="text" placeholder="Birim fiyatını girin" required oninput="calculateTotal(this)">
-                        <select onchange="calculateTotal(this)">
-                            <option value="EUR">€</option>
-                            <option value="TRY">₺</option>
-                            <option value="USD">$</option>
-                        </select>
-                    </div>
-                `;
-
-                // Toplam Fiyat
-                const cellTotal = row.insertCell(cellIndex++);
-                cellTotal.innerHTML = `<input type="text" placeholder="Toplam Fiyat" readonly>`;
-
-                // Ekstra sütunlar
-                extraColumns.forEach(columnName => {
-                    const cell = row.insertCell(cellIndex++);
-                    cell.dataset.columnName = columnName;
-                    cell.innerHTML = `<input type="text" placeholder="${columnName} girin">`;
-                });
-
-                // İşlemler
-                const cellActions = row.insertCell(cellIndex++);
-                cellActions.className = 'actions-cell';
-                cellActions.innerHTML = `
-                    <button onclick="moveUp(this)">▲</button>
-                    <button onclick="moveDown(this)">▼</button>
-                    <button class="delete-button" onclick="deleteProduct(this)">Sil</button>
-                `;
-            }
-        }
-
-        function deleteProduct(button) {
-            const isMobile = window.matchMedia("(max-width: 600px)").matches;
-            if (isMobile) {
-                const productSection = button.closest('.product-section');
-                productSection.remove();
-                updateProductNumbers();
-            } else {
-                const row = button.closest('tr');
-                row.remove();
-                updateProductNumbers();
-            }
-        }
-
-        function moveUp(button) {
-            const isMobile = window.matchMedia("(max-width: 600px)").matches;
-            if (isMobile) {
-                const productSection = button.closest('.product-section');
-                const prevSection = productSection.previousElementSibling;
-                if (prevSection) {
-                    productSection.parentNode.insertBefore(productSection, prevSection);
-                    updateProductNumbers();
+            var newProduct = createProduct();
+            products.push(newProduct);
+            render();
+            window.setTimeout(function() {
+                var input = document.querySelector("#mobile-name-" + newProduct.id);
+                if (input && window.matchMedia("(max-width: 899px)").matches) {
+                    input.focus();
                 }
+            }, 0);
+        }
+
+        function deleteProduct(productId) {
+            if (products.length === 1) {
+                showToast("En az bir ürün satırı kalmalı.", true);
+                return;
+            }
+
+            products = products.filter(function(product) {
+                return product.id !== String(productId);
+            });
+            render();
+        }
+
+        function moveProduct(productId, direction) {
+            var index = products.findIndex(function(product) {
+                return product.id === String(productId);
+            });
+            var nextIndex = index + direction;
+
+            if (index < 0 || nextIndex < 0 || nextIndex >= products.length) {
+                return;
+            }
+
+            var current = products[index];
+            products[index] = products[nextIndex];
+            products[nextIndex] = current;
+            render();
+        }
+
+        function changeQuantity(productId, delta) {
+            var product = findProduct(productId);
+            if (!product) {
+                return;
+            }
+
+            var quantity = Math.max(0, Math.round(parseNumber(product.quantity) + Number(delta)));
+            product.quantity = String(quantity);
+            render();
+        }
+
+        function insertDiameter(button) {
+            var scope = button.closest(".product-card, tr");
+            var input = scope ? scope.querySelector("input[data-field=\"name\"]") : null;
+            if (!input) {
+                return;
+            }
+
+            var start = Number.isInteger(input.selectionStart) ? input.selectionStart : input.value.length;
+            var end = Number.isInteger(input.selectionEnd) ? input.selectionEnd : start;
+
+            if (typeof input.setRangeText === "function") {
+                input.setRangeText("Ø", start, end, "end");
             } else {
-                const row = button.closest('tr');
-                const prevRow = row.previousElementSibling;
-                if (prevRow) {
-                    row.parentNode.insertBefore(row, prevRow);
-                    updateProductNumbers();
+                input.value = input.value.slice(0, start) + "Ø" + input.value.slice(end);
+            }
+
+            input.dispatchEvent(new Event("input", { bubbles: true }));
+            input.focus();
+        }
+
+        function addExtraColumn(rawName) {
+            var name = String(rawName || "").trim();
+            if (!name) {
+                return;
+            }
+
+            var duplicate = extraColumns.some(function(column) {
+                return column.name.trim().toLocaleLowerCase("tr-TR") === name.toLocaleLowerCase("tr-TR");
+            });
+
+            if (duplicate) {
+                showToast(name + " sütunu zaten ekli.", true);
+                return;
+            }
+
+            var column = createColumn(name);
+            extraColumns.push(column);
+            products.forEach(function(product) {
+                product.extras[column.id] = "";
+            });
+            render();
+
+            window.setTimeout(function() {
+                var input = document.getElementById("column-name-" + column.id);
+                if (input) {
+                    input.focus();
+                    input.select();
                 }
+            }, 0);
+        }
+
+        function deleteExtraColumn(columnId) {
+            var column = findColumn(columnId);
+            if (!column) {
+                return;
+            }
+
+            if (!window.confirm("\"" + column.name + "\" sütunu ve içindeki ürün bilgileri silinsin mi?")) {
+                return;
+            }
+
+            extraColumns = extraColumns.filter(function(item) {
+                return item.id !== column.id;
+            });
+            products.forEach(function(product) {
+                delete product.extras[column.id];
+            });
+            render();
+        }
+
+        function applyColumnValue(columnId) {
+            var column = findColumn(columnId);
+            if (!column) {
+                return;
+            }
+
+            var value = String(column.bulkValue || "").trim();
+            if (!value) {
+                var input = document.querySelector("[data-column-id=\"" + column.id + "\"][data-column-field=\"bulk\"]");
+                if (input) {
+                    input.focus();
+                }
+                showToast("Önce bu sütuna uygulanacak değeri yaz.", true);
+                return;
+            }
+
+            column.defaultValue = value;
+            products.forEach(function(product) {
+                product.extras[column.id] = value;
+            });
+            render();
+            showToast("\"" + column.name + "\" değeri tüm ürünlere uygulandı.");
+        }
+
+        function toggleCustomColumnCreator() {
+            var creator = document.getElementById("customColumnCreator");
+            creator.classList.toggle("is-visible");
+            if (creator.classList.contains("is-visible")) {
+                document.getElementById("customColumnName").focus();
             }
         }
 
-        function moveDown(button) {
-            const isMobile = window.matchMedia("(max-width: 600px)").matches;
-            if (isMobile) {
-                const productSection = button.closest('.product-section');
-                const nextSection = productSection.nextElementSibling;
-                if (nextSection) {
-                    productSection.parentNode.insertBefore(nextSection, productSection);
-                    updateProductNumbers();
-                }
-            } else {
-                const row = button.closest('tr');
-                const nextRow = row.nextElementSibling;
-                if (nextRow) {
-                    row.parentNode.insertBefore(nextRow, row);
-                    updateProductNumbers();
-                }
+        function addCustomColumn() {
+            var input = document.getElementById("customColumnName");
+            var name = input.value.trim();
+            if (!name) {
+                input.focus();
+                showToast("Önce yeni sütun adını yaz.", true);
+                return;
+            }
+
+            addExtraColumn(name);
+            input.value = "";
+            document.getElementById("customColumnCreator").classList.remove("is-visible");
+        }
+
+        function sanitizePriceInput(input) {
+            var cleaned = input.value.replace(/[^\d.,]/g, "");
+            if (cleaned !== input.value) {
+                input.value = cleaned;
             }
         }
 
-        function updateProductNumbers() {
-            const isMobile = window.matchMedia("(max-width: 600px)").matches;
-            if (isMobile) {
-                const productContainer = document.getElementById('productContainer');
-                const productSections = productContainer.querySelectorAll('.product-section');
-                productSections.forEach((section, index) => {
-                    section.dataset.index = index + 1;
-                    section.querySelector('.product-number').innerText = `#${index + 1}`;
+        function validateBeforePDF() {
+            var requiredIds = ["alici", "ilgili", "gonderen", "tarih", "teklifNo"];
+            for (var i = 0; i < requiredIds.length; i += 1) {
+                var field = document.getElementById(requiredIds[i]);
+                if (!field || !field.value.trim()) {
+                    if (field) {
+                        field.focus();
+                    }
+                    showToast("Lütfen teklif bilgilerini tamamla.", true);
+                    return false;
+                }
+            }
+
+            var unnamedProduct = products.find(function(product) {
+                return !product.name.trim();
+            });
+            if (unnamedProduct) {
+                var productInput = document.querySelector("#mobile-name-" + unnamedProduct.id);
+                if (productInput && window.matchMedia("(max-width: 899px)").matches) {
+                    productInput.focus();
+                }
+                showToast("Her ürün için önce ürün adını yaz.", true);
+                return false;
+            }
+
+            return true;
+        }
+
+        async function fetchExchangeRates(baseCurrency) {
+            if (exchangeRateBase === baseCurrency && Object.keys(exchangeRates).length) {
+                return;
+            }
+
+            try {
+                var response = await fetch("https://v6.exchangerate-api.com/v6/" + API_KEY + "/latest/" + baseCurrency);
+                var data = await response.json();
+
+                if (data.result !== "success") {
+                    throw new Error("Kur alınamadı");
+                }
+
+                exchangeRates = data.conversion_rates || {};
+                exchangeRates[baseCurrency] = 1;
+                exchangeRateBase = baseCurrency;
+            } catch (error) {
+                exchangeRates = {};
+                exchangeRates[baseCurrency] = 1;
+                exchangeRateBase = baseCurrency;
+                showToast("Döviz kuru alınamadı; aynı para birimindeki tutarlar hesaplandı.", true);
+            }
+        }
+
+        function escapePDF(value) {
+            return escapeHTML(value).replace(/\n/g, "<br>");
+        }
+
+        function buildPDFMarkup(baseCurrency) {
+            var baseSign = currencySign(baseCurrency);
+            var grandTotal = 0;
+            var rows = "";
+
+            products.forEach(function(product, index) {
+                var amount = productTotal(product);
+                var rate = product.currency === baseCurrency ? 1 : Number(exchangeRates[product.currency]);
+                if (!Number.isFinite(rate) || rate <= 0) {
+                    rate = 1;
+                }
+                grandTotal += amount / rate;
+
+                rows += "<tr>" +
+                    "<td>" + (index + 1) + "</td>" +
+                    "<td>" + escapePDF(product.name) + "</td>" +
+                    "<td>" + escapePDF(product.quantity) + "</td>" +
+                    "<td>" + currencySign(product.currency) + " " + parseNumber(product.price).toFixed(2) + "</td>" +
+                    "<td>" + currencySign(product.currency) + " " + amount.toFixed(2) + "</td>" +
+                    extraColumns.map(function(column) {
+                        return "<td>" + escapePDF(product.extras[column.id] || "") + "</td>";
+                    }).join("") +
+                    "</tr>";
+            });
+
+            var extraHeaders = extraColumns.map(function(column) {
+                return "<th>" + escapePDF(column.name) + "</th>";
+            }).join("");
+
+            var alici = document.getElementById("alici").value;
+            var ilgili = document.getElementById("ilgili").value;
+            var gonderen = document.getElementById("gonderen").value;
+            var tarih = document.getElementById("tarih").value;
+            var teklifNo = document.getElementById("teklifNo").value;
+
+            return "<!DOCTYPE html><html lang=\"tr\"><head><meta charset=\"UTF-8\">" +
+                "<style>" +
+                    "@page{size:A4;margin:18mm 15mm 15mm}" +
+                    "*{box-sizing:border-box}" +
+                    "body{font-family:Arial,sans-serif;color:#17233d;font-size:11px;margin:0}" +
+                    ".pdf-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:35px}" +
+                    ".pdf-logo{width:205px;height:auto}" +
+                    ".pdf-qr{text-align:center;color:#0563C1;font-size:9px}" +
+                    ".pdf-qr img{display:block;width:74px;height:74px;margin:0 auto 4px}" +
+                    ".pdf-info{display:flex;justify-content:space-between;gap:30px;margin-bottom:25px;color:#0563C1;line-height:1.7}" +
+                    ".pdf-info p{margin:0}" +
+                    ".pdf-table{width:100%;border-collapse:collapse;table-layout:fixed}" +
+                    ".pdf-table th{padding:8px 5px;border-bottom:2px solid #0563C1;color:#0563C1;text-align:left;font-weight:bold}" +
+                    ".pdf-table td{padding:8px 5px;border-bottom:1px solid #e2e8f0;vertical-align:top;word-wrap:break-word}" +
+                    ".pdf-table th:nth-child(1),.pdf-table td:nth-child(1){width:25px}" +
+                    ".pdf-table th:nth-child(2),.pdf-table td:nth-child(2){width:26%}" +
+                    ".pdf-table th:nth-child(3),.pdf-table td:nth-child(3){width:45px}" +
+                    ".pdf-table th:nth-child(4),.pdf-table td:nth-child(4){width:82px}" +
+                    ".pdf-table th:nth-child(5),.pdf-table td:nth-child(5){width:82px}" +
+                    ".pdf-total{display:flex;justify-content:flex-end;margin-top:22px}" +
+                    ".pdf-total-box{min-width:155px;padding:9px;background:#0563C1;color:#fff;text-align:center}" +
+                    ".pdf-total-box strong{display:block;margin-bottom:4px}" +
+                    ".pdf-footer{position:fixed;right:0;bottom:0;left:0;text-align:center;color:#0563C1;font-size:9px}" +
+                    "@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}" +
+                "</style></head><body>" +
+                    "<div class=\"pdf-header\">" +
+                        "<img src=\"logo.svg\" class=\"pdf-logo\" alt=\"AGEN\">" +
+                        "<div class=\"pdf-qr\">" +
+                            "<img src=\"https://api.qrserver.com/v1/create-qr-code/?data=http://www.agentedarik.com&size=80x80&color=0563C1&bgcolor=FFFFFF\" alt=\"QR Code\">" +
+                            "www.agentedarik.com" +
+                        "</div>" +
+                    "</div>" +
+                    "<div class=\"pdf-info\">" +
+                        "<div><p><strong>Alıcı:</strong> " + escapePDF(alici) + "</p>" +
+                        "<p><strong>İlgili:</strong> " + escapePDF(ilgili) + "</p>" +
+                        "<p><strong>Gönderen:</strong> " + escapePDF(gonderen) + "</p></div>" +
+                        "<div style=\"text-align:right\"><p><strong>Tarih:</strong> " + escapePDF(tarih) + "</p>" +
+                        "<p><strong>Teklif No:</strong> " + escapePDF(teklifNo) + "</p></div>" +
+                    "</div>" +
+                    "<table class=\"pdf-table\"><thead><tr>" +
+                        "<th>#</th><th>Tanımı</th><th>Adet</th><th>Birim fiyatı</th><th>Toplam fiyat</th>" +
+                        extraHeaders +
+                    "</tr></thead><tbody>" + rows + "</tbody></table>" +
+                    "<div class=\"pdf-total\"><div class=\"pdf-total-box\"><strong>Genel toplam</strong>" +
+                        baseSign + " " + grandTotal.toFixed(2) +
+                    "</div></div>" +
+                    "<div class=\"pdf-footer\">www.agentedarik.com</div>" +
+                "</body></html>";
+        }
+
+        function waitForImages(root) {
+            var images = root.querySelectorAll("img");
+            return Promise.all(Array.prototype.map.call(images, function(image) {
+                if (image.complete) {
+                    return Promise.resolve();
+                }
+                return new Promise(function(resolve) {
+                    image.onload = resolve;
+                    image.onerror = resolve;
                 });
-            } else {
-                const productTableBody = document.getElementById('productTable').querySelector('tbody');
-                const rows = productTableBody.querySelectorAll('tr');
-                rows.forEach((row, index) => {
-                    row.dataset.index = index + 1;
-                    row.cells[0].textContent = index + 1;
-                });
-            }
+            }));
         }
 
-        function calculateTotal(element) {
-            const isMobile = window.matchMedia("(max-width: 600px)").matches;
-            let adetInput, birimFiyatInput, currencySelect, toplamFiyatInput;
-
-            if (isMobile) {
-                const productSection = element.closest('.product-section');
-                adetInput = productSection.querySelector('input[placeholder="Adet girin"]');
-                birimFiyatInput = productSection.querySelector('input[placeholder="Birim fiyatını girin"]');
-                currencySelect = productSection.querySelector('.currency-input select');
-                toplamFiyatInput = productSection.querySelector('input[placeholder="Toplam Fiyat"]');
-            } else {
-                const row = element.closest('tr');
-                adetInput = row.cells[2].querySelector('input');
-                birimFiyatInput = row.cells[3].querySelector('input');
-                currencySelect = row.cells[3].querySelector('select');
-                toplamFiyatInput = row.cells[4].querySelector('input');
-            }
-
-            // Virgülleri noktaya çevir
-            birimFiyatInput.value = birimFiyatInput.value.replace(',', '.');
-
-            const adet = parseFloat(adetInput.value) || 0;
-            const birimFiyat = parseFloat(birimFiyatInput.value) || 0;
-            const currencySign = currencySelect.selectedOptions[0].text;
-
-            const total = adet * birimFiyat;
-
-            toplamFiyatInput.value = currencySign + ' ' + total.toFixed(2);
-        }
-
-        // PDF oluşturma fonksiyonları
-        async function generatePDF() {
-            await createPDF('print');
-        }
-
-        async function downloadPDF() {
-            await createPDF('download');
-        }
-
-        async function sharePDF() {
-            await createPDF('share');
+        function setPDFBusy(isBusy) {
+            pdfBusy = isBusy;
+            document.querySelectorAll("[data-action=\"generate-pdf\"], [data-action=\"download-pdf\"], [data-action=\"share-pdf\"]").forEach(function(button) {
+                button.disabled = isBusy;
+            });
         }
 
         async function createPDF(action) {
-            const alici = document.getElementById('alici').value;
-            const ilgili = document.getElementById('ilgili').value;
-            const gonderen = document.getElementById('gonderen').value;
-            const tarih = document.getElementById('tarih').value;
-            const teklifNo = document.getElementById('teklifNo').value;
-            const genelToplamCurrency = document.getElementById('genelToplamCurrency').value;
-            const genelToplamCurrencySign = document.getElementById('genelToplamCurrency').selectedOptions[0].text;
-
-            // Döviz kurlarını al
-            await fetchExchangeRates(genelToplamCurrency);
-
-            const isMobile = window.matchMedia("(max-width: 600px)").matches;
-
-            let products = [];
-            let genelToplam = 0;
-
-            if (isMobile) {
-                const productSections = document.querySelectorAll('.product-section');
-
-                productSections.forEach((section, index) => {
-                    const productName = section.querySelector('input[placeholder="Ürün ismini girin"]').value;
-                    const adet = parseFloat(section.querySelector('input[placeholder="Adet girin"]').value) || 0;
-                    const birimFiyatInput = section.querySelector('input[placeholder="Birim fiyatını girin"]');
-                    // Virgülleri noktaya çevir
-                    birimFiyatInput.value = birimFiyatInput.value.replace(',', '.');
-                    const birimFiyat = parseFloat(birimFiyatInput.value) || 0;
-                    const currencySelect = section.querySelector('.currency-input select');
-                    const currencySymbol = currencySelect.value;
-                    const currencySign = currencySelect.selectedOptions[0].text;
-                    const total = adet * birimFiyat;
-                    const toplamFiyatText = currencySign + ' ' + total.toFixed(2);
-
-                    // Ekstra alan değerlerini al
-                    const extraValues = [];
-                    extraColumns.forEach(columnName => {
-                        const input = section.querySelector(`.form-group[data-column-name="${columnName}"] input`);
-                        const value = input ? input.value : '';
-                        extraValues.push({ columnName, value });
-                    });
-
-                    // Toplam fiyatı genel toplam para birimine çevir
-                    const exchangeRate = exchangeRates[currencySymbol];
-                    const convertedTotal = total / exchangeRate;
-
-                    genelToplam += convertedTotal;
-
-                    products.push({
-                        index: index + 1,
-                        productName,
-                        adet,
-                        birimFiyat,
-                        currencySign,
-                        toplamFiyatText,
-                        extraValues
-                    });
-                });
-            } else {
-                const rows = document.querySelectorAll('#productTable tbody tr');
-
-                rows.forEach((row, index) => {
-                    const productName = row.cells[1].querySelector('input').value;
-                    const adet = parseFloat(row.cells[2].querySelector('input').value) || 0;
-                    const birimFiyatInput = row.cells[3].querySelector('input');
-                    // Virgülleri noktaya çevir
-                    birimFiyatInput.value = birimFiyatInput.value.replace(',', '.');
-                    const birimFiyat = parseFloat(birimFiyatInput.value) || 0;
-                    const currencySelect = row.cells[3].querySelector('select');
-                    const currencySymbol = currencySelect.value;
-                    const currencySign = currencySelect.selectedOptions[0].text;
-                    const total = adet * birimFiyat;
-                    const toplamFiyatText = currencySign + ' ' + total.toFixed(2);
-
-                    // Ekstra alan değerlerini al
-                    const extraValues = [];
-                    extraColumns.forEach(columnName => {
-                        let cellIndex = -1;
-                        const headerCells = document.querySelectorAll('#productTable thead th');
-                        headerCells.forEach((th, idx) => {
-                            if (th.dataset.columnName === columnName) {
-                                cellIndex = idx;
-                            }
-                        });
-                        if (cellIndex !== -1) {
-                            const input = row.cells[cellIndex].querySelector('input');
-                            const value = input ? input.value : '';
-                            extraValues.push({ columnName, value });
-                        }
-                    });
-
-                    // Toplam fiyatı genel toplam para birimine çevir
-                    const exchangeRate = exchangeRates[currencySymbol];
-                    const convertedTotal = total / exchangeRate;
-
-                    genelToplam += convertedTotal;
-
-                    products.push({
-                        index: index + 1,
-                        productName,
-                        adet,
-                        birimFiyat,
-                        currencySign,
-                        toplamFiyatText,
-                        extraValues
-                    });
-                });
+            if (pdfBusy || !validateBeforePDF()) {
+                return;
             }
 
-            // "Alıcı" değerini dosya ismi için hazırlama
-            let sanitizedAlici = alici.trim()
-                .replace(/[\s]+/g, '-') // Boşlukları tire ile değiştir
-                .replace(/[^a-zA-Z0-9ığüşöçİĞÜŞÖÇ\-]/g, '') // Özel karakterleri kaldır, Türkçe karakterleri koru
+            var baseCurrency = document.getElementById("genelToplamCurrency").value;
+            var filenameBase = document.getElementById("alici").value.trim()
+                .replace(/\s+/g, "-")
+                .replace(/[^a-zA-Z0-9ığüşöçİĞÜŞÖÇ-]/g, "") || "Fiyat-Teklifi";
+            var filename = filenameBase + "-Fiyat-Teklifi-AGEN.pdf";
 
-            // Eğer "Alıcı" alanı boşsa varsayılan bir isim kullan
-            if (!sanitizedAlici) {
-                sanitizedAlici = 'Fiyat-Teklifi';
-            }
+            setPDFBusy(true);
 
-            // Dosya ismini oluştur
-            const filename = `${sanitizedAlici}-Fiyat-Teklifi-AGEN.pdf`;
+            try {
+                await fetchExchangeRates(baseCurrency);
 
-            // Tablo sütun genişliklerini ayarla
-            const numExtraColumns = extraColumns.length;
-            const baseWidth = numExtraColumns > 0 ? 100 : 0;
-            const nameColumnWidth = 100 + (3 - numExtraColumns) * 50;
+                var pdfElement = document.createElement("div");
+                pdfElement.innerHTML = buildPDFMarkup(baseCurrency);
+                pdfElement.style.position = "fixed";
+                pdfElement.style.left = "-100000px";
+                pdfElement.style.top = "0";
+                pdfElement.style.width = "794px";
+                pdfElement.style.background = "#fff";
+                document.body.appendChild(pdfElement);
 
-            let content = `
-                <div id="pdf-content" style="position: relative; min-height: 1000px;">
-                    <div class="pdf-header" style="margin-bottom: 40px; padding: 0 40px;">
-                        <img src="logo.svg" class="pdf-logo" style="width: 230px; margin-top: 40px;">
-                        <div class="pdf-qr" style="margin-top: 40px;">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?data=http://www.agentedarik.com&size=80x80&color=06AEEF&bgcolor=FFFFFF" alt="QR Code">
-                            <div style="color: #0563C1; font-size: 10px;">www.agentedarik.com</div>
-                        </div>
-                    </div>
-                    <!-- Ekstra boşluk -->
-                    <div style="height: 40px;"></div>
-                    <!-- Bilgiler -->
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; color: #0563C1; padding: 0 40px;">
-                        <div>
-                            <p><strong>Alıcı:</strong> ${alici}</p>
-                            <p><strong>İlgili:</strong> ${ilgili}</p>
-                            <p><strong>Gönderen:</strong> ${gonderen}</p>
-                        </div>
-                        <div style="text-align: right;">
-                            <p><strong>Tarih:</strong> ${tarih}</p>
-                            <p><strong>Teklif No:</strong> ${teklifNo}</p>
-                        </div>
-                    </div>
-                    <!-- Boşluk -->
-                    <div style="height: 20px;"></div>
-                    <!-- Tablo -->
-                    <table class="pdf-table" style="width:100%; text-align: left; font-size: 12px; table-layout: fixed; padding: 0 40px;">
-                        <thead>
-                            <tr>
-                                <th style="color: #0563C1; font-weight: bold; width: 30px;">#</th>
-                                <th style="color: #0563C1; font-weight: bold; width: ${nameColumnWidth}px;">Tanımı</th>
-                                <th style="color: #0563C1; font-weight: bold; width: 60px;">Adet</th>
-                                <th style="color: #0563C1; font-weight: bold; width: 100px;">Birim Fiyatı</th>
-                                <th style="color: #0563C1; font-weight: bold; width: 100px;">Toplam Fiyat</th>
-            `;
+                await waitForImages(pdfElement);
 
-            extraColumns.forEach(columnName => {
-                content += `<th style="color: #0563C1; font-weight: bold; width: ${baseWidth}px;">${columnName}</th>`;
-            });
-
-            content += `
-                            </tr>
-                        </thead>
-                    </table>
-                    <!-- Çizgi -->
-                    <hr style="border: none; border-top: 2px solid #0563C1; margin: 5px 40px;">
-                    <table class="pdf-table" style="width:100%; text-align: left; font-size: 12px; table-layout: fixed; padding: 0 40px;">
-                        <tbody>
-            `;
-
-            products.forEach(product => {
-                content += `
-                    <tr>
-                        <td style="width: 30px;">${product.index}</td>
-                        <td style="width: ${nameColumnWidth}px;">${product.productName}</td>
-                        <td style="width: 60px;">${product.adet}</td>
-                        <td style="width: 100px;">${product.currencySign} ${parseFloat(product.birimFiyat).toFixed(2)}</td>
-                        <td style="width: 100px;">${product.toplamFiyatText}</td>
-                `;
-                product.extraValues.forEach(extra => {
-                    content += `<td style="width: ${baseWidth}px;">${extra.value}</td>`;
-                });
-                content += `</tr>`;
-            });
-
-            content += `
-                        </tbody>
-                    </table>
-                    <!-- Boşluk -->
-                    <div style="height: 20px;"></div>
-                    <!-- Genel Toplam -->
-                    <div style="display: flex; justify-content: flex-end; margin-top: 20px; padding: 0 40px;">
-                        <div class="genel-toplam" style="background-color: #0563C1; color: white; padding: 5px; width: 150px; text-align: center; font-size: 14px;">
-                            <strong>Genel Toplam</strong><br>
-                            <span>${genelToplamCurrencySign} ${genelToplam.toFixed(2)}</span>
-                        </div>
-                    </div>
-                    <!-- Alt bilgi -->
-                    <div style="position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; font-size: 10px; color: #0563C1;">
-                        www.agentedarik.com
-                    </div>
-                </div>
-                <style>
-                    /* PDF Stilleri */
-                    @page {
-                        size: A4;
-                        margin: 30mm 20mm 20mm 20mm; /* Üst, sağ, alt, sol boşluklar */
+                if (action === "print") {
+                    var printWindow = window.open("", "_blank");
+                    if (!printWindow) {
+                        throw new Error("Popup blocked");
                     }
-                    body { font-family: Arial, sans-serif; font-size: 12px; margin: 0; }
-                    .pdf-logo { float: left; width: 230px; }
-                    .pdf-qr { float: right; text-align: center; }
-                    .pdf-qr img { width: 80px; }
-                    .pdf-header::after { content: ""; display: block; clear: both; }
-                    /* Çizgiler kaldırıldı */
-                    .pdf-table, .pdf-table th, .pdf-table td {
-                        border: none;
+                    printWindow.document.open();
+                    printWindow.document.write(pdfElement.innerHTML);
+                    printWindow.document.close();
+                    printWindow.onload = function() {
+                        printWindow.focus();
+                        printWindow.print();
+                    };
+                } else {
+                    if (typeof html2pdf !== "function") {
+                        throw new Error("PDF library unavailable");
                     }
-                    /* Çizgi */
-                    hr {
-                        border: none;
-                        border-top: 2px solid #0563C1;
-                    }
-                    /* Kelime kaydırma */
-                    .pdf-table td, .pdf-table th {
-                        word-wrap: break-word;
-                    }
-                    /* Arka plan renklerinin yazdırılması */
-                    @media print {
-                        * {
-                            -webkit-print-color-adjust: exact;
-                            color-adjust: exact;
-                            print-color-adjust: exact;
-                        }
-                    }
-                </style>
-            `;
 
-            // Resimlerin yüklendiğinden emin ol
-            function imagesLoaded() {
-                const images = pdfElement.querySelectorAll('img');
-                const promises = [];
-                images.forEach(img => {
-                    if (!img.complete) {
-                        promises.push(new Promise(resolve => {
-                            img.onload = img.onerror = resolve;
-                        }));
-                    }
-                });
-                return Promise.all(promises);
-            }
+                    var options = {
+                        margin: [30, 20, 20, 20],
+                        filename: filename,
+                        image: { type: "jpeg", quality: 1 },
+                        html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff" },
+                        jsPDF: { unit: "pt", format: "a4", orientation: "portrait" }
+                    };
 
-            const pdfElement = document.createElement('div');
-            pdfElement.innerHTML = content;
-            document.body.appendChild(pdfElement); // Stil uygulanması için body'ye ekle
+                    var pdfBlob = await html2pdf().set(options).from(pdfElement).outputPdf("blob");
 
-            await imagesLoaded(); // Resimlerin yüklenmesini bekle
-
-            if (action === 'print') {
-                const win = window.open('', '_blank');
-                win.document.write(pdfElement.outerHTML);
-                win.document.close();
-                win.print();
-                document.body.removeChild(pdfElement);
-            } else if (action === 'download' || action === 'share') {
-                const opt = {
-                    margin:       [30, 20, 20, 20], // Kenar boşlukları: üst, sol, alt, sağ
-                    filename:     filename,
-                    image:        { type: 'jpeg', quality: 1 },
-                    html2canvas:  { scale: 2, useCORS: true },
-                    jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' }
-                };
-
-                try {
-                    const pdfBlob = await html2pdf().set(opt).from(pdfElement).outputPdf('blob');
-                    document.body.removeChild(pdfElement); // Temizlik
-
-                    if (action === 'download') {
-                        const link = document.createElement('a');
+                    if (action === "download") {
+                        var link = document.createElement("a");
                         link.href = URL.createObjectURL(pdfBlob);
                         link.download = filename;
+                        document.body.appendChild(link);
                         link.click();
-                    } else if (action === 'share') {
-                        const file = new File([pdfBlob], filename, { type: 'application/pdf' });
-
-                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                            try {
-                                await navigator.share({
-                                    files: [file],
-                                    title: 'AGEN Fiyat Teklifi',
-                                    text: 'Merhaba, talep etmiş olduğunuz ürünlerin fiyat teklifi ektedir. Kolay gelsin, iyi çalışmalar dilerim.'
-                                });
-                            } catch (error) {
-                                console.error('Paylaşma hatası:', error);
-                                alert('Paylaşma işlemi iptal edildi veya bir hata oluştu.');
-                            }
-                        } else {
-                            alert('Paylaşma özelliği bu tarayıcıda desteklenmiyor. Lütfen daha güncel bir tarayıcı kullanınız.');
+                        link.remove();
+                        window.setTimeout(function() {
+                            URL.revokeObjectURL(link.href);
+                        }, 1000);
+                    } else if (action === "share") {
+                        var file = new File([pdfBlob], filename, { type: "application/pdf" });
+                        if (!navigator.canShare || !navigator.canShare({ files: [file] })) {
+                            throw new Error("Share unavailable");
                         }
+                        await navigator.share({
+                            files: [file],
+                            title: "AGEN Fiyat Teklifi",
+                            text: "Merhaba, talep etmiş olduğunuz ürünlerin fiyat teklifi ektedir. Kolay gelsin, iyi çalışmalar dilerim."
+                        });
                     }
-                } catch (error) {
-                    console.error('PDF oluşturma hatası:', error);
-                    alert('PDF oluşturulurken bir hata oluştu. Lütfen tekrar deneyiniz.');
                 }
+
+                showToast(action === "print" ? "Yazdırma penceresi açıldı." : action === "download" ? "PDF indirildi." : "Paylaşım menüsü açıldı.");
+            } catch (error) {
+                console.error("PDF işlemi hatası:", error);
+                showToast(action === "share" ? "Bu tarayıcı PDF paylaşımını desteklemiyor." : "PDF hazırlanırken bir hata oluştu.", true);
+            } finally {
+                var temporaryPDF = document.querySelector("body > div[style*=\"-100000px\"]");
+                if (temporaryPDF) {
+                    temporaryPDF.remove();
+                }
+                setPDFBusy(false);
             }
         }
+
+        function generatePDF() {
+            return createPDF("print");
+        }
+
+        function downloadPDF() {
+            return createPDF("download");
+        }
+
+        function sharePDF() {
+            return createPDF("share");
+        }
+
+        document.addEventListener("click", function(event) {
+            var sender = event.target.closest("[data-sender]");
+            if (sender) {
+                document.getElementById("gonderen").value = sender.getAttribute("data-sender");
+                updateSenderSelection(sender.getAttribute("data-sender"));
+                return;
+            }
+
+            var actionButton = event.target.closest("[data-action]");
+            if (!actionButton) {
+                return;
+            }
+
+            var action = actionButton.getAttribute("data-action");
+            var productId = actionButton.getAttribute("data-product-id");
+            var columnId = actionButton.getAttribute("data-column-id");
+
+            if (action === "add-product") {
+                addProduct();
+            } else if (action === "delete-product") {
+                deleteProduct(productId);
+            } else if (action === "move-up") {
+                moveProduct(productId, -1);
+            } else if (action === "move-down") {
+                moveProduct(productId, 1);
+            } else if (action === "change-quantity") {
+                changeQuantity(productId, Number(actionButton.getAttribute("data-delta")));
+            } else if (action === "insert-diameter") {
+                insertDiameter(actionButton);
+            } else if (action === "add-column") {
+                addExtraColumn(actionButton.getAttribute("data-column-name"));
+            } else if (action === "toggle-custom-column") {
+                toggleCustomColumnCreator();
+            } else if (action === "add-custom-column") {
+                addCustomColumn();
+            } else if (action === "delete-column") {
+                deleteExtraColumn(columnId);
+            } else if (action === "apply-column") {
+                applyColumnValue(columnId);
+            } else if (action === "generate-pdf") {
+                generatePDF();
+            } else if (action === "download-pdf") {
+                downloadPDF();
+            } else if (action === "share-pdf") {
+                sharePDF();
+            }
+        });
+
+        document.addEventListener("input", function(event) {
+            var target = event.target;
+            var productId = target.getAttribute("data-product-id");
+            var productField = target.getAttribute("data-field");
+
+            if (productId && productField) {
+                var product = findProduct(productId);
+                if (!product) {
+                    return;
+                }
+
+                if (productField === "price") {
+                    sanitizePriceInput(target);
+                }
+
+                if (productField === "extra") {
+                    product.extras[target.getAttribute("data-column-id")] = target.value;
+                } else {
+                    product[productField] = target.value;
+                }
+
+                updateProductTotal(productId);
+                updateSummary();
+                return;
+            }
+
+            var columnId = target.getAttribute("data-column-id");
+            var columnField = target.getAttribute("data-column-field");
+            if (columnId && columnField === "bulk") {
+                var column = findColumn(columnId);
+                if (column) {
+                    column.bulkValue = target.value;
+                }
+            }
+        });
+
+        document.addEventListener("change", function(event) {
+            var target = event.target;
+            var productId = target.getAttribute("data-product-id");
+            var productField = target.getAttribute("data-field");
+
+            if (productId && productField === "currency") {
+                var product = findProduct(productId);
+                if (product) {
+                    product.currency = target.value;
+                    updateProductTotal(productId);
+                    updateSummary();
+                }
+                return;
+            }
+
+            if (target.id === "genelToplamCurrency") {
+                updateSummary();
+                return;
+            }
+
+            var columnId = target.getAttribute("data-column-id");
+            var columnField = target.getAttribute("data-column-field");
+
+            if (columnId && columnField === "name") {
+                var column = findColumn(columnId);
+                if (!column) {
+                    return;
+                }
+
+                var newName = target.value.trim();
+                if (!newName) {
+                    target.value = column.name;
+                    showToast("Sütun adı boş bırakılamaz.", true);
+                    return;
+                }
+
+                var duplicate = extraColumns.some(function(item) {
+                    return item.id !== column.id && item.name.trim().toLocaleLowerCase("tr-TR") === newName.toLocaleLowerCase("tr-TR");
+                });
+
+                if (duplicate) {
+                    target.value = column.name;
+                    showToast("Bu isimde başka bir sütun zaten var.", true);
+                    return;
+                }
+
+                column.name = newName;
+                render();
+            }
+        });
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Enter" && event.target.id === "customColumnName") {
+                event.preventDefault();
+                addCustomColumn();
+            }
+        });
+
+        document.getElementById("tarih").valueAsDate = new Date();
+        extraColumns.push(createColumn("Stok Durumu"));
+        products.push(createProduct());
+        render();
     </script>
 </body>
 </html>
