@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#f5f5fb">
+  <title>Ödev 1 · YBST Yazılım Geliştirme</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#teslim">Teslim alanına geç</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./" aria-label="YBST Ödev 1">
+        <span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span><b>YBST</b><span>Yazılım Geliştirme</span></span>
+      </a>
+      <nav aria-label="Sayfada gez">
+        <a href="#teslim">Teslim alanı</a>
+        <a href="#akis">Sınıf akışı</a>
+      </nav>
+      <div class="header-profile" id="header-profile" hidden>
+        <span class="avatar" id="header-avatar" aria-hidden="true"></span>
+        <span id="header-name"></span>
+      </div>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow"><span></span> YBST YAZILIM GELİŞTİRME DERSLERİ</p>
+        <h1 id="page-title">Ödev 1</h1>
+        <p class="hero-copy">Üç çalışmanı tek gönderide paylaş, sınıf arkadaşlarının neler yaptığını gör.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="sheet sheet-back"><b>01</b></div>
+        <div class="sheet sheet-middle"><b>02</b></div>
+        <div class="sheet sheet-front"><b>03</b><span></span><i></i><i></i></div>
+      </div>
+    </section>
+
+    <div class="workspace">
+      <div>
+        <section id="teslim" aria-labelledby="delivery-title">
+          <div class="section-heading"><h2 id="delivery-title">Teslim alanı</h2><span id="delivery-count" hidden></span></div>
+          <div class="card welcome" id="welcome">
+            <div class="intro-mark" aria-hidden="true">✳</div>
+            <h3>Önce tanışalım.</h3>
+            <p>Adın ve soyadın gönderinle birlikte sınıf akışında görünecek. Sayfaya girip adını yazan herkes paylaşımları görebilir.</p>
+            <form id="profile-form">
+              <div class="name-fields">
+                <label>Adın<input name="first" autocomplete="given-name" maxlength="60" required></label>
+                <label>Soyadın<input name="last" autocomplete="family-name" maxlength="60" required></label>
+              </div>
+              <p class="form-error" id="profile-error" role="alert" hidden></p>
+              <button class="button primary" type="submit">Devam et <span aria-hidden="true">↗</span></button>
+            </form>
+          </div>
+          <form id="composer" hidden>
+            <div class="card compose">
+              <div class="compose-top"><span class="avatar" id="compose-avatar" aria-hidden="true"></span><div><h3>Yeni gönderi</h3><p id="compose-name"></p></div><button type="button" class="text-button" id="change-name">Adı değiştir</button></div>
+              <div id="questions"></div>
+              <div class="compose-end">
+                <p class="form-error" id="compose-error" role="alert" hidden></p>
+                <div><span>Bir kez teslim edebilirsin.</span><button type="submit" class="button primary">Gönderiyi önizle <span aria-hidden="true">↗</span></button></div>
+              </div>
+            </div>
+          </form>
+          <div class="card delivery-status" id="delivery-status" hidden></div>
+        </section>
+
+        <section id="akis" class="feed" aria-labelledby="feed-title">
+          <div class="section-heading"><h2 id="feed-title">Sınıf akışı</h2><button type="button" class="text-button" id="refresh" hidden>Yenile</button></div>
+          <p class="card feed-note" id="feed-note" role="status">Paylaşımları görmek için adını ve soyadını yaz.</p>
+          <div id="posts"></div>
+          <button type="button" class="button secondary" id="more" hidden>Daha fazla gönderi</button>
+        </section>
+      </div>
+
+      <aside class="guide" aria-labelledby="guide-title">
+        <div class="guide-head"><h2 id="guide-title">Teslim listesi</h2><p>Üç çalışma, bir gönderi.</p></div>
+        <ol>
+          <li><span class="number">01</span><div><b>Banuybst.com ve mobil uygulamalar</b><p>Fikrini yaz veya tasarımını ekle.</p></div></li>
+          <li><span class="number">02</span><div><b>GameFlix</b><p>Proje fikrini veya tasarımını paylaş.</p></div></li>
+          <li><span class="number">03</span><div><b>Film formu ve yönetici paneli</b><p>Canlı site, GitHub deposu ve ekran görüntüleri.</p></div></li>
+        </ol>
+        <a class="reference" id="guide-reference" href="https://perde77.vercel.app/" target="_blank" rel="noopener noreferrer"><span>Perde 77 örneğini aç</span><span aria-hidden="true">↗</span></a>
+      </aside>
+    </div>
+  </main>
+  <footer class="wrap site-footer"><span>YBST · Yazılım Geliştirme</span><a href="https://banuybst.com/" target="_blank" rel="noopener noreferrer">banuybst.com ↗</a></footer>
+
+  <dialog id="preview" aria-labelledby="preview-title">
+    <div class="dialog-top"><h2 id="preview-title">Gönderi önizlemesi</h2><button class="icon-button" type="button" data-close aria-label="Önizlemeyi kapat">×</button></div>
+    <div class="dialog-body" id="preview-content"></div>
+    <div class="dialog-foot">
+      <p class="form-error" id="publish-error" role="alert" hidden></p>
+      <div><button type="button" class="button secondary" data-close>Düzenlemeye dön</button><button type="button" class="button primary" id="publish">Ödevi teslim et <span aria-hidden="true">↗</span></button></div>
+    </div>
+  </dialog>
+  <dialog id="image-dialog" aria-label="Görsel önizlemesi"><button class="icon-button" type="button" data-close aria-label="Görseli kapat">×</button><img id="large-image" alt=""></dialog>
+</body>
+</html>
