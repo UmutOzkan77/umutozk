@@ -26,6 +26,9 @@ const byId = (id) => document.getElementById(id);
 const profileForm = byId("profile-form");
 const composer = byId("composer");
 const preview = byId("preview");
+const maxImageFileBytes = 5_000_000;
+const maxCompressedImageBytes = 150_000;
+const acceptedImages = new Set(["image/jpeg", "image/png", "image/webp"]);
 const uploads = questions.map(() => []);
 const pendingImages = new Set();
 const profileKey = "ybst-odev-1-profile";
@@ -169,8 +172,8 @@ for (const [index, question] of questions.entries()) {
     </div>` : ""}
     <div class="upload-line">
       <button type="button" class="button secondary upload" aria-describedby="images-note-${index}"><b aria-hidden="true">＋</b> Görsel ekle</button>
-      <span id="images-note-${index}">${index === 2 ? "En az 1 ekran görüntüsü" : "En çok 3 görsel"} · JPG, PNG, WebP</span>
-      <input type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+      <span id="images-note-${index}">${index === 2 ? "En az 1 ekran görüntüsü" : "En çok 3 görsel"} · JPG, PNG, WebP · Görsel başına 5 MB</span>
+      <input type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" multiple hidden>
     </div>
     <p class="form-error" role="alert" hidden></p>
     <div class="gallery" hidden></div>`;
@@ -213,27 +216,57 @@ for (const [index, question] of questions.entries()) {
 }
 
 async function makeImage(file) {
-  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 20_000_000) {
-    throw new Error("20 MB’tan küçük bir JPG, PNG veya WebP seç.");
+  if (file.size > maxImageFileBytes) {
+    throw new Error("Her görsel en fazla 5 MB olabilir.");
   }
-  const image = await createImageBitmap(file).catch(() => null);
-  if (!image) throw new Error("Bu görsel açılamadı. Başka bir dosya seç.");
+  if (!acceptedImages.has(file.type) && (file.type || !/\.(jpe?g|png|webp)$/i.test(file.name))) {
+    throw new Error("JPG, PNG veya WebP biçiminde bir görsel seç.");
+  }
+
+  const image = typeof createImageBitmap === "function"
+    ? await createImageBitmap(file).catch(() => null)
+    : null;
+  const source = image ? null : URL.createObjectURL(file);
   try {
+    const drawable = image || await loadImage(source);
     const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-    const longEdge = Math.max(image.width, image.height);
-    for (const maxSide of [1600, 1250, 960, 700]) {
-      const scale = Math.min(1, maxSide / longEdge);
-      canvas.width = Math.max(1, Math.round(image.width * scale));
-      canvas.height = Math.max(1, Math.round(image.height * scale));
-      context.drawImage(image, 0, 0, canvas.width, canvas.height);
-      const encoded = await new Promise((resolve) => canvas.toBlob(resolve, "image/webp", .82));
-      if (encoded?.type === "image/webp" && encoded.size <= 250_000) return encoded;
+    const webpSupported = canvas.toDataURL("image/webp").startsWith("data:image/webp");
+    const format = webpSupported ? "image/webp" : "image/jpeg";
+    const context = canvas.getContext("2d", { alpha: webpSupported });
+    const longEdge = Math.max(drawable.width, drawable.height);
+
+    for (let maxSide = Math.min(1600, longEdge); maxSide >= 1; maxSide = Math.floor(maxSide * .76)) {
+      const scale = maxSide / longEdge;
+      canvas.width = Math.max(1, Math.round(drawable.width * scale));
+      canvas.height = Math.max(1, Math.round(drawable.height * scale));
+      context.imageSmoothingQuality = "high";
+      if (!webpSupported) {
+        context.fillStyle = "#fff";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+      }
+      context.drawImage(drawable, 0, 0, canvas.width, canvas.height);
+
+      for (const quality of [.76, .62, .48]) {
+        const encoded = await new Promise((resolve) => canvas.toBlob(resolve, format, quality));
+        if (encoded?.type === format && encoded.size <= maxCompressedImageBytes) return encoded;
+      }
     }
-    throw new Error("Görsel sıkıştırılamadı. Daha küçük bir görsel seç.");
+  } catch {
+    throw new Error("Bu görsel açılamadı. Dosyayı yeniden seç veya farklı bir görsel dene.");
   } finally {
-    image.close();
+    image?.close();
+    if (source) URL.revokeObjectURL(source);
   }
+  throw new Error("Bu görsel işlenemedi. Dosyayı yeniden seç veya farklı bir görsel dene.");
+}
+
+function loadImage(source) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = source;
+  });
 }
 
 function base64(blob) {

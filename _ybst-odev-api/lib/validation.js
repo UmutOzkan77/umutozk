@@ -4,6 +4,8 @@ import sharp from "sharp";
 export const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const personName = /^[\p{L}\p{M}][\p{L}\p{M} .’'-]*$/u;
 const imageEncoding = /^[A-Za-z0-9+/]+={0,2}$/;
+const maxUploadImageBytes = 250_000;
+const maxStoredImageBytes = 150_000;
 
 export class RequestError extends Error {
   constructor(status, message) {
@@ -62,17 +64,27 @@ function link(value) {
 }
 
 async function image(value) {
-  if (typeof value !== "string" || value.length > 333_336 || !imageEncoding.test(value)) {
+  const maxBase64Length = Math.ceil(maxUploadImageBytes / 3) * 4;
+  if (typeof value !== "string" || value.length > maxBase64Length || !imageEncoding.test(value)) {
     throw new RequestError(400, "Görsellerden biri geçersiz veya çok büyük.");
   }
   const raw = Buffer.from(value, "base64");
   try {
     const input = sharp(raw, { limitInputPixels: 2_560_000 });
     const meta = await input.metadata();
-    if (meta.format !== "webp" || meta.pages > 1 || meta.width > 1600 || meta.height > 1600 || raw.length > 250_000) {
+    if (!["webp", "jpeg"].includes(meta.format) || meta.pages > 1 ||
+        meta.width > 1600 || meta.height > 1600 || raw.length > maxUploadImageBytes) {
       throw new Error("Invalid dimensions, format or file size");
     }
-    return await input.webp({ quality: 86 }).toBuffer();
+
+    for (let maxSide = Math.max(meta.width, meta.height); maxSide >= 1; maxSide = Math.floor(maxSide * .76)) {
+      const compressed = await input.clone()
+        .resize(maxSide, maxSide, { fit: "inside", withoutEnlargement: true })
+        .webp({ quality: 65 })
+        .toBuffer();
+      if (compressed.length <= maxStoredImageBytes) return compressed;
+    }
+    throw new Error("Image could not be reduced to the storage limit");
   } catch {
     throw new RequestError(400, "Görsellerden biri açılamadı. Dosyayı yeniden ekle.");
   }
