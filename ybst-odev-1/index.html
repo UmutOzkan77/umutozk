@@ -9,7 +9,7 @@
   <title>Ödev 1 · YBST Yazılım Geliştirme</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
-  <script type="module" src="./app.js?v=2"></script>
+  <script type="module" src="./app.js?v=3"></script>
 </head>
 <body>
   <a class="skip" href="#teslim">Teslim alanına geç</a>
@@ -50,7 +50,7 @@
           <div class="card welcome" id="welcome">
             <div class="intro-mark" aria-hidden="true">✳</div>
             <h3>Önce tanışalım.</h3>
-            <p>Adın ve soyadın gönderinle birlikte sınıf akışında görünecek. Sayfaya girip adını yazan herkes paylaşımları görebilir.</p>
+            <p>Ödevini teslim etmek için adını ve soyadını yaz. Sayfayı açan herkes gönderileri ve gönderenlerin adlarını görebilir.</p>
             <form id="profile-form">
               <div class="name-fields">
                 <label>Adın<input name="first" autocomplete="given-name" maxlength="60" required></label>
@@ -74,8 +74,8 @@
         </section>
 
         <section id="akis" class="feed" aria-labelledby="feed-title">
-          <div class="section-heading"><h2 id="feed-title">Sınıf akışı</h2><button type="button" class="text-button" id="refresh" hidden>Yenile</button></div>
-          <p class="card feed-note" id="feed-note" role="status">Paylaşımları görmek için adını ve soyadını yaz.</p>
+          <div class="section-heading"><h2 id="feed-title">Sınıf akışı</h2><button type="button" class="text-button" id="refresh">Yenile</button></div>
+          <p class="card feed-note" id="feed-note" role="status">Gönderiler yükleniyor…</p>
           <div id="posts"></div>
           <button type="button" class="button secondary" id="more" hidden>Daha fazla gönderi</button>
         </section>

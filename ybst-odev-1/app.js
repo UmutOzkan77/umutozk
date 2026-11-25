@@ -98,7 +98,6 @@ async function request(query, body, method = body ? "POST" : "GET") {
 function showProfile() {
   byId("welcome").hidden = Boolean(profile);
   byId("header-profile").hidden = !profile;
-  byId("refresh").hidden = !profile;
   byId("guide-reference").hidden = Boolean(profile);
   composer.hidden = true;
   byId("delivery-status").hidden = true;
@@ -107,13 +106,10 @@ function showProfile() {
   byId("more").hidden = true;
   cursor = null;
 
-  if (!profile) {
-    message(byId("feed-note"), "Paylaşımları görmek için adını ve soyadını yaz.");
-    return;
+  if (profile) {
+    for (const id of ["header-avatar", "compose-avatar"]) byId(id).textContent = initials(profile.name);
+    for (const id of ["header-name", "compose-name"]) byId(id).textContent = profile.name;
   }
-
-  for (const id of ["header-avatar", "compose-avatar"]) byId(id).textContent = initials(profile.name);
-  for (const id of ["header-name", "compose-name"]) byId(id).textContent = profile.name;
   message(byId("feed-note"), "Gönderiler yükleniyor…");
   loadFeed();
 }
@@ -465,7 +461,6 @@ function showDelivery(delivery) {
 }
 
 async function loadFeed(append = false) {
-  if (!profile) return;
   const currentRequest = ++feedRequest;
   byId("refresh").disabled = true;
   byId("more").disabled = true;
@@ -473,7 +468,7 @@ async function loadFeed(append = false) {
   try {
     const result = await request(append ? { before: cursor } : {});
     if (currentRequest !== feedRequest || profileAtRequest !== profile) return;
-    showDelivery(result.delivery);
+    if (profile) showDelivery(result.delivery);
     const container = byId("posts");
     if (!append) container.replaceChildren();
     if (result.delivery?.state === "mine" && !append &&
@@ -483,12 +478,13 @@ async function loadFeed(append = false) {
     for (const post of result.posts) {
       if (!byId("gonderi-" + post.id)) container.append(postCard(post));
     }
-    message(byId("feed-note"), container.children.length ? "" : "Henüz gönderi yok. İlk ödevi sen paylaşabilirsin.");
+    const emptyFeed = profile ? "Henüz gönderi yok. İlk ödevi sen paylaşabilirsin." : "Henüz gönderi yok.";
+    message(byId("feed-note"), container.children.length ? "" : emptyFeed);
     cursor = result.before;
     byId("more").hidden = !cursor;
   } catch (error) {
     if (currentRequest !== feedRequest || profileAtRequest !== profile) return;
-    if (error.status === 401) {
+    if (error.status === 401 && profileAtRequest) {
       clearProfile();
       message(byId("profile-error"), "Devam etmek için adını ve soyadını yeniden yaz.");
     } else {

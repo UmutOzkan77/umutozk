@@ -22,7 +22,7 @@ function postFrom(row) {
 
 export async function getFeed(profile, before) {
   const db = sql();
-  const [posts, matches] = await db.transaction([
+  const queries = [
     db`
       SELECT p.id, p.name, p.created_at, p.answers, p.live, p.repo,
         COALESCE((
@@ -33,7 +33,9 @@ export async function getFeed(profile, before) {
       WHERE (${before}::integer IS NULL OR p.id < ${before})
       ORDER BY p.id DESC LIMIT ${pageSize + 1}
     `,
-    db`
+  ];
+  if (profile) {
+    queries.push(db`
       SELECT p.id, p.name, p.created_at, p.answers, p.live, p.repo,
         COALESCE((
           SELECT jsonb_agg(jsonb_build_object('id', i.id, 'question', i.question) ORDER BY i.question, i.position)
@@ -43,8 +45,9 @@ export async function getFeed(profile, before) {
       FROM assignment_posts p
       WHERE p.browser_id = ${profile.browserId}::uuid OR p.name_key = ${nameKey(profile.name)}
       ORDER BY mine DESC LIMIT 1
-    `,
-  ]);
+    `);
+  }
+  const [posts, matches = []] = await db.transaction(queries);
   const match = matches[0];
   return {
     posts: posts.slice(0, pageSize).map(postFrom),

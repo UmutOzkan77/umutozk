@@ -52,8 +52,9 @@ export default async function handler(req, res) {
       return res.status(200).json(profileFrom(requestBody(req)));
     }
 
-    const profile = verifyProfile(req.headers.authorization);
     if (req.method === "GET") {
+      const authorization = req.headers.authorization;
+      const profile = authorization ? verifyProfile(authorization) : null;
       const rawCursor = params.get("before");
       const before = rawCursor === null ? null : Number(rawCursor);
       if (before !== null && (!Number.isInteger(before) || before < 1 || before > 2_147_483_647)) {
@@ -62,6 +63,7 @@ export default async function handler(req, res) {
       return res.status(200).json(await getFeed(profile, before));
     }
     if (req.method === "POST") {
+      const profile = verifyProfile(req.headers.authorization);
       const submission = await submissionFrom(requestBody(req));
       const post = await publishPost(profile, submission);
       if (!post) throw new RequestError(409, "Bu ad veya tarayıcıyla daha önce ödev teslim edildi.");
